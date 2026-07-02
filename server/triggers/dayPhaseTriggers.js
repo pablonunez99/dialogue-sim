@@ -6,20 +6,25 @@ import { evaluateNpcGoalProgress } from '../handlers/world/evaluateNpcGoalProgre
 import { assignNpcRoutinesForDay } from '../handlers/world/assignNpcRoutinesForDay.js';
 import { generateDailyQuestsForActiveNpcs } from '../handlers/world/generateDailyQuestsForActiveNpcs.js';
 import { refreshNpcMemorySummary } from '../handlers/npc/refreshNpcMemorySummary.js';
+import { pruneOrphanMemories } from '../handlers/memory/pruneOrphanMemories.js';
+import { validateFlagConsistency } from '../handlers/npc/validateFlagConsistency.js';
 
 export function registerDayPhaseHandlers() {
   // afterNight triggers: run when day ends, preparing statistics/logs from yesterday
   on('afterNight', extractNpcActionsFromYesterday);
   on('afterNight', deprecateInvalidatedEvents);
+  on('afterNight', pruneOrphanMemories);
 
   // beforeMorning triggers: run at start of day, preparing the new state, schedules, and goals
   on('beforeMorning', scheduleFollowupEvents);
   on('beforeMorning', evaluateNpcGoalProgress);
   on('beforeMorning', assignNpcRoutinesForDay);
+  on('beforeMorning', validateFlagConsistency);
+  on('beforeMorning', generateDailyQuestsForActiveNpcs);
+  on('beforeMorning', refreshNpcMemorySummary);
 
-  // afterMorning triggers: run after daily setup, refreshing memory digests and quests
-  on('afterMorning', generateDailyQuestsForActiveNpcs);
-  on('afterMorning', refreshNpcMemorySummary);
+  // afterMorning, beforeAfternoon, afterAfternoon, beforeNight: 
+  // Fired during time of day transitions, ready for future content handlers.
 }
 
 export async function runDayTransition(day, context) {
@@ -28,11 +33,21 @@ export async function runDayTransition(day, context) {
   // 1. Run afterNight logic (processing yesterday's day = day - 1)
   await fire('afterNight', { ...context, day: day - 1 });
   
-  // 2. Run beforeMorning logic (planning today's schedule and goals)
+  // 2. Run beforeMorning logic (planning today's schedule, goals, and quests)
   await fire('beforeMorning', { ...context, day });
   
-  // 3. Run afterMorning logic (refreshing daily quests and memory digests)
-  await fire('afterMorning', { ...context, day });
-  
   console.log(`[DayTransition] Day transition complete for Day ${day}.`);
+}
+
+export async function handleTimeOfDayTransition(oldTOD, newTOD, context) {
+  if (oldTOD === newTOD) return;
+  console.log(`[TimeTransition] Transitioning from "${oldTOD}" to "${newTOD}"...`);
+  
+  if (oldTOD === 'mañana' && newTOD === 'tarde') {
+    await fire('afterMorning', context);
+    await fire('beforeAfternoon', context);
+  } else if (oldTOD === 'tarde' && newTOD === 'noche') {
+    await fire('afterAfternoon', context);
+    await fire('beforeNight', context);
+  }
 }

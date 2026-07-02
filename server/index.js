@@ -1331,7 +1331,10 @@ app.post('/api/conversation', async (req, res) => {
     };
 
     // Run morning update if day advanced
+    const oldTOD = state.timeOfDay || getTimeOfDay(state.time || '08:00');
+    const newTOD = inputState.timeOfDay;
     const isNewDay = inputState.day > (state.day || 1);
+
     if (isNewDay) {
       console.log(`[QuestEngine] Day advanced to ${inputState.day} during transition. Triggering morning world update...`);
       const activeProvider = provider || state.provider || defaultProvider;
@@ -1355,6 +1358,59 @@ app.post('/api/conversation', async (req, res) => {
         isGemini: currentIsGemini
       });
       runMorningWorldUpdate(activeConversationManager, inputState.day, history, inputState);
+    } else if (oldTOD !== newTOD) {
+      console.log(`[TimeTransition] Time of day transitioned during journey from "${oldTOD}" to "${newTOD}".`);
+      const activeProvider = provider || state.provider || defaultProvider;
+      let currentClient = client;
+      let currentModel = modelName;
+      let currentIsGemini = useGemini;
+
+      if (activeProvider === 'gemini' && geminiClient) {
+        currentClient = geminiClient;
+        currentModel = geminiModel;
+        currentIsGemini = true;
+      } else if (activeProvider === 'openai' && openaiClient) {
+        currentClient = openaiClient;
+        currentModel = openaiModel;
+        currentIsGemini = false;
+      }
+
+      const activeConversationManager = new ConversationManager({
+        client: currentClient,
+        model: currentModel,
+        isGemini: currentIsGemini
+      });
+
+      const db = {
+        loadNpcs,
+        saveNpcs,
+        loadLocations,
+        saveLocations,
+        loadEvents,
+        saveEvents,
+        savePendingUpdates
+      };
+      
+      const pending = { quests: [], npcActions: [], npcUpdates: [] };
+      loadNpcs().then(async (npcsList) => {
+        const locationsList = await loadLocations();
+        const currentEvents = await loadEvents();
+        const context = {
+          manager: activeConversationManager,
+          day: inputState.day,
+          history,
+          state: inputState,
+          npcsList,
+          locationsList,
+          currentEvents,
+          db,
+          pending
+        };
+        await handleTimeOfDayTransition(oldTOD, newTOD, context);
+        await savePendingUpdates(pending);
+      }).catch(err => {
+        console.error('[TimeTransition] Mid-day transition in journey failed:', err.message);
+      });
     }
 
     return res.json(transitionScene);
@@ -1591,15 +1647,49 @@ app.post('/api/conversation', async (req, res) => {
     const minutes = (scene.minutesPassed || 2) + aiTravelMinutes;
     const { day: nextDay, time: nextTime } = addMinutesToTime(inputState.day, inputState.time, minutes);
     
+    const oldTOD = state.timeOfDay || getTimeOfDay(state.time || '08:00');
     const isNewDay = nextDay > (state.day || 1);
     
     inputState.day = nextDay;
     inputState.time = nextTime;
     inputState.timeOfDay = getTimeOfDay(nextTime);
+    const newTOD = inputState.timeOfDay;
 
     if (isNewDay) {
       console.log(`[QuestEngine] Day advanced to ${nextDay}. Triggering morning world update in the background...`);
       runMorningWorldUpdate(activeConversationManager, nextDay, history, inputState);
+    } else if (oldTOD !== newTOD) {
+      console.log(`[TimeTransition] Time of day transitioned from "${oldTOD}" to "${newTOD}".`);
+      const db = {
+        loadNpcs,
+        saveNpcs,
+        loadLocations,
+        saveLocations,
+        loadEvents,
+        saveEvents,
+        savePendingUpdates
+      };
+      
+      const pending = { quests: [], npcActions: [], npcUpdates: [] };
+      loadNpcs().then(async (npcsList) => {
+        const locationsList = await loadLocations();
+        const currentEvents = await loadEvents();
+        const context = {
+          manager: activeConversationManager,
+          day: inputState.day,
+          history,
+          state: inputState,
+          npcsList,
+          locationsList,
+          currentEvents,
+          db,
+          pending
+        };
+        await handleTimeOfDayTransition(oldTOD, newTOD, context);
+        await savePendingUpdates(pending);
+      }).catch(err => {
+        console.error('[TimeTransition] Mid-day transition failed:', err.message);
+      });
     }
 
     const bgEndResult = await triggerBackgroundEvents(inputState, events, currentLocations);
@@ -1937,7 +2027,8 @@ export class ConversationManager {
       relationships: npc.relationships || '',
       secret: npc.secret,
       hint: npc.hint,
-      knownSuggestions: npc.suggestions
+      knownSuggestions: npc.suggestions,
+      memorySummary: npc.memorySummary || ''
     };
   }
 
