@@ -450,7 +450,15 @@ export default function App() {
       setParticipantIds(npcIds);
       participantIdsRef.current = npcIds;
 
-      const newEntry = { speakerId: 'narrator', speaker: 'Narrador', line: `Viaja a ${locations.find(l => l.id === newLocationId)?.name || newLocationId} - Suceso Especial: ${ev.name}`, type: 'player' };
+      const newEntry = {
+        speakerId: 'narrator',
+        speaker: 'Narrador',
+        line: `Viaja a ${locations.find(l => l.id === newLocationId)?.name || newLocationId} - Suceso Especial: ${ev.name}`,
+        type: 'player',
+        locationId: locationIdRef.current,
+        day: dayRef.current,
+        time: timeRef.current
+      };
       const updatedHistory = [...history, newEntry];
       setHistory(updatedHistory);
 
@@ -483,7 +491,15 @@ export default function App() {
     const locationName = locations.find((l) => l.id === newLocationId)?.name || newLocationId;
     const initialText = `Viaje a ${locationName}. Los personajes presentes reaccionan a mi llegada.`;
     
-    const newEntry = { speakerId: 'player', speaker: 'Viajero', line: `Viaja a ${locationName}`, type: 'player' };
+    const newEntry = {
+      speakerId: 'player',
+      speaker: 'Viajero',
+      line: `Viaja a ${locationName}`,
+      type: 'player',
+      locationId: locationIdRef.current,
+      day: dayRef.current,
+      time: timeRef.current
+    };
     const updatedHistory = [...history, newEntry];
     setHistory(updatedHistory);
     
@@ -508,7 +524,15 @@ export default function App() {
     setPlayerInputText('');
     setAwaitingPlayer(false);
     
-    const newEntry = { speakerId: 'player', speaker: 'Viajero', line: text, type: 'player' };
+    const newEntry = {
+      speakerId: 'player',
+      speaker: 'Viajero',
+      line: text,
+      type: 'player',
+      locationId: locationIdRef.current,
+      day: dayRef.current,
+      time: timeRef.current
+    };
     const updatedHistory = [...history, newEntry];
     setHistory(updatedHistory);
     
@@ -882,7 +906,15 @@ export default function App() {
     setParticipantIds(npcIds);
     participantIdsRef.current = npcIds;
 
-    const newEntry = { speakerId: 'narrator', speaker: 'Narrador', line: `Suceso Especial: ${ev.name}`, type: 'player' };
+    const newEntry = {
+      speakerId: 'narrator',
+      speaker: 'Narrador',
+      line: `Suceso Especial: ${ev.name}`,
+      type: 'player',
+      locationId: locationIdRef.current,
+      day: dayRef.current,
+      time: timeRef.current
+    };
     const updatedHistory = [...history, newEntry];
     setHistory(updatedHistory);
 
@@ -999,7 +1031,15 @@ export default function App() {
         const nextLocName = locations.find(l => l.id === nextLocId)?.name || nextLocId;
         const initialText = `Llegada a ${nextLocName} en viaje continuo.`;
         
-        const newEntry = { speakerId: 'player', speaker: 'Viajero', line: `Viaja a ${nextLocName}`, type: 'player' };
+        const newEntry = {
+          speakerId: 'player',
+          speaker: 'Viajero',
+          line: `Viaja a ${nextLocName}`,
+          type: 'player',
+          locationId: locationIdRef.current,
+          day: dayRef.current,
+          time: timeRef.current
+        };
         setHistory((prev) => [...prev, newEntry]);
         
         fetchConversation({

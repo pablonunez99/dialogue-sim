@@ -2,6 +2,8 @@ import { LocalIndex } from 'vectra';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { getEmbedding } from './helpers/embeddingHelper.js';
+import { queryByVector } from './helpers/vectorSearchHelper.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -115,20 +117,8 @@ export class VectorManager {
   }
 
   async getEmbedding(text) {
-    if (!this.client?.models?.embedContent) {
-      return new Array(768).fill(0);
-    }
-
-    try {
-      const response = await this.client.models.embedContent({
-        model: this.model,
-        contents: text
-      });
-      return response.embeddings[0].values;
-    } catch (err) {
-      console.error('[VectorManager] Error generating embedding:', err.message);
-      return new Array(768).fill(0);
-    }
+    const provider = this.client?.models?.embedContent ? 'gemini' : 'openai';
+    return await getEmbedding(this.client, text, provider);
   }
 
   async upsertItem(id, text, metadata) {
@@ -167,8 +157,19 @@ export class VectorManager {
 
   async query(queryText, typeFilter = '', limit = 5) {
     try {
-      await this.loadPersistedItems();
+      const queryVector = await this.getEmbedding(queryText);
+      let results = await queryByVector(this.index, queryVector, limit * 3);
 
+      if (typeFilter) {
+        results = results.filter(r => r.metadata?.type === typeFilter);
+      }
+
+      if (results.length > 0) {
+        return results.slice(0, limit);
+      }
+
+      // Fallback to keyword search if vector search returns empty results (e.g. initial zero-vector)
+      await this.loadPersistedItems();
       const normalizedQuery = String(queryText || '').toLowerCase();
       const filteredItems = this.persistedItems.filter((item) => {
         if (typeFilter && item.metadata?.type !== typeFilter) {
@@ -176,10 +177,6 @@ export class VectorManager {
         }
         return true;
       });
-
-      if (!filteredItems.length) {
-        return [];
-      }
 
       const scored = filteredItems
         .map((item) => ({
@@ -193,8 +190,25 @@ export class VectorManager {
 
       return scored;
     } catch (err) {
-      console.error('[VectorManager] Query failed:', err.message);
-      return [];
+      console.error('[VectorManager] Vector query failed. Falling back to keyword search:', err.message);
+      try {
+        await this.loadPersistedItems();
+        const normalizedQuery = String(queryText || '').toLowerCase();
+        const scored = this.persistedItems
+          .filter(item => !typeFilter || item.metadata?.type === typeFilter)
+          .map(item => ({
+            id: item.id,
+            score: this.scoreText(item.text || '', normalizedQuery),
+            metadata: item.metadata,
+            text: item.text
+          }))
+          .sort((a, b) => b.score - a.score)
+          .slice(0, limit);
+        return scored;
+      } catch (fallbackErr) {
+        console.error('[VectorManager] Critical query fallback failure:', fallbackErr.message);
+        return [];
+      }
     }
   }
 
