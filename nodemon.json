@@ -1,0 +1,11 @@
+{
+  "ignore": [
+    "server/data/vector_memories.json",
+    "server/data/locations.json",
+    "server/data/npcs.json",
+    "public/assets/**",
+    "dist/**",
+    "node_modules/**"
+  ],
+  "ext": "js"
+}
