@@ -11,7 +11,7 @@ import { getNpcImagePrompt, npcImageConfig, getLocationImagePrompt, locationImag
 import { VectorManager } from './vector-manager.js';
 import { buildAssetSyncPlan } from './asset-sync.js';
 import { registerTurnHandlers, runBeforeTurn, runAfterTurn } from './triggers/turnTriggers.js';
-import { registerDayPhaseHandlers, runDayTransition } from './triggers/dayPhaseTriggers.js';
+import { registerDayPhaseHandlers, runDayTransition, handleTimeOfDayTransition, triggerTimeOfDayTransitionIfNeeded } from './triggers/dayPhaseTriggers.js';
 import { buildInstructions } from './helpers/promptBuilderHelper.js';
 
 import { EXPRESSIONS, LOCATIONS, NPCS, getNpcLocation, CONNECTIONS as STATIC_CONNECTIONS, getPathDistance } from '../src/data/world.js';
@@ -48,6 +48,25 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const npcsFilePath = path.join(rootDir, 'server', 'data', 'npcs.json');
+const historyFilePath = path.join(rootDir, 'server', 'data', 'history.json');
+
+async function loadHistory() {
+  try {
+    const data = await readFile(historyFilePath, 'utf8');
+    return JSON.parse(data);
+  } catch (e) {
+    return [];
+  }
+}
+
+async function saveHistory(history) {
+  try {
+    await mkdir(path.dirname(historyFilePath), { recursive: true });
+    await writeFile(historyFilePath, JSON.stringify(history || [], null, 2), 'utf8');
+  } catch (error) {
+    console.error('[Database] Failed to write history.json', error);
+  }
+}
 
 const app = express();
 const port = Number(process.env.PORT || 5174);
@@ -1169,11 +1188,60 @@ app.get('/api/config', (_req, res) => {
   });
 });
 
+app.post('/api/world/reset', async (_req, res) => {
+  console.log('[Server] POST /api/world/reset - Wiping all game databases, history, and vector index...');
+  try {
+    // 1. Delete database files
+    const filesToDelete = [
+      npcsFilePath,
+      locationsFilePath,
+      eventsFilePath,
+      pendingUpdatesFilePath,
+      historyFilePath,
+      vectorManager?.persistPath
+    ].filter(Boolean);
+
+    for (const file of filesToDelete) {
+      try {
+        await rm(file, { force: true });
+        console.log(`[Reset] Deleted: ${path.basename(file)}`);
+      } catch (err) {
+        console.log(`[Reset] Skip deleting ${path.basename(file)}: ${err.message}`);
+      }
+    }
+
+    // 2. Clear vector index folder
+    if (vectorManager?.indexPath) {
+      try {
+        await rm(vectorManager.indexPath, { recursive: true, force: true });
+        console.log('[Reset] Deleted vector index folder');
+      } catch (err) {
+        console.log(`[Reset] Skip deleting vector index folder: ${err.message}`);
+      }
+    }
+
+    // 3. Re-initialize databases from static templates
+    await loadNpcs();
+    await loadLocations();
+    await loadEvents();
+    if (vectorManager) {
+      await vectorManager.init();
+    }
+
+    res.json({ success: true, message: 'All database files, history, and vector indexes have been successfully reset.' });
+  } catch (err) {
+    console.error('[Reset] Failed to execute full database reset:', err.message);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 app.post('/api/conversation', async (req, res) => {
-  let { locationId, participantIds, playerText, history = [], state = {}, provider } = req.body ?? {};
+  const history = await loadHistory();
+  let { locationId, participantIds, playerText, state = {}, provider } = req.body ?? {};
   console.log(`\n[Server] POST /api/conversation - locationId: "${locationId}", participantIds: [${(participantIds || []).join(', ')}], playerText: "${playerText}", history length: ${history.length}, provider: "${provider}"`);
   
   const currentLocations = await loadLocations();
+  const currentNpcs = await loadNpcs();
   
   const inputState = {
     locationId: state.locationId || locationId,
@@ -1188,6 +1256,17 @@ app.post('/api/conversation', async (req, res) => {
     quests: Array.isArray(state.quests) ? state.quests : [],
     npcActivityLog: Array.isArray(state.npcActivityLog) ? state.npcActivityLog : []
   };
+
+  // Append player turn to server-side history
+  history.push({
+    speakerId: 'player',
+    speaker: 'Viajero',
+    line: playerText || '',
+    type: 'player',
+    locationId: inputState.locationId,
+    day: inputState.day,
+    time: inputState.time
+  });
 
   // Intercept if travelQueue is active (meaning a step-by-step automatic trip is ongoing)
   let travelQueue = Array.isArray(state.travelQueue) ? [...state.travelQueue] : [];
@@ -1330,36 +1409,12 @@ app.post('/api/conversation', async (req, res) => {
       }
     };
 
-    // Run morning update if day advanced
+    // Run day or time phase updates if advanced
     const oldTOD = state.timeOfDay || getTimeOfDay(state.time || '08:00');
     const newTOD = inputState.timeOfDay;
     const isNewDay = inputState.day > (state.day || 1);
 
-    if (isNewDay) {
-      console.log(`[QuestEngine] Day advanced to ${inputState.day} during transition. Triggering morning world update...`);
-      const activeProvider = provider || state.provider || defaultProvider;
-      let currentClient = client;
-      let currentModel = modelName;
-      let currentIsGemini = useGemini;
-
-      if (activeProvider === 'gemini' && geminiClient) {
-        currentClient = geminiClient;
-        currentModel = geminiModel;
-        currentIsGemini = true;
-      } else if (activeProvider === 'openai' && openaiClient) {
-        currentClient = openaiClient;
-        currentModel = openaiModel;
-        currentIsGemini = false;
-      }
-
-      const activeConversationManager = new ConversationManager({
-        client: currentClient,
-        model: currentModel,
-        isGemini: currentIsGemini
-      });
-      runMorningWorldUpdate(activeConversationManager, inputState.day, history, inputState);
-    } else if (oldTOD !== newTOD) {
-      console.log(`[TimeTransition] Time of day transitioned during journey from "${oldTOD}" to "${newTOD}".`);
+    if (isNewDay || oldTOD !== newTOD) {
       const activeProvider = provider || state.provider || defaultProvider;
       let currentClient = client;
       let currentModel = modelName;
@@ -1381,37 +1436,41 @@ app.post('/api/conversation', async (req, res) => {
         isGemini: currentIsGemini
       });
 
-      const db = {
-        loadNpcs,
-        saveNpcs,
-        loadLocations,
-        saveLocations,
-        loadEvents,
-        saveEvents,
-        savePendingUpdates
-      };
-      
-      const pending = { quests: [], npcActions: [], npcUpdates: [] };
-      loadNpcs().then(async (npcsList) => {
-        const locationsList = await loadLocations();
-        const currentEvents = await loadEvents();
-        const context = {
-          manager: activeConversationManager,
-          day: inputState.day,
-          history,
-          state: inputState,
-          npcsList,
-          locationsList,
-          currentEvents,
-          db,
-          pending
-        };
-        await handleTimeOfDayTransition(oldTOD, newTOD, context);
-        await savePendingUpdates(pending);
-      }).catch(err => {
-        console.error('[TimeTransition] Mid-day transition in journey failed:', err.message);
+      if (isNewDay) {
+        console.log(`[QuestEngine] Day advanced to ${inputState.day} during transition. Triggering morning world update...`);
+        runMorningWorldUpdate(activeConversationManager, inputState.day, history, inputState);
+      } else {
+        triggerTimeOfDayTransitionIfNeeded(oldTOD, newTOD, inputState, history, activeConversationManager, db);
+      }
+    }
+
+    if (transitionScene.narration) {
+      history.push({
+        speakerId: 'narrator',
+        speaker: 'Narrador',
+        line: transitionScene.narration,
+        type: 'npc',
+        locationId: inputState.locationId,
+        day: inputState.day,
+        time: inputState.time
       });
     }
+    if (Array.isArray(transitionScene.messages)) {
+      transitionScene.messages.forEach(m => {
+        history.push({
+          speakerId: m.speakerId,
+          speaker: m.speakerId === 'narrator' ? 'Narrador' : m.speakerId,
+          line: m.line,
+          type: 'npc',
+          locationId: inputState.locationId,
+          day: inputState.day,
+          time: inputState.time
+        });
+      });
+    }
+
+    await saveHistory(history);
+    transitionScene.history = history;
 
     return res.json(transitionScene);
   }
@@ -1658,38 +1717,8 @@ app.post('/api/conversation', async (req, res) => {
     if (isNewDay) {
       console.log(`[QuestEngine] Day advanced to ${nextDay}. Triggering morning world update in the background...`);
       runMorningWorldUpdate(activeConversationManager, nextDay, history, inputState);
-    } else if (oldTOD !== newTOD) {
-      console.log(`[TimeTransition] Time of day transitioned from "${oldTOD}" to "${newTOD}".`);
-      const db = {
-        loadNpcs,
-        saveNpcs,
-        loadLocations,
-        saveLocations,
-        loadEvents,
-        saveEvents,
-        savePendingUpdates
-      };
-      
-      const pending = { quests: [], npcActions: [], npcUpdates: [] };
-      loadNpcs().then(async (npcsList) => {
-        const locationsList = await loadLocations();
-        const currentEvents = await loadEvents();
-        const context = {
-          manager: activeConversationManager,
-          day: inputState.day,
-          history,
-          state: inputState,
-          npcsList,
-          locationsList,
-          currentEvents,
-          db,
-          pending
-        };
-        await handleTimeOfDayTransition(oldTOD, newTOD, context);
-        await savePendingUpdates(pending);
-      }).catch(err => {
-        console.error('[TimeTransition] Mid-day transition failed:', err.message);
-      });
+    } else {
+      triggerTimeOfDayTransitionIfNeeded(oldTOD, newTOD, inputState, history, activeConversationManager, db);
     }
 
     const bgEndResult = await triggerBackgroundEvents(inputState, events, currentLocations);
@@ -1760,6 +1789,34 @@ app.post('/api/conversation', async (req, res) => {
       npcActivityLog: inputState.npcActivityLog || []
     };
 
+    if (scene.narration) {
+      history.push({
+        speakerId: 'narrator',
+        speaker: 'Narrador',
+        line: scene.narration,
+        type: 'npc',
+        locationId: inputState.locationId,
+        day: inputState.day,
+        time: inputState.time
+      });
+    }
+    if (Array.isArray(scene.messages)) {
+      scene.messages.forEach(m => {
+        history.push({
+          speakerId: m.speakerId,
+          speaker: currentNpcs.find(n => n.id === m.speakerId)?.name || m.speakerId,
+          line: m.line,
+          type: 'npc',
+          locationId: inputState.locationId,
+          day: inputState.day,
+          time: inputState.time
+        });
+      });
+    }
+
+    await saveHistory(history);
+    scene.history = history;
+
     return res.json(scene);
   } catch (error) {
     console.error('[Server] Conversation manager error:', error);
@@ -1804,6 +1861,35 @@ app.post('/api/conversation', async (req, res) => {
     fallback.messages.forEach((m, idx) => {
       console.log(`  [Fallback Msg ${idx + 1}] (${m.speakerId}): "${m.line}"`);
     });
+
+    if (fallback.narration) {
+      history.push({
+        speakerId: 'narrator',
+        speaker: 'Narrador',
+        line: fallback.narration,
+        type: 'npc',
+        locationId: inputState.locationId,
+        day: inputState.day,
+        time: inputState.time
+      });
+    }
+    if (Array.isArray(fallback.messages)) {
+      fallback.messages.forEach(m => {
+        history.push({
+          speakerId: m.speakerId,
+          speaker: currentNpcs.find(n => n.id === m.speakerId)?.name || m.speakerId,
+          line: m.line,
+          type: 'npc',
+          locationId: inputState.locationId,
+          day: inputState.day,
+          time: inputState.time
+        });
+      });
+    }
+
+    await saveHistory(history);
+    fallback.history = history;
+
     return res.json(fallback);
   }
 });
@@ -2288,6 +2374,18 @@ function clampNumber(value, min, max) {
 function getLocation(id) {
   return cachedLocations.find((location) => location.id === id) ?? cachedLocations[0] ?? LOCATIONS[0];
 }
+
+export const db = {
+  loadNpcs,
+  saveNpcs,
+  loadLocations,
+  saveLocations,
+  loadEvents,
+  saveEvents,
+  savePendingUpdates,
+  loadHistory,
+  saveHistory
+};
 
 // Initialize database caches on startup
 registerTurnHandlers();

@@ -29,16 +29,20 @@ export async function ingestPastTurnsIntoMemory(context) {
       const turnId = `dialogue_turn_${Math.abs(hash)}`;
 
       try {
-        const exists = await vectorManager.index.getItem(turnId);
-        if (!exists) {
-          console.log(`[IngestPastTurns] Ingesting turn: ${turnId} (Location: ${turn.locationId}, Day: ${turn.day})`);
-          await vectorManager.upsertItem(turnId, turnText, {
-            type: 'dialogue',
-            locationId: turn.locationId,
-            participantIds: turn.npcIds || [],
-            day: turn.day,
-            time: turn.time
-          });
+        const npcIds = turn.npcIds && turn.npcIds.length ? turn.npcIds : ['__ambient__'];
+        for (const npcId of npcIds) {
+          const scopedTurnId = `${turnId}_${npcId}`;
+          const exists = await vectorManager.index.getItem(scopedTurnId);
+          if (!exists) {
+            console.log(`[IngestPastTurns] Ingesting turn for NPC ${npcId}: ${scopedTurnId} (Location: ${turn.locationId}, Day: ${turn.day})`);
+            await vectorManager.upsertItem(scopedTurnId, turnText, {
+              type: 'dialogue',
+              locationId: turn.locationId,
+              npcId,
+              day: turn.day,
+              time: turn.time
+            });
+          }
         }
       } catch (err) {
         console.error(`[IngestPastTurns] Failed to ingest turn ${turnId}:`, err.message);

@@ -450,23 +450,10 @@ export default function App() {
       setParticipantIds(npcIds);
       participantIdsRef.current = npcIds;
 
-      const newEntry = {
-        speakerId: 'narrator',
-        speaker: 'Narrador',
-        line: `Viaja a ${locations.find(l => l.id === newLocationId)?.name || newLocationId} - Suceso Especial: ${ev.name}`,
-        type: 'player',
-        locationId: locationIdRef.current,
-        day: dayRef.current,
-        time: timeRef.current
-      };
-      const updatedHistory = [...history, newEntry];
-      setHistory(updatedHistory);
-
       await fetchConversation({
         locationId: newLocationId,
         participantIds: npcIds,
         playerText: promptText,
-        history: updatedHistory.slice(-60),
         currentRelationships: relationships,
         currentTrust: trust,
         currentNpcs: npcs,
@@ -491,23 +478,10 @@ export default function App() {
     const locationName = locations.find((l) => l.id === newLocationId)?.name || newLocationId;
     const initialText = `Viaje a ${locationName}. Los personajes presentes reaccionan a mi llegada.`;
     
-    const newEntry = {
-      speakerId: 'player',
-      speaker: 'Viajero',
-      line: `Viaja a ${locationName}`,
-      type: 'player',
-      locationId: locationIdRef.current,
-      day: dayRef.current,
-      time: timeRef.current
-    };
-    const updatedHistory = [...history, newEntry];
-    setHistory(updatedHistory);
-    
     await fetchConversation({
       locationId: newLocationId,
       participantIds: newParticipants,
       playerText: initialText,
-      history: updatedHistory.slice(-60),
       currentRelationships: relationships,
       currentTrust: trust,
       currentNpcs: npcs,
@@ -524,22 +498,10 @@ export default function App() {
     setPlayerInputText('');
     setAwaitingPlayer(false);
     
-    const newEntry = {
-      speakerId: 'player',
-      speaker: 'Viajero',
-      line: text,
-      type: 'player',
-      locationId: locationIdRef.current,
-      day: dayRef.current,
-      time: timeRef.current
-    };
-    const updatedHistory = [...history, newEntry];
-    setHistory(updatedHistory);
-    
-    await startConversation(text, npcs, updatedHistory);
+    await startConversation(text, npcs);
   };
 
-  const startConversation = async (playerText, currentNpcsList = npcs, customHistory = null) => {
+  const startConversation = async (playerText, currentNpcsList = npcs) => {
     setLoading(true);
     setAwaitingPlayer(false);
     setMessages([]);
@@ -547,13 +509,11 @@ export default function App() {
     setTypedText('');
     setIsTyping(false);
     
-    const histToUse = customHistory || history;
     // Use refs to always read committed, up-to-date location/participant state
     await fetchConversation({
       locationId: locationIdRef.current,
       participantIds: participantIdsRef.current,
       playerText,
-      history: histToUse.slice(-60),
       currentRelationships: relationships,
       currentTrust: trust,
       currentNpcs: currentNpcsList
@@ -565,7 +525,6 @@ export default function App() {
     locationId,
     participantIds,
     playerText,
-    history,
     currentRelationships,
     currentTrust,
     currentNpcs,
@@ -579,7 +538,6 @@ export default function App() {
           locationId,
           participantIds,
           playerText,
-          history,
           provider: providerRef.current,
           state: {
             locationId: originLocationId,
@@ -610,6 +568,11 @@ export default function App() {
 
   const applyConversation = (payload, currentNpcs) => {
     const cleanLocation = payload.locationId || locationIdRef.current;
+
+    if (Array.isArray(payload.history)) {
+      setHistory(payload.history);
+      historyRef.current = payload.history;
+    }
 
     // Build a merged NPC list that includes any newly introduced NPC this turn
     let mergedNpcs = currentNpcs;
@@ -826,7 +789,17 @@ export default function App() {
     setMessageIndex(0);
   };
 
-  const resetGame = () => {
+  const resetGame = async () => {
+    if (!window.confirm('¿Seguro que deseas reiniciar el juego? Se perderá todo el progreso y las memorias.')) {
+      return;
+    }
+
+    try {
+      await fetch('/api/world/reset', { method: 'POST' });
+    } catch (err) {
+      console.warn('Failed to reset server-side DBs:', err);
+    }
+
     clearGameState();
     setLocationId('plaza');
     locationIdRef.current = 'plaza';
@@ -965,8 +938,6 @@ export default function App() {
         } else {
           clearInterval(typingTimerRef.current);
           setIsTyping(false);
-          // Add to dialogue log once fully rendered
-          appendHistory({ ...message, type: 'npc' });
           
           // Auto-advance if this is an intermediate travel transition stop
           if (messages.length === 1 && travelQueueRef.current && travelQueueRef.current.length > 0) {
@@ -994,9 +965,6 @@ export default function App() {
       clearInterval(typingTimerRef.current);
       setTypedText(currentLineRef.current);
       setIsTyping(false);
-      
-      const currentMessage = messages[messageIndex];
-      appendHistory({ ...currentMessage, type: 'npc' });
       return;
     }
 
@@ -1031,22 +999,10 @@ export default function App() {
         const nextLocName = locations.find(l => l.id === nextLocId)?.name || nextLocId;
         const initialText = `Llegada a ${nextLocName} en viaje continuo.`;
         
-        const newEntry = {
-          speakerId: 'player',
-          speaker: 'Viajero',
-          line: `Viaja a ${nextLocName}`,
-          type: 'player',
-          locationId: locationIdRef.current,
-          day: dayRef.current,
-          time: timeRef.current
-        };
-        setHistory((prev) => [...prev, newEntry]);
-        
         fetchConversation({
           locationId: nextLocId,
           participantIds: nextParticipants,
           playerText: initialText,
-          history: [...historyRef.current, newEntry].slice(-60),
           currentRelationships: relationshipsRef.current,
           currentTrust: trustRef.current,
           currentNpcs: npcs
@@ -1063,23 +1019,6 @@ export default function App() {
   // Keep ref updated to avoid closure stale state in useEffect
   handleAdvanceRef.current = handleAdvance;
 
-  // Helper: Append line to general dialogue history list
-  const appendHistory = (entry) => {
-    setHistory((prev) => [
-      ...prev,
-      {
-        speakerId: entry.speakerId,
-        speaker: entry.speakerId === 'narrator' 
-          ? 'Narrador' 
-          : entry.speaker || npcs.find((n) => n.id === entry.speakerId)?.name || 'Viajero',
-        line: entry.line,
-        type: entry.type,
-        locationId: locationIdRef.current,
-        day: dayRef.current,
-        time: timeRef.current
-      }
-    ]);
-  };
 
   const handleSuggestionClick = (suggestion) => {
     setPlayerInputText(suggestion);

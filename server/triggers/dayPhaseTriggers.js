@@ -51,3 +51,32 @@ export async function handleTimeOfDayTransition(oldTOD, newTOD, context) {
     await fire('beforeNight', context);
   }
 }
+
+export async function triggerTimeOfDayTransitionIfNeeded(oldTOD, newTOD, inputState, history, activeConversationManager, db) {
+  if (oldTOD === newTOD) return;
+  
+  console.log(`[TimeTransition] Time of day transitioned from "${oldTOD}" to "${newTOD}". Running mid-day phase triggers...`);
+  try {
+    const npcsList = await db.loadNpcs();
+    const locationsList = await db.loadLocations();
+    const currentEvents = await db.loadEvents();
+    
+    const pending = { quests: [], npcActions: [], npcUpdates: [] };
+    const context = {
+      manager: activeConversationManager,
+      day: inputState.day,
+      history,
+      state: inputState,
+      npcsList,
+      locationsList,
+      currentEvents,
+      db,
+      pending
+    };
+
+    await handleTimeOfDayTransition(oldTOD, newTOD, context);
+    await db.savePendingUpdates(pending);
+  } catch (err) {
+    console.error('[TimeTransition] Mid-day transition triggers failed:', err.message);
+  }
+}
