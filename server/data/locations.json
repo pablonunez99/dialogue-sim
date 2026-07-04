@@ -3,7 +3,7 @@
     "id": "plaza",
     "name": "Plaza del Pozo",
     "asset": "assets/locations/plaza.png",
-    "prompt": "corazon de la aldea, con pozo comunal, mercado pequeno, gallardetes y casas de entramado de madera",
+    "prompt": "A medieval village square in the morning, tense crowd of peasants gathered around a stone well, whispers of horror, dark blood stains on the well stone, cinematic lighting.",
     "ambient": "Campanas lejanas, pregones de mercado y ruedas de carro sobre barro seco.",
     "connections": [
       {
@@ -25,6 +25,14 @@
       {
         "to": "ayuntamientointerno",
         "distance": 1
+      },
+      {
+        "to": "casaflorista",
+        "distance": 5
+      },
+      {
+        "to": "testdummyidnotused",
+        "distance": 5
       }
     ]
   },
@@ -45,7 +53,7 @@
     "id": "bosque",
     "name": "Linde del Bosque",
     "asset": "assets/locations/bosque.png",
-    "prompt": "borde de bosque antiguo con sendero, ruinas cubiertas de musgo y niebla suave",
+    "prompt": "Old forest edge with a chaotic swarm of bees buzzing in the air near a destroyed hive on the ground, tense and dangerous atmosphere, dappled sunlight filtering through trees.",
     "ambient": "Las ramas crujen sin viento y algun pajaro corta el silencio.",
     "connections": [
       {
@@ -91,7 +99,7 @@
     "id": "molinoviejo",
     "name": "Molino Viejo",
     "asset": "assets/locations/molinoviejo.png",
-    "prompt": "An old abandoned windmill on a grassy hill, overgrown with weeds, with broken wooden blades, under a twilight sky, dark fantasy visual novel style background.",
+    "prompt": "An old windmill on a grassy hill during twilight. A hidden compartment at the base is wide open, with weathered leather-bound documents partially pulled out. Several men stand in a circle around the opening, their faces illuminated by the dying orange sunlight and their shadows stretching long and distorted across the dry grass.",
     "ambient": "El susurro del viento entre la hierba alta y el crujido ocasional de la madera vieja del molino.",
     "connections": [
       {
@@ -104,7 +112,7 @@
     "id": "panaderiavieja",
     "name": "Antigua Panadería de Grimo",
     "asset": "assets/locations/panaderiavieja.png",
-    "prompt": "An old, rustic medieval bakery, with a large stone oven, sacks of flour, and kneading tables. Cobwebs in the corners, but a faint smell of old yeast still lingers. Dark fantasy visual novel style background.",
+    "prompt": "An immaculate and cozy medieval bakery with fresh, golden bread loaves resting on polished wooden tables. The stone oven glows with soft embers, and sunlight streams through clean windows, filling the space with an inviting, warm atmosphere.",
     "ambient": "El silencio de un lugar en desuso, roto solo por el susurro del viento al colarse por rendijas y el ocasional crujido de la madera vieja.",
     "connections": [
       {
@@ -172,7 +180,7 @@
     "id": "muralla",
     "name": "Muralla de Robledal",
     "asset": "assets/locations/muralla.png",
-    "prompt": "A wooden palisade wall surrounding a medieval village, a guard tower with torches, a heavy gate at dusk, dark fantasy visual novel style background.",
+    "prompt": "A wooden palisade wall in the early morning, bright clear sunlight filtering through the wooden planks, morning mist lingering, guard captain and archer looking surprised, dark fantasy visual novel style background.",
     "ambient": "El crujir de la madera, pasos de ronda y el chisporroteo de las antorchas.",
     "connections": [
       {
@@ -193,7 +201,7 @@
     "id": "granja",
     "name": "Granja de los Trigales",
     "asset": "assets/locations/granja.png",
-    "prompt": "A golden wheat field beside a modest medieval farmhouse, a wooden fence, a pitchfork leaning against a hay bale, warm sunset light, dark fantasy visual novel style background.",
+    "prompt": "A desolate circular crater of fused black glass, violet magical sparks drifting in the air, character standing in the center with glowing violet veins and hands, cinematic, high contrast, 8k.",
     "ambient": "El susurro del trigo mecido por el viento y el mugido lejano del ganado.",
     "connections": [
       {
@@ -287,7 +295,7 @@
     "id": "ruinas",
     "name": "Ruinas Cubiertas de Musgo",
     "asset": "assets/locations/ruinas.png",
-    "prompt": "Ancient moss-covered stone ruins deep in the forest, broken pillars etched with faint arcane symbols, soft fog drifting between the stones, dark fantasy visual novel style background.",
+    "prompt": "Ancient stone ruins overgrown with moss and shadows, safe haven from the forest, sunlight barely reaches the interior, quiet and damp atmosphere.",
     "ambient": "Un silencio antiguo, roto apenas por el goteo de agua sobre piedra musgosa.",
     "connections": [
       {
@@ -334,7 +342,7 @@
     "id": "ayuntamientointerno",
     "name": "Despacho y Archivos del Consejo",
     "asset": "assets/locations/ayuntamientointerno.png",
-    "prompt": "Un interior de piedra con estanterías llenas de pergaminos antiguos y una mesa de roble macizo con documentos dispersos.",
+    "prompt": "Un interior de piedra con estanterías llenas de pergaminos antiguos. En la mesa de roble macizo, se ven restos de ceniza negra y un rastro de cera derretida cerca de una vela parpadeante.",
     "ambient": "Silencio sepulcral, solo interrumpido por el crujido de la madera y el goteo de una vela.",
     "connections": [
       {
@@ -353,6 +361,32 @@
       {
         "to": "rio",
         "distance": 2
+      }
+    ]
+  },
+  {
+    "id": "casaflorista",
+    "name": "Casa de Rosalía",
+    "asset": "assets/locations/casaflorista.png",
+    "prompt": "Small rustic cottage interior, tense atmosphere, Rosalía standing between a defiant traveler and an angry village mayor, sunlight filtering through windows casting sharp shadows.",
+    "ambient": "Sonido de pájaros cercanos y el leve crujir de la madera antigua.",
+    "connections": [
+      {
+        "to": "plaza",
+        "distance": 5
+      }
+    ]
+  },
+  {
+    "id": "testdummyidnotused",
+    "name": "",
+    "asset": "assets/locations/testdummyidnotused.png",
+    "prompt": "",
+    "ambient": "Silencio medieval.",
+    "connections": [
+      {
+        "to": "plaza",
+        "distance": 5
       }
     ]
   }

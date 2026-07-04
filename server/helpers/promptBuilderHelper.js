@@ -1,4 +1,13 @@
-function getWeatherForDay(day) {
+// This file is kept for backwards compatibility.
+// The implementation has been moved to ./instructions/
+// See: ./instructions/buildInstructions.js
+export { buildInstructions } from './instructions/buildInstructions.js';
+
+// Legacy helpers re-exported for any external consumers
+export { getWeatherForDay, getRelationshipLabel } from './instructions/utils.js';
+
+/*
+
   const weathers = [
     'soleado y cálido con una brisa ligera',
     'nublado y fresco con neblina matutina en las zonas bajas',
@@ -262,3 +271,4 @@ Reglas:
 - Si no hay ubicación nueva que crear, pon 'newLocation' como null.
 - Ubicación actual: ${location.name}. Ambiente: ${location.prompt}.${ragContext}${eventContext}${relationshipContext}${notableOthersContext}${mapGraphContext}${travelNote}${journeyNote}${timeAndWeatherContext}${questAndInventoryContext}`;
 }
+*/

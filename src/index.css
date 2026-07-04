@@ -972,8 +972,12 @@ button, input {
 }
 
 /* Reset button */
+.sidebar-actions {
+  margin: 0.75rem 0 0.9rem;
+}
+
 .reset-game-btn {
-  margin-top: 0.5rem;
+  margin-top: 0;
   width: 100%;
   padding: 0.65rem;
   background: rgba(162, 60, 60, 0.15);

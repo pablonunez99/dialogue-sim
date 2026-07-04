@@ -8,7 +8,7 @@
     "background": "Elvira llegó al poder tras la muerte repentina de su padre, el alcalde anterior, hace doce años. Muchos dudaban de una mujer joven sin experiencia; ella los silencció duplicando la cosecha en tres años consecutivos. Ha mantenido la paz con el señorío feudal a costa de secretos que pesan cada vez más. Enviudó joven, nunca volvió a casarse, y rumores apuntan a que guarda aún el anillo de bodas en una caja de caoba bajo su despacho.",
     "fears": "Que la aldea descubra que ha estado manipulando los registros de impuestos para proteger a ciertas familias. Que el señor del castillo exija el pago completo de las deudas atrasadas.",
     "desires": "Mantener la autonomía de Robledal sin recurrir a la violencia. Encontrar y destruir los documentos comprometedores antes de que llegue el nuevo inspector real.",
-    "quirks": "Tuerce lentamente un anillo de plata en su dedo índice cuando miente. Nunca bebe antes de que el visitante lo haga primero. Recuerda con exactitud cada nombre y fecha que alguien le menciona.",
+    "quirks": "Tuerce lentamente un anillo de plata en su dedo índice cuando miente. Nunca bebe antes de que el visitor lo haga primero. Recuerda con exactitud cada nombre y fecha que alguien le menciona.",
     "speech_style": "Formal, pausada, usa metáforas de agricultura y estaciones. Nunca dice 'no' directamente, siempre 'eso presenta ciertas complicaciones'.",
     "relationships": "Desconfía del herrero desde que forjó algo en secreto. Aprecia a la curandera aunque sus métodos le parecen inquietantes. Observa a la posadera como una aliada útil pero peligrosa.",
     "secret": "Sabe que el antiguo recaudador desapareció con documentos que comprometen a tres miembros del consejo, incluyéndola a ella. Además, fue ella quien contrató al mensajero que nunca llegó al castillo.",
@@ -25,10 +25,15 @@
     ],
     "appearancePrompt": "A composed middle-aged medieval woman, mayor of a village, wearing deep burgundy and purple robes with silver trim, silver ring on index finger, dark brown hair streaked with grey in a tight braid, sharp calculating brown eyes, authoritative posture",
     "routine": {
-      "mañana": "plaza",
+      "mañana": "ayuntamientointerno",
       "tarde": "plaza",
-      "noche": "casa"
-    }
+      "noche": "castillo"
+    },
+    "shortTermGoal": "Encontrar y destruir los documentos comprometedores del antiguo recaudador antes de que el inspector real comience la auditoría.",
+    "longTermGoal": "Asegurar la autonomía a largo plazo de Robledal frente al señorío feudal sin recurrir al conflicto armado.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Al amanecer del Día 1, Elvira comienza a revisar de manera frenética el sótano del ayuntamiento, buscando entre los viejos archivadores antes de que llegue la comitiva del inspector."
   },
   {
     "id": "herrero",
@@ -57,16 +62,21 @@
     "appearancePrompt": "A burly medieval blacksmith in his 40s, weathered leather apron, massive forearms with burn scars, missing left pinky finger, short dark beard with ash streaks, wary amber eyes, broad shoulders, standing near a forge with hammers on his belt",
     "routine": {
       "mañana": "forja",
-      "tarde": "forja",
+      "tarde": "molinoviejo",
       "noche": "taberna"
-    }
+    },
+    "shortTermGoal": "Averiguar discretamente si la llave de hierro negro que forjó ha sido utilizada en el viejo molino.",
+    "longTermGoal": "Superar los traumas de su pasado en la guerra y librarse de las pesadillas recurrentes para vivir en paz.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Se aproxima disimuladamente a los alrededores del molino viejo en este amanecer, examinando visualmente la cerradura de la puerta trasera desde una distancia prudencial."
   },
   {
     "id": "curandera",
     "name": "Mara Lunaverde",
     "role": "Curandera herbolaria y partera",
     "locationId": "bosque",
-    "personality": "Serena como un lago en calma, con una profundidad que incomoda a quien la subestima. Empática con los marginados y los animales, pero distante con quienes llegan con agendas. Habla en capas: lo que dice en voz alta raramente es todo lo que sabe. Tiene un sentido del humor seco que sorprende en los momentos menos esperados.",
+    "personality": "Serena como un lago en calma, con una profundidad que incomoda a quien la subestima. Empática con los marginados y los animals, pero distante con quienes llegan con agendas. Habla en capas: lo que dice en voz alta raramente es todo lo que sabe. Tiene un sentido del humor seco que sorprende en los momentos menos esperados.",
     "background": "Llegó al bosque hace veinte años desde ningún sitio concreto, o eso dice. Nadie en el pueblo conoce su apellido verdadero; 'Lunaverde' se lo pusieron los niños que recolectaban plantas con ella. Se dice que vivió en un monasterio de sanadores del norte antes de que fuera quemado en una purga religiosa. Tiene libros en un idioma que nadie del pueblo puede leer. Ha traído al mundo a la mitad del pueblo y enviado en paz a la otra mitad.",
     "fears": "Que encuentren a la criatura herida que está tratando. Que el pasado del monasterio llegue a Robledal en forma de inquisidores.",
     "desires": "Que la criatura del bosque sane completamente y pueda regresar a donde pertenece. Encontrar a alguien de confianza a quien traspasar su conocimiento.",
@@ -88,9 +98,14 @@
     "appearancePrompt": "A calm and mysterious medieval healer woman in her 50s, wearing layered forest-green robes with brown trim, silver-grey hair loose with braided herb stems woven in, warm dark eyes that seem to analyze everything, carrying a linen bag of plants, standing in dappled forest light",
     "routine": {
       "mañana": "bosque",
-      "tarde": "plaza",
+      "tarde": "capilla",
       "noche": "bosque"
-    }
+    },
+    "shortTermGoal": "Estabilizar y sanar por completo a la criatura herida que oculta en el bosque utilizando pétalos azules.",
+    "longTermGoal": "Transmitir de forma segura todo su conocimiento ancestral a Aurelia para preservar el legado de sanación.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Termina de mezclar el ungüento curativo en el amanecer del Día 1 y se prepara para adentrarse en la arboleda con Aurelia para aplicárselo a la criatura."
   },
   {
     "id": "posadera",
@@ -118,10 +133,15 @@
     ],
     "appearancePrompt": "A sharp-eyed medieval innkeeper woman in her mid-30s, worn apron over warm amber dress, reddish-brown hair tied up messily, strong forearms from years of carrying barrels, quick eyes that miss nothing, slight smirk as default expression, standing behind a wooden tavern counter",
     "routine": {
-      "mañana": "taberna",
+      "mañana": "bodega",
       "tarde": "taberna",
       "noche": "taberna"
-    }
+    },
+    "shortTermGoal": "Reunir las monedas necesarias para saldar la deuda con el proveedor de Almería antes de la luna nueva.",
+    "longTermGoal": "Garantizar la estabilidad financiera de la taberna para que sus dos hijos puedan estudiar con el clérigo.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Comienza el día encendiendo los fogones de la taberna para preparar el guiso especial, esperando atraer a la guardia y a los viajeros matutinos."
   },
   {
     "id": "clerigo",
@@ -150,9 +170,14 @@
     "appearancePrompt": "An elderly medieval priest in his 60s, wearing a simple grey cassock with a worn wooden pendant, thinning silver hair, kind but haunted pale eyes, trembling hands clasped together, standing inside a small stone chapel lit by candles",
     "routine": {
       "mañana": "capilla",
-      "tarde": "capilla",
+      "tarde": "ayuntamientointerno",
       "noche": "capilla"
-    }
+    },
+    "shortTermGoal": "Mantener ocultos los libros prohibidos del monasterio y vigilar discretamente los movimientos del inspector real.",
+    "longTermGoal": "Proteger la identidad y el conocimiento de la curandera Mara frente a posibles persecuciones de la Iglesia.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Se encuentra apostado en el pórtico del templo observando el camino principal, registrando mentalmente el momento en que el inspector salga de su posada."
   },
   {
     "id": "molinero",
@@ -181,9 +206,14 @@
     "appearancePrompt": "A nervous medieval miller in his 30s, flour-dusted tunic and apron, sandy unkempt hair, wide anxious blue eyes, sleeves rolled up, standing near a large wooden mill wheel with a sealed cellar door visible in the background",
     "routine": {
       "mañana": "molinoviejo",
-      "tarde": "molinoviejo",
+      "tarde": "plaza",
       "noche": "molinoviejo"
-    }
+    },
+    "shortTermGoal": "Mantener al niño Tomi alejado del sótano mientras refuerza las barreras contra lo que acecha dentro.",
+    "longTermGoal": "Reunir el valor y el dinero suficiente para vender el molino viejo y mudarse a una aldea más segura.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Verifica que los candados del sótano sigan intactos esta mañana y barre la entrada del molino para asegurarse de que Tomi no intente colarse."
   },
   {
     "id": "mercader",
@@ -212,9 +242,14 @@
     "appearancePrompt": "A charismatic medieval traveling merchant in his 40s, richly patterned green and gold vest over a linen shirt, dark hair tied back, sharp observant brown eyes, gold rings on calloused fingers, standing beside a loaded merchant cart full of goods",
     "routine": {
       "mañana": "mercado",
-      "tarde": "mercado",
+      "tarde": "calle",
       "noche": "taberna"
-    }
+    },
+    "shortTermGoal": "Evitar cualquier interrogatorio de la alcaldesa o el inspector que lo vincule con el comprador encapuchado.",
+    "longTermGoal": "Acumular suficiente oro para comprar una carreta más grande y establecer una ruta comercial fija y próspera.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Termina de acomodar sus mercancías en el puesto norte, manteniendo los cargamentos más valiosos y misteriosos bien cubiertos bajo pesadas mantas."
   },
   {
     "id": "sepulturero",
@@ -225,7 +260,7 @@
     "background": "Lleva treinta años cavando tumbas en Robledal, desde que su padre lo dejó el oficio junto con las herramientas. Conoce el nombre de cada persona enterrada en el cementerio y la fecha exacta, aunque no sepa leer. Vive en una choza pegada al muro del camposanto y rara vez baja al pueblo salvo para comprar pan y cerveza.",
     "fears": "Que alguien note que una de las tumbas que cavó hace dos años, la del supuesto noble caído en batalla, está vacía desde dentro. Que le pregunten por qué nunca avisó a nadie.",
     "desires": "Que lo dejen en paz con sus tumbas. Una pinta de cerveza fuerte cada tarde, sin preguntas.",
-    "quirks": "Habla más con los muertos que con los vivos, en voz baja, mientras cava. Marca cada tumba nueva con una piedra blanca que solo él reconoce. Se quita el sombrero ante cualquier entierro, incluso de animales.",
+    "quirks": "Habla más con los muertos que con los vivos, en voz baja, mientras cava. Marca cada tumba nueva con una piedra blanca que solo él reconoce. Se quita el sombrero ante cualquier entierro, incluso de animals.",
     "speech_style": "Cortante, monosilábico con extraños, más extenso solo cuando habla de los muertos que conoció.",
     "relationships": "Respeta a la curandera porque nunca le ha pedido que mienta sobre una muerte. Desconfía del consejo de la alcaldesa, a quien culpa de no pagarle lo suficiente. Bebe en silencio en una esquina de la taberna de Inés sin hablar con nadie.",
     "secret": "Hace dos años cavó una tumba para un noble caído supuestamente en batalla, por orden directa del castillo, con el ataúd ya sellado y sin permitirle verlo. Meses después, al pasar cerca, encontró la tierra removida desde dentro.",
@@ -243,9 +278,14 @@
     "appearancePrompt": "A gaunt medieval gravedigger in his 60s, dirt-stained brown tunic, weathered wide-brimmed hat, deep wrinkles, pale watery eyes, leaning on a wooden shovel beside a row of stone grave markers in a misty cemetery",
     "routine": {
       "mañana": "cementerio",
-      "tarde": "cementerio",
-      "noche": "taberna"
-    }
+      "tarde": "taberna",
+      "noche": "cementerio"
+    },
+    "shortTermGoal": "Vigilar la tumba vacía del noble para asegurarse de que nadie note que la tierra ha sido removida desde dentro.",
+    "longTermGoal": "Mantener su estilo de vida solitario en el cementerio y asegurar su suministro diario de cerveza sin intromisiones.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Confirma que el camuflaje de hojas y ramas sobre la tumba sospechosa resistió el viento de la noche, y procede a limpiar el sendero del camposanto."
   },
   {
     "id": "capitan_guardia",
@@ -274,9 +314,14 @@
     "appearancePrompt": "A disciplined medieval guard captain in his 40s, dented steel breastplate over a faded blue tabard, short greying hair, stern grey eyes, a sword at his hip, standing watch atop a wooden village wall at dusk",
     "routine": {
       "mañana": "muralla",
-      "tarde": "muralla",
-      "noche": "taberna"
-    }
+      "tarde": "camino",
+      "noche": "ayuntamientointerno"
+    },
+    "shortTermGoal": "Descubrir la verdad detrás de la orden de la alcaldesa de no patrullar el sendero norte la noche que desapareció el mensajero.",
+    "longTermGoal": "Restaurar el honor de la guardia y asegurar una protección justa para la aldea sin ser cómplice de conspiraciones políticas.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Prepara su equipo militar y repasa los horarios de la guardia nocturna, decidido a realizar él mismo un reconocimiento exhaustivo del sendero norte."
   },
   {
     "id": "anciano",
@@ -305,9 +350,14 @@
     "appearancePrompt": "A wrinkled, white-haired elderly medieval man in his 80s, patched brown wool cloak, twinkling pale blue eyes, a carved wooden cane resting beside him, sitting on a stone bench in a village plaza surrounded by curious children",
     "routine": {
       "mañana": "plaza",
-      "tarde": "plaza",
-      "noche": "casa"
-    }
+      "tarde": "molinoviejo",
+      "noche": "taberna"
+    },
+    "shortTermGoal": "Encontrar a un forastero o habitante con la perspicacia suficiente para comprender la advertencia real detrás de sus cuentos.",
+    "longTermGoal": "Revelar el secreto de la luz azul bajo el molino viejo antes de que el invierno empeore su salud y se lleve su historia.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Se sienta en su banco habitual bajo el gran roble, observando los primeros movimientos de la plaza y esperando captar la atención de alguien interesado en sus historias."
   },
   {
     "id": "granjero",
@@ -336,9 +386,14 @@
     "appearancePrompt": "A sturdy medieval farmer in his 40s, sun-weathered skin, simple brown tunic with rolled sleeves, straw hat hanging on his back, calloused hands resting on a wooden pitchfork, standing in a golden wheat field at sunset",
     "routine": {
       "mañana": "granja",
-      "tarde": "granja",
-      "noche": "taberna"
-    }
+      "tarde": "rio",
+      "noche": "granja"
+    },
+    "shortTermGoal": "Esconder los libros de contabilidad comprometedores después de la presión recibida por el inspector.",
+    "longTermGoal": "Saldar la deuda privada con la alcaldesa para asegurar que sus hijos hereden las tierras completamente libres de cargas.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Comienza su jornada labrando la tierra y alimentando a los animales, confiado en que los documentos ocultos bajo el gallinero están a salvo del inspector."
   },
   {
     "id": "pescador",
@@ -367,9 +422,14 @@
     "appearancePrompt": "A quiet medieval fisherman in his 30s, simple grey tunic rolled up at the sleeves, sun-bleached brown hair, calm observant hazel eyes, holding a woven fishing net, standing on a wooden dock by a misty river at dawn",
     "routine": {
       "mañana": "rio",
-      "tarde": "rio",
-      "noche": "casa"
-    }
+      "tarde": "mercado",
+      "noche": "rio"
+    },
+    "shortTermGoal": "Evitar llamar la atención de la guardia de la muralla mientras sigue investigando discretamente el origen de la arcilla roja.",
+    "longTermGoal": "Lograr la independencia económica total mediante la venta de pescado en el mercado para no depender de nadie del pueblo.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Carga sus aparejos en el bote y rema río arriba, alejándose disimuladamente de la vista de los vigías para examinar las orillas en busca de arcilla."
   },
   {
     "id": "inspector_real",
@@ -380,7 +440,7 @@
     "background": "Ascendió en la administración real revisando los registros de una docena de aldeas, descubriendo fraudes que arruinaron a más de un alcalde. Llega a Robledal por una denuncia anónima sobre discrepancias en los registros de impuestos de los últimos años, justo el tipo de documento que la alcaldesa lleva meses intentando destruir.",
     "fears": "Fallar en una investigación de alto perfil y perder la confianza de la corona. Que sus propios métodos, no siempre limpios, salgan a la luz junto con los fraudes que persigue.",
     "desires": "Encontrar pruebas sólidas e irrefutables del fraude en Robledal. Una promoción a inspector general que lo aleje para siempre de los caminos polvorientos.",
-    "quirks": "Lleva sus propios libros de contabilidad y nunca confía en los del pueblo que audita. Se limpia las botas obsesivamente antes de entrar a cualquier edificio. Habla con una calma que se vuelve más afilada cuanto más nervioso está su interlocutor.",
+    "quirks": "Luev sus propios libros de contabilidad y nunca confía en los del pueblo que audita. Se limpia las botas obsesivamente antes de entrar a cualquier edificio. Habla con una calma que se vuelve más afilada cuanto más nervioso está su interlocutor.",
     "speech_style": "Formal, burocrático, cita artículos y ordenanzas con precisión incómoda. Nunca alza la voz, lo cual resulta más intimidante que si lo hiciera.",
     "relationships": "Se ha entrevistado brevemente con la alcaldesa y ya detecta inconsistencias en su discurso. No conoce aún a nadie más del pueblo. Pronto buscará hablar con el granjero y revisar los libros del consejo.",
     "secret": "La denuncia anónima que lo trajo a Robledal fue enviada por el antiguo recaudador desaparecido, como seguro de vida, con instrucciones de entregarla a la corona si él no reaparecía en un año. El año se cumplió hace tres semanas.",
@@ -397,10 +457,15 @@
     ],
     "appearancePrompt": "A stern medieval royal inspector in his 50s, immaculate black and grey doublet with a silver chain of office, slicked dark hair, cold pale grey eyes, carrying a leather ledger, standing rigidly on a dusty road leading into a village",
     "routine": {
-      "mañana": "plaza",
-      "tarde": "granja",
+      "mañana": "granja",
+      "tarde": "ayuntamientointerno",
       "noche": "taberna"
-    }
+    },
+    "shortTermGoal": "Obtener acceso físico a los libros de contabilidad del consejo tras interrogar al granjero.",
+    "longTermGoal": "Descubrir la red de fraude fiscal de Robledal para asegurar su promoción definitiva a inspector general de la corona.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Con la orden de registro oficial en su maletín, se encamina firmemente hacia el ayuntamiento para exigir a la alcaldesa acceso total e inmediato a los archivos."
   },
   {
     "id": "bardo",
@@ -428,10 +493,15 @@
     ],
     "appearancePrompt": "A vivacious medieval bard woman in her late 20s, colorful patched traveling cloak over a simple dress, auburn hair in loose braids with small bells, mischievous green eyes, carrying a worn lute, performing animatedly in a candlelit tavern",
     "routine": {
-      "mañana": "taberna",
-      "tarde": "plaza",
+      "mañana": "plaza",
+      "tarde": "taberna",
       "noche": "taberna"
-    }
+    },
+    "shortTermGoal": "Ganarse la confianza de Inés la posadera para indagar sutilmente sobre las cartas del mensajero desaparecido.",
+    "longTermGoal": "Desentrañar el misterio del noble que fingió su muerte y componer una obra maestra épica antes de cruzar la frontera.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Se encuentra en la cocina de la posada ayudando de buena gana a Inés con las tareas matutinas, esperando el momento propicio para sacar el tema del mensajero."
   },
   {
     "id": "carpintero",
@@ -460,9 +530,14 @@
     "appearancePrompt": "A quiet medieval carpenter in his 50s, sawdust-covered leather apron over a simple tunic, calloused worn hands, short grey-flecked hair, focused tired eyes, standing in a wooden workshop surrounded by tools and half-finished furniture",
     "routine": {
       "mañana": "taller",
-      "tarde": "taller",
-      "noche": "casa"
-    }
+      "tarde": "plaza",
+      "noche": "taberna"
+    },
+    "shortTermGoal": "Mantener el secreto sobre los detalles técnicos del ataúd sellado del noble si el inspector real viene a interrogarlo.",
+    "longTermGoal": "Encontrar un aprendiz de confianza en Robledal para transmitirle el oficio de ebanista antes de que sus manos pierdan precisión.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Abre las puertas de su taller en este amanecer, barriendo el aserrín y ensayando mentalmente sus respuestas ante una eventual visita del inspector."
   },
   {
     "id": "costurera",
@@ -491,9 +566,14 @@
     "appearancePrompt": "A warm medieval seamstress woman in her 40s, simple lavender dress with a pincushion tied at her waist, dark hair pinned up neatly, sharp attentive eyes, surrounded by spools of thread and folded fabrics in a cozy cottage interior",
     "routine": {
       "mañana": "casa",
-      "tarde": "casa",
+      "tarde": "mercado",
       "noche": "casa"
-    }
+    },
+    "shortTermGoal": "Averiguar discretamente entre sus clientas si la alcaldesa sospecha que ella conoce el rango militar del mensajero.",
+    "longTermGoal": "Utilizar la información sobre el bordado de la capa del mensajero como un seguro para garantizar su estabilidad si el pueblo entra en crisis.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Prepara sus hilos y ordena el taller matutino a la espera de que Leonor de Ferraval acuda a probarse su vestido para sonsacarle rumores de la corte."
   },
   {
     "id": "cazador",
@@ -522,9 +602,14 @@
     "appearancePrompt": "A rugged medieval hunter in his 50s, weathered fur-lined leather coat, unkempt dark hair and beard, intense watchful eyes, a bow slung across his back and a hunting knife at his belt, standing alert in a dense misty forest",
     "routine": {
       "mañana": "bosque",
-      "tarde": "mercado",
-      "noche": "casa"
-    }
+      "tarde": "ruinas",
+      "noche": "bosque"
+    },
+    "shortTermGoal": "Rastrear el perímetro de las ruinas cubiertas de musgo para identificar el patrón de movimiento de la criatura misteriosa.",
+    "longTermGoal": "Descubrir la naturaleza exacta de la criatura que acecha el bosque sin poner en peligro el equilibrio de su territorio solitario.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Se adentra sigilosamente en las ruinas cubiertas de musgo al amanecer, buscando nuevas huellas frescas o ramas rotas que indiquen por dónde transita la bestia."
   },
   {
     "id": "emisario",
@@ -552,10 +637,15 @@
     ],
     "appearancePrompt": "A haughty medieval feudal envoy in his 30s, fine burgundy doublet with the embroidered crest of a noble house, slicked dark hair, calculating dark eyes, polished leather gloves, standing arrogantly before a stone castle gate",
     "routine": {
-      "mañana": "castillo",
-      "tarde": "castillo",
+      "mañana": "ayuntamientointerno",
+      "tarde": "plaza",
       "noche": "castillo"
-    }
+    },
+    "shortTermGoal": "Localizar a la alcaldesa para exigir el pago de la deuda antes de que la auditoría bloquee los fondos.",
+    "longTermGoal": "Garantizar el cobro total de los atrasos de Robledal para ganarse un puesto permanente en la corte.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Se planta a las puertas del ayuntamiento impaciente y enfadado, decidido a interceptar a Elvira antes de que se encierre con el inspector real."
   },
   {
     "id": "ermitano",
@@ -563,7 +653,7 @@
     "role": "Ermitaño y antiguo alquimista",
     "locationId": "ruinas",
     "personality": "Excéntrico, brillante y completamente indiferente a las normas sociales del pueblo. Décadas de aislamiento lo han vuelto directo hasta la incomodidad, sin filtro entre lo que piensa y lo que dice. Bajo la rareza hay una mente extraordinariamente lúcida que pocos se molestan en escuchar.",
-    "background": "Fue alguna vez alquimista formado en el mismo monasterio del norte que la curandera y el padre Anselmo, aunque llegó por un camino distinto: expulsado por experimentos que la orden consideró peligrosos, no por la purga. Vive entre las ruinas cubiertas de musgo desde hace más de veinte años, estudiando símbolos que nadie más en la región reconoce.",
+    "background": "Fue alguna vez alquimista formado en el mismo monasterio del norte que la curandera y el padre Anselmo, aunque llegó por un camino distinto: expulsado por experimentos que la orden consideró peligrosos, no por la purga. Vive entre las ruinas cubiertas de musgo desde hace más de veinte años, studying símbolos que nadie más en la región reconoce.",
     "fears": "Que sus viejos experimentos con hierro negro, los mismos símbolos grabados en la puerta del molino, hayan sido la causa real de lo que sea que duerme bajo Robledal. Que el padre Anselmo lo reconozca y revele su pasado.",
     "desires": "Terminar de descifrar los símbolos de las ruinas antes de morir. Una redención silenciosa, sin testigos, por lo que sea que ayudó a sellar hace décadas.",
     "quirks": "Habla solo en voz alta mientras camina entre las ruinas, repasando teorías. Colecciona fragmentos de piedra grabada que ordena obsesivamente. Desconfía profundamente del fuego abierto, por razones que nunca explica del todo.",
@@ -584,9 +674,14 @@
     "appearancePrompt": "An eccentric elderly medieval hermit alchemist in his 70s, tattered grey robes covered in chalk dust and strange symbols, wild white hair, intense pale eyes, surrounded by moss-covered stone ruins etched with arcane carvings",
     "routine": {
       "mañana": "ruinas",
-      "tarde": "ruinas",
+      "tarde": "molinoviejo",
       "noche": "ruinas"
-    }
+    },
+    "shortTermGoal": "Terminar de transcribir el último grupo de símbolos antiguos grabados en las piedras de las ruinas.",
+    "longTermGoal": "Lograr una redención silenciosa descifrando la forma de contener permanentemente el mal que ayudó a sellar bajo el molino hace cuarenta años.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Con el pergamino listo, continúa limpiando con esmero el musgo de la última estela de piedra en las ruinas para copiar los símbolos restantes."
   },
   {
     "id": "huerfano",
@@ -615,9 +710,14 @@
     "appearancePrompt": "A scrappy medieval orphan boy around 10 years old, patched oversized tunic, messy sandy brown hair, bright curious eyes with dark circles beneath them, dirt-smudged cheeks, barefoot, standing in a narrow cobblestone village alley",
     "routine": {
       "mañana": "plaza",
-      "tarde": "calle",
-      "noche": "taberna"
-    }
+      "tarde": "molinoviejo",
+      "noche": "granja"
+    },
+    "shortTermGoal": "Encontrar una entrada oculta al molino viejo para confirmar la identidad del hombre encapuchado.",
+    "longTermGoal": "Conseguir que una familia o persona de confianza en el pueblo lo adopte de verdad para dejar de vivir en el establo.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Observa con atención a Tomás desde la esquina del establo, esperando que el molinero se aleje de la entrada trasera para intentar colarse."
   },
   {
     "id": "florista_rosalia",
@@ -680,10 +780,15 @@
       ]
     },
     "routine": {
-      "mañana": "mercado",
+      "mañana": "casaflorista",
       "tarde": "mercado",
-      "noche": "taberna"
-    }
+      "noche": "casaflorista"
+    },
+    "shortTermGoal": "Proteger sus cultivos más delicados de las heladas nocturnas mientras intenta descubrir a quién compró el mercader el ramo misterioso.",
+    "longTermGoal": "Encontrar una pareja sincera que comparta su vida en la aldea y expandir su jardín hasta cubrir gran parte de la plaza.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Tras comprobar que sus flores sobrevivieron al frío de la noche, se dirige al puesto de Yusuf decidida a indagar sobre la procedencia de las flores exóticas."
   },
   {
     "id": "cazadora_briala",
@@ -748,9 +853,14 @@
     },
     "routine": {
       "mañana": "bosque",
-      "tarde": "bosque",
-      "noche": "bosque"
-    }
+      "tarde": "ruinas",
+      "noche": "taberna"
+    },
+    "shortTermGoal": "Demostrarle a Renzo que es capaz de cubrir el flanco norte del bosque de forma independiente en la próxima jornada de caza.",
+    "longTermGoal": "Establecerse firmemente como una cazadora respetada e independiente en Robledal, cortando cualquier lazo con su pasado noble.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Comienza su patrulla de rastreo en el sector norte de la montaña bajo las primeras luces del día, buscando rastros de presas para demostrar su destreza."
   },
   {
     "id": "pintora_nadia",
@@ -815,9 +925,14 @@
     },
     "routine": {
       "mañana": "campamentonadia",
-      "tarde": "campamentonadia",
+      "tarde": "mercado",
       "noche": "campamentonadia"
-    }
+    },
+    "shortTermGoal": "Completar los bocetos del campamento y conseguir los pigmentos raros que le prometió el mercader.",
+    "longTermGoal": "Encontrar una inspiración o un vínculo lo suficientemente profundo en Robledal que la convenza de quedarse más de una estación.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Se aproxima al mercado de la aldea con su cuaderno bajo el brazo, buscando a Yusuf para reclamar el lote de pigmentos que le encargó."
   },
   {
     "id": "arquera_ysolda",
@@ -882,9 +997,14 @@
     },
     "routine": {
       "mañana": "muralla",
-      "tarde": "muralla",
+      "tarde": "plaza",
       "noche": "muralla"
-    }
+    },
+    "shortTermGoal": "Mantener la máxima alerta en las rondas nocturnas de la muralla ante la posible presencia de intrusos.",
+    "longTermGoal": "Encontrar una estabilidad emocional y una razón de peso para bajar su guardia personal sin comprometer su deber militar.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Entrega su informe de la guardia nocturna al capitán Renato detallando los sonidos del río, y se retira a descansar manteniendo la guardia alta."
   },
   {
     "id": "maestra_carmen",
@@ -948,10 +1068,15 @@
       ]
     },
     "routine": {
-      "mañana": "capilla",
+      "mañana": "plaza",
       "tarde": "capilla",
-      "noche": "capilla"
-    }
+      "noche": "taberna"
+    },
+    "shortTermGoal": "Asegurar el material de lectura necesario para las clases de Tomi y mantener al día las respuestas a las cartas familiares.",
+    "longTermGoal": "Mantener la viabilidad económica de la escuela del pueblo para asegurar la educación de los niños y su propia independencia financiera.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Organiza los pupitres de la pequeña escuela y prepara los libros ilustrados de fábulas, esperando que Tomi aparezca hoy para su lección de lectura."
   },
   {
     "id": "aprendiz_aurelia",
@@ -1016,9 +1141,14 @@
     },
     "routine": {
       "mañana": "bosque",
-      "tarde": "bosque",
+      "tarde": "capilla",
       "noche": "bosque"
-    }
+    },
+    "shortTermGoal": "Aprender a catalogar correctamente las propiedades de los pétalos azules sin cometer errores que afecten el trabajo de Mara.",
+    "longTermGoal": "Superar sus miedos del pasado y convertirse en una sanadora consumada, capaz de proteger el bosque y la aldea.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Anota minuciosamente cada paso del ungüento que realiza junto a Mara en el herbolario, asegurándose de registrar los tiempos exactos de cocción."
   },
   {
     "id": "adivina_sabina",
@@ -1029,7 +1159,7 @@
     "background": "Vive sola en el pantano desde hace más años de los que admite, leyendo destinos en huesos, humo y aguas estancadas. El pueblo la visita a escondidas, avergonzado, y ella cobra en favores más que en monedas, acumulando deudas que algún día pretende cobrar todas juntas.",
     "fears": "Que su don, si es que lo es, empiece a mostrarle cosas que preferiría no saber sobre gente que le importa. Quedarse completamente sola, a pesar de decir en voz alta que lo prefiere así.",
     "desires": "Encontrar a alguien capaz de desafiarla sin temerle, algo que casi nadie logra. Cobrarse, algún día, todos los favores pendientes del pueblo, aunque disfruta más la expectativa que el cobro en sí.",
-    "quirks": "Habla de sí misma en tercera persona cuando está de humor teatral. Colecciona pequeños huesos de animales que encuentra en el pantano. Nunca revela una predicción completa, siempre deja algo sin decir 'a propósito'.",
+    "quirks": "Habla de sí misma en tercera persona cuando está de humor teatral. Colecciona pequeños huesos de animals que encuentra en el pantano. Nunca revela una predicción completa, siempre deja algo sin decir 'a propósito'.",
     "speech_style": "Críptica, teatral, mezcla preguntas retóricas con afirmaciones ambiguas que suenan más profundas de lo que quizás son.",
     "relationships": "Mantiene una rivalidad cordial con el padre Anselmo, que desaprueba sus prácticas sin poder evitar visitarla en secreto alguna vez. Le divierte enormemente la curiosidad del huérfano Tomi, a quien deja acercarse más que a los adultos. Sospecha, sin decirlo del todo, que el ermitaño Eustaquio sabe más de lo que ella misma sobre las ruinas.",
     "secret": "Hace años, antes de instalarse en el pantano, vendió una predicción falsa a un noble desesperado que terminó, por esa mentira, tomando una decisión que le costó la vida a otra persona. Nunca ha vuelto a mentir en una predicción desde entonces, aunque nadie sabe por qué es tan estricta con esa regla.",
@@ -1083,9 +1213,14 @@
     },
     "routine": {
       "mañana": "ruinas",
-      "tarde": "ruinas",
+      "tarde": "plaza",
       "noche": "ruinas"
-    }
+    },
+    "shortTermGoal": "Poner a prueba a los forasteros que visitan las ruinas para medir su verdadera determinación antes de revelarles el destino.",
+    "longTermGoal": "Encontrar a alguien con la fuerza espiritual suficiente para desafiar sus acertijos y compartir su conocimiento sin temor a su reputación.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Se sienta en el cruce de caminos que lleva a las ruinas antiguas, extendiendo sus runas sobre un paño de terciopelo y aguardando a los viajeros del día."
   },
   {
     "id": "mercenaria_ilsabet",
@@ -1149,10 +1284,15 @@
       ]
     },
     "routine": {
-      "mañana": "camino",
-      "tarde": "camino",
-      "noche": "camino"
-    }
+      "mañana": "rio",
+      "tarde": "bosque",
+      "noche": "taberna"
+    },
+    "shortTermGoal": "Asegurarse de que el emisario del castillo no note su presencia en los caminos principales mientras descansa su caballo.",
+    "longTermGoal": "Resolver las cuentas pendientes del informe falso que firmó en el pasado para poder asentarse definitivamente y dejar las armas.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Camufla su campamento temporal en la espesura del bosque, vigilando los caminos principales desde una posición oculta y segura."
   },
   {
     "id": "noble_leonor",
@@ -1193,7 +1333,7 @@
       "dislikes": [
         "Ser tratada con obsequiosidad excesiva por su título",
         "Cualquier riesgo de escándalo que comprometa a su familia",
-        "Que se hable mal de su hermano frente a ella, aunque discutan en privado"
+        "Que se hable mal de su hermano frente a ella, aunque discuten en privado"
       ],
       "approach": "La dificultad no es ganarse su interés, que surge con facilidad, sino sortear las barreras de clase, familia y un compromiso matrimonial pendiente. Requiere discreción extrema y estar dispuesto a enfrentar consecuencias políticas.",
       "milestones": [
@@ -1217,27 +1357,35 @@
     },
     "routine": {
       "mañana": "castillo",
-      "tarde": "castillo",
-      "noche": "castillo"
-    }
+      "tarde": "mercado",
+      "noche": "taberna"
+    },
+    "shortTermGoal": "Encontrar una excusa válida ante su hermano Galindo para pasear sola por los mercados de la aldea lejos de la escolta.",
+    "longTermGoal": "Evitar el matrimonio arreglado por su padre para forjar su propio destino y desentrañar la verdad sobre su primo oculto.",
+    "shortTermGoalProgress": [],
+    "longTermGoalProgress": [],
+    "goalProgress": "Consigue convencer a Galindo de que necesita intimidad para una prueba de costura, y se encamina sola y aliviada hacia el taller de Beatriz."
   },
   {
-    "id": "intrusoencapuchado",
-    "name": "Intruso",
-    "role": "Asaltante",
-    "locationId": "muralla",
-    "personality": "Desesperado y sigiloso",
-    "secret": "Trabaja para un noble que busca desestabilizar el consejo.",
-    "hint": "Lleva una máscara de cuero y un sello de cera negra.",
-    "color": "#333333",
-    "skin": "#a67b5b",
-    "hair": "#000000",
-    "outfit": "capa de viaje oscura",
+    "id": "testdummyidnotused",
+    "name": "",
+    "role": "",
+    "locationId": "casaflorista",
+    "personality": "",
+    "secret": "",
+    "hint": "",
+    "color": "#7c7c7c",
+    "skin": "#dfab8f",
+    "hair": "#2b1b17",
+    "outfit": "civic",
     "suggestions": [],
     "routine": {
-      "mañana": "muralla",
-      "tarde": "muralla",
-      "noche": "muralla"
-    }
+      "mañana": "plaza",
+      "tarde": "mercado",
+      "noche": "taberna"
+    },
+    "shortTermGoal": "Establecer contacto",
+    "longTermGoal": "Cumplir sus deberes",
+    "goalProgress": "Aún no iniciado"
   }
 ]

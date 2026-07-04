@@ -65,8 +65,12 @@ export default function App() {
   const typingTimerRef = useRef(null);
   const currentLineRef = useRef('');
 
+  const [streamActive, setStreamActive] = useState(false);
+  const streamActiveRef = useRef(false);
+
   const inputRef = useRef(null);
   const handleAdvanceRef = useRef(null);
+
   const locationIdRef = useRef('plaza');
   const participantIdsRef = useRef([...DEFAULT_PARTICIPANTS]);
   const messagesRef = useRef([]);
@@ -521,6 +525,7 @@ export default function App() {
   };
 
   // Sends the API request and processes the visual novel response
+  // Sends the API request and processes the visual novel response via SSE streaming
   const fetchConversation = async ({
     locationId,
     participantIds,
@@ -530,8 +535,17 @@ export default function App() {
     currentNpcs,
     originLocationId = locationIdRef.current
   }) => {
+    setLoading(true);
+    setAwaitingPlayer(false);
+    setMessages([]);
+    setMessageIndex(-1);
+    setTypedText('');
+    setIsTyping(false);
+    setStreamActive(true);
+    streamActiveRef.current = true;
+
     try {
-      const response = await fetch('/api/conversation', {
+      const response = await fetch('/api/conversation-stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -555,18 +569,155 @@ export default function App() {
         })
       });
 
-      const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error || 'Error de servidor.');
-      applyConversation(payload, currentNpcs);
+      if (!response.ok) {
+        const payload = await response.json();
+        throw new Error(payload.error || 'Error de servidor.');
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let buffer = '';
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const events = buffer.split('\n\n');
+        buffer = events.pop() || ''; // Keep partial last event in buffer
+
+        for (const rawEvent of events) {
+          if (!rawEvent.trim()) continue;
+
+          const lines = rawEvent.split('\n');
+          let eventType = '';
+          let dataStr = '';
+
+          for (const line of lines) {
+            if (line.startsWith('event: ')) {
+              eventType = line.slice(7).trim();
+            } else if (line.startsWith('data: ')) {
+              dataStr = line.slice(6).trim();
+            }
+          }
+
+          if (!dataStr) continue;
+          const data = JSON.parse(dataStr);
+
+          if (eventType === 'dm_response') {
+            console.log('[SSE] dm_response received:', data);
+
+            // Start updating visual scene info immediately
+            const cleanLocation = data.locationId || locationIdRef.current;
+            setLocationId(cleanLocation);
+            locationIdRef.current = cleanLocation;
+
+            const aiParticipants = Array.isArray(data.participantIds) ? data.participantIds : participantIdsRef.current;
+            const cleanParticipants = sanitizeParticipantIds(aiParticipants, currentNpcs);
+            setParticipantIds(cleanParticipants);
+            participantIdsRef.current = cleanParticipants;
+            setBgKey((k) => k + 1);
+
+            // Handle new locations/NPCs from DM immediately
+            if (data.newNpc && data.newNpc.id) {
+              setNpcs(prev => {
+                const exists = prev.some(n => n.id === data.newNpc.id);
+                if (!exists) return [...prev, data.newNpc];
+                return prev;
+              });
+              setRelationships(prev => ({ ...prev, [data.newNpc.id]: prev[data.newNpc.id] ?? 0 }));
+              setTrust(prev => ({ ...prev, [data.newNpc.id]: prev[data.newNpc.id] ?? 0 }));
+            }
+
+            if (data.newLocation && data.newLocation.id) {
+              const parentLocId = data.newLocation.connectedTo || locationIdRef.current;
+              const distance = data.newLocation.distance || 5;
+              const finalAsset = data.newLocation.assetUrl || `assets/locations/${data.newLocation.id}.png?t=${Date.now()}`;
+
+              setLocations(prev => {
+                const exists = prev.some(l => l.id === data.newLocation.id);
+                if (!exists) {
+                  const updatedList = prev.map(loc => {
+                    if (loc.id === parentLocId) {
+                      const connExists = (loc.connections || []).some(c => c.to === data.newLocation.id);
+                      if (!connExists) {
+                        return {
+                          ...loc,
+                          connections: [...(loc.connections || []), { to: data.newLocation.id, distance }]
+                        };
+                      }
+                    }
+                    return loc;
+                  });
+                  return [...updatedList, {
+                    id: data.newLocation.id,
+                    name: data.newLocation.name,
+                    asset: finalAsset,
+                    prompt: data.newLocation.prompt,
+                    ambient: data.newLocation.ambient,
+                    connections: [{ to: parentLocId, distance }]
+                  }];
+                }
+                return prev;
+              });
+            }
+
+            if (data.locationUpdate && data.locationUpdate.id) {
+              setLocations((prev) => prev.map((loc) => loc.id === data.locationUpdate.id
+                ? { ...loc, asset: data.locationUpdate.assetUrl, prompt: data.locationUpdate.prompt }
+                : loc
+              ));
+            }
+
+            // Set the first message (narration) and start the typewriter
+            if (data.narration) {
+              setMessages([{
+                speakerId: 'narrator',
+                line: data.narration,
+                expression: 'neutral'
+              }]);
+              setMessageIndex(0);
+            }
+          } else if (eventType === 'npc_response') {
+            console.log('[SSE] npc_response received:', data);
+
+            // Append NPC message to the list
+            setMessages((prev) => {
+              const formattedLine = data.actions ? `*${data.actions}*\n${data.dialogue}` : data.dialogue;
+              const clean = sanitizeMessages([...prev, {
+                speakerId: data.npcId,
+                line: formattedLine,
+                expression: data.expression || 'neutral'
+              }], participantIdsRef.current);
+
+              // If we were at messageIndex === -1 (no messages), advance to 0
+              setMessageIndex((idx) => (idx === -1 ? 0 : idx));
+              return clean;
+            });
+          } else if (eventType === 'turn_complete') {
+            console.log('[SSE] turn_complete received:', data);
+
+            // Final state updates
+            applyConversation(data, currentNpcs, true);
+
+            // Stop streaming mode
+            setStreamActive(false);
+            streamActiveRef.current = false;
+            setLoading(false);
+          }
+        }
+      }
     } catch (error) {
-      console.error('API Error, falling back to local conversation logic', error);
+      console.error('SSE Error, falling back to local conversation logic', error);
       applyConversation(makeLocalConversation(playerText, participantIds), currentNpcs);
-    } finally {
+      setStreamActive(false);
+      streamActiveRef.current = false;
       setLoading(false);
     }
   };
 
-  const applyConversation = (payload, currentNpcs) => {
+
+  const applyConversation = (payload, currentNpcs, skipMessageReset = false) => {
     const cleanLocation = payload.locationId || locationIdRef.current;
 
     if (Array.isArray(payload.history)) {
@@ -638,7 +789,8 @@ export default function App() {
 
     // Update existing Location background and prompt if dynamic update is returned
     if (payload.locationUpdate && payload.locationUpdate.id) {
-      console.log('[Client] Overwriting background image and prompt for location:', payload.locationUpdate.id);
+      console.log(`[Client] ✓ Received location image update for: ${payload.locationUpdate.id}`);
+      console.log(`  Asset URL: ${payload.locationUpdate.assetUrl}`);
       setLocations((prev) => prev.map((loc) => loc.id === payload.locationUpdate.id
         ? { ...loc, asset: payload.locationUpdate.assetUrl, prompt: payload.locationUpdate.prompt }
         : loc
@@ -668,9 +820,11 @@ export default function App() {
     // Bump bgKey to force the background <img> to remount and re-fetch
     setBgKey((k) => k + 1);
 
-    console.log('[Client] applyConversation - cleanMessages:', cleanMessages);
-    setMessages(cleanMessages);
-    setNarration(payload.narration || '');
+    if (!skipMessageReset) {
+      console.log('[Client] applyConversation - cleanMessages:', cleanMessages);
+      setMessages(cleanMessages);
+      setNarration(payload.narration || '');
+    }
 
     // Update inventory items
     if (Array.isArray(payload.inventoryDeltas) && payload.inventoryDeltas.length > 0) {
@@ -785,8 +939,10 @@ export default function App() {
       }
     }
 
-    // Reset message pointer to 0
-    setMessageIndex(0);
+    if (!skipMessageReset) {
+      // Reset message pointer to 0
+      setMessageIndex(0);
+    }
   };
 
   const resetGame = async () => {
@@ -908,10 +1064,16 @@ export default function App() {
     if (messageIndex < 0 || messageIndex >= messages.length) {
       setTypedText('');
       setIsTyping(false);
+      currentLineRef.current = '';
       return;
     }
 
     const message = messages[messageIndex];
+
+    // Avoid restarting the typewriter if the message line is identical to the one currently being typed
+    if (currentLineRef.current === message.line) {
+      return;
+    }
     
     // Update active expression for the speaker (unless it's the narrator)
     if (message.speakerId !== 'narrator') {
@@ -958,7 +1120,7 @@ export default function App() {
   // Handle visual novel dialog box interaction (Advance or Skip typewriter)
   const handleAdvance = () => {
     console.log('[Client] handleAdvance - messageIndex:', messageIndex, 'messages.length:', messages.length, 'isTyping:', isTyping, 'loading:', loading);
-    if (loading) return;
+    if (loading && !streamActiveRef.current) return;
 
     if (isTyping) {
       // Skip typewriter animation, display entire text instantly
@@ -972,6 +1134,10 @@ export default function App() {
       // Advance to next dialog message
       setMessageIndex((prev) => prev + 1);
     } else {
+      if (streamActiveRef.current) {
+        console.log('[Client] Waiting for stream to add more messages...');
+        return;
+      }
       // Prompt player for reply or continue auto-travel if queue is active
       const currentQueue = travelQueueRef.current || [];
       if (currentQueue.length > 0) {
@@ -1074,6 +1240,12 @@ export default function App() {
           <span className={`time-badge time-badge-${timeOfDay}`}>
             {timeOfDay.toUpperCase()}
           </span>
+        </div>
+
+        <div className="sidebar-actions">
+          <button className="reset-game-btn" onClick={resetGame}>
+            Reiniciar Historia
+          </button>
         </div>
 
         <nav className="sidebar-tabs" aria-label="Navegación del panel">
@@ -1324,10 +1496,6 @@ export default function App() {
                   </div>
                 )}
               </section>
-              
-              <button className="reset-game-btn" onClick={resetGame}>
-                Reiniciar Simulación
-              </button>
             </div>
           )}
 
@@ -1545,8 +1713,11 @@ export default function App() {
                 <p className={`dialogue-text ${activeMessage?.speakerId === 'narrator' ? 'narrator-style' : ''}`}>
                   {typedText}
                 </p>
-                {!isTyping && messageIndex + 1 <= messages.length && (
+                {!isTyping && (messageIndex + 1 < messages.length || (!streamActive && messageIndex + 1 === messages.length)) && (
                   <div className="dialogue-continue-arrow" aria-hidden="true"></div>
+                )}
+                {!isTyping && messageIndex + 1 === messages.length && streamActive && (
+                  <span className="typing-indicator-dots" style={{ marginLeft: '10px', opacity: 0.6, fontSize: '1.5rem', lineHeight: 1 }}>...</span>
                 )}
               </>
             ) : (

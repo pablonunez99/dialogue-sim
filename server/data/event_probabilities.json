@@ -1,0 +1,49 @@
+{
+  "probabilities": {
+    "nada": 0.70,
+    "evento_social_menor": 0.15,
+    "clima_cambia": 0.05,
+    "rumor_chisme": 0.05,
+    "evento_dramatic_menor": 0.03,
+    "evento_critico_tragico": 0.01,
+    "encuentro_inesperado": 0.01
+  },
+  "events_by_category": {
+    "evento_social_menor": [
+      "Un mercader ambulante discute a viva voz sobre el precio del grano en la lejanía.",
+      "Un aldeano tropieza de forma graciosa y derrama un cesto de manzanas, pidiendo disculpas en voz alta.",
+      "Se escuchan risas y cantos distantes provenientes de la taberna.",
+      "Dos personas debaten de forma amistosa sobre quién tiene el mejor caballo de la aldea."
+    ],
+    "clima_cambia": [
+      "El viento cambia de golpe del norte, trayendo un aire helado y nubes oscuras de tormenta.",
+      "Una llovizna suave pero persistente comienza a caer, humedeciendo la ropa y el suelo.",
+      "El cielo se despeja repentinamente, dejando pasar un sol radiante que calienta el ambiente.",
+      "Una densa neblina empieza a bajar de las montañas, limitando la visibilidad a unos pocos metros."
+    ],
+    "rumor_chisme": [
+      "Un susurro indiscreto pasa entre dos vecinos: mencionan que alguien vio luces extrañas cerca de las ruinas anoche.",
+      "Se comenta en voz baja que las raciones de trigo del almacén municipal no durarán hasta el invierno.",
+      "Un chisme de taberna sugiere que el herrero y la posadera tuvieron una fuerte discusión por una deuda antigua.",
+      "Un viajero asegura haber avistado lobos más agresivos de lo normal en los caminos occidentales."
+    ],
+    "evento_dramatic_menor": [
+      "Se escucha un grito ahogado a la distancia, seguido por el portazo de una casa cercana.",
+      "Un guardia pasa a paso apresurado, mirando sospechosamente a cada rincón con la mano en el pomo de su espada.",
+      "El graznido inquietante de una bandada de cuervos sobrevuela el lugar, posándose sobre los tejados.",
+      "Un mendigo balbucea palabras incomprensibles y temerosas sobre 'la sombra que acecha bajo la tierra'."
+    ],
+    "evento_critico_tragico": [
+      "La campana de alarma de la aldea suena de forma frenética; hay pánico en el ambiente.",
+      "Un aldeano llega corriendo, herido y exhausto, pidiendo ayuda tras escapar de un asalto en el camino.",
+      "Un denso humo negro comienza a subir rápidamente de uno de los tejados lejanos; ¡hay fuego en la aldea!",
+      "Un estruendo sordo sacude ligeramente el suelo, como si algo pesado se hubiera derrumbado en las cercanías."
+    ],
+    "encuentro_inesperado": [
+      "Un habitante conocido de la aldea, que no estaba previsto aquí, camina apresurado en tu dirección con gesto adusto.",
+      "Un mensajero cansado de la capital pasa a caballo, buscando indicaciones para llegar a la plaza.",
+      "Un misterioso encapuchado se detiene a observarte en silencio desde la esquina de un callejón antes de desaparecer.",
+      "Un perro callejero herido y asustado se acerca cojeando, buscando comida o refugio."
+    ]
+  }
+}

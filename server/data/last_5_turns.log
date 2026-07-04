@@ -1,0 +1,32 @@
+=== DEBUG LOG: LAST 5 TURNS OF CONVERSATION ===
+Generated at: 2026-07-02T09:48:46.200Z
+Total history length: 31 entries
+
+
+[Turn 1] --------------------------------------------------
+VIAJERO: "No pasa nada. Recien llego a la aldea. Busco un lugar donde quedarme un tiempito" (Day 1, Time 08:12, Loc: casaflorista)
+NARRADOR: Rosalía se limpia suavemente las manos en su delantal, mirándote con timidez y curiosidad. El sol de la mañana entra por la ventana, iluminando los manojos de flores silvestres que decoran la estancia.
+ROSALÍA CAMPOFLOR: "¡Bienvenido a Robledal, Pablo! Pocos buscan posada aquí, pero quizás la taberna tenga algo disponible para ti."
+
+[Turn 2] --------------------------------------------------
+VIAJERO: "Ah , aja, si... el tema es que... mi aldea natal fue incendiada. Pude escapar solo con lo que llevo puesto." (Day 1, Time 08:12, Loc: casaflorista)
+NARRADOR: Rosalía se queda helada al escuchar tu relato, y su expresión de timidez se transforma de inmediato en una mueca de profunda compasión. Sus dedos se aprietan con fuerza contra el delantal de lino mientras da un paso instintivo hacia ti, conmovida por tu desgracia.
+ROSALÍA CAMPOFLOR: "¡Qué tragedia, pobre alma! Por favor, toma esto, quizás te traiga un poco de paz en este momento tan difícil."
+
+[Turn 3] --------------------------------------------------
+VIAJERO: "Que flor es esta? es hermosa" (Day 1, Time 08:13, Loc: casaflorista)
+NARRADOR: Un violento grito desgarrador resuena a lo lejos, rompiendo súbitamente la calma matutina de la aldea. Rosalía se estremece al instante, apartando los ojos de la flor y mirando alarmada hacia la ventana abierta.
+ROSALÍA CAMPOFLOR: "Es un nomeolvides, ¡para que no olvides que aquí hay gente dispuesta a ayudarte! Pero... ¿oíste eso? Ese grito ha sonado muy cerca."
+
+[Turn 4] --------------------------------------------------
+VIAJERO: "Habra que ir a ver" (Day 1, Time 08:14, Loc: casaflorista)
+NARRADOR: Salís de la cabaña a toda prisa hacia la Plaza del Pozo, donde el eco del grito aún resuena. Allí, bajo el sol matutino, una pequeña multitud rodea el pozo con rostros llenos de pavor.
+ROSALÍA CAMPOFLOR: "¡Cierto, no podemos quedarnos parados! Vamos, pero ten cuidado, no me gusta nada ese alboroto."
+ELVIRA DE ROBLEDAL: "Mantengamos el orden. Iré tras ella, no perdamos de vista lo que ocurre en nuestra plaza."
+NARRADOR: [Especial] Te trasladas a Plaza del Pozo (5 min de viaje).
+
+[Turn 5] --------------------------------------------------
+VIAJERO: "que ha ocurrido?" (Day 1, Time 08:24, Loc: plaza)
+NARRADOR: Al llegar a la plaza, un grupo de aldeanos rodea el pozo señalando su interior con rostros desencajados. Un fino hilo de sangre fresca se desliza por el borde de piedra, perdiéndose en la oscuridad del fondo. La alcaldesa Elvira intenta mantener el control mientras Rosalía contiene el aliento a tu lado.
+ROSALÍA CAMPOFLOR: "¡No lo sé, Pablo! Es horrible... sangre en el pozo, Dios nos asista."
+ELVIRA DE ROBLEDAL: "Aún no conocemos la causa, pero esto presenta complicaciones graves para nuestra paz. Retírense todos del brocal inmediatamente mientras organizo una inspección."

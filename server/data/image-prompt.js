@@ -16,8 +16,26 @@ LAYOUT: single continuous solid chroma green background (#00FF00). NO borders, N
 Keep each figure fully centered inside its cell with a wide green margin of at least 35 pixels on left, right, and top, so no part of the character (clothes, arms, hair) touches the top, left, or right edges.`;
 }
 
-export function getLocationImagePrompt(description) {
-  return `Masterpiece, high quality visual novel background art, flat anime coloring, beautiful lighting, medieval fantasy style, depicting a ${description}. Highly detailed.`;
+export function getLocationImagePrompt(description, isEdit = false) {
+  const basePrompt = `Masterpiece, high quality visual novel background art, flat anime coloring, beautiful lighting, medieval fantasy style, depicting a ${description}. Highly detailed.`;
+
+  if (!isEdit) {
+    return basePrompt;
+  }
+
+  return `Edit this existing background image to match the new description: ${basePrompt}
+
+Keep the composition, perspective, and overall layout consistent with the current image. Preserve the same visual style and make only the necessary changes to reflect the new scene. Avoid generating a completely new composition from scratch.`;
+}
+
+export function buildLocationImageContent(prompt, existingImageBase64) {
+  const parts = [{ text: prompt }];
+
+  if (existingImageBase64) {
+    parts.push({ inlineData: { mimeType: 'image/png', data: existingImageBase64 } });
+  }
+
+  return parts;
 }
 
 export const npcImageConfig = {

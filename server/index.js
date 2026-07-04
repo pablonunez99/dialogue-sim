@@ -7,12 +7,18 @@ import { fileURLToPath } from 'node:url';
 import { readFile, writeFile, mkdir, rm, access } from 'node:fs/promises';
 import sharp from 'sharp';
 import { removeBackground } from '@imgly/background-removal-node';
-import { getNpcImagePrompt, npcImageConfig, getLocationImagePrompt, locationImageConfig } from './data/image-prompt.js';
+import { getNpcImagePrompt, npcImageConfig, getLocationImagePrompt, locationImageConfig, buildLocationImageContent } from './data/image-prompt.js';
 import { VectorManager } from './vector-manager.js';
 import { buildAssetSyncPlan } from './asset-sync.js';
 import { registerTurnHandlers, runBeforeTurn, runAfterTurn } from './triggers/turnTriggers.js';
 import { registerDayPhaseHandlers, runDayTransition, handleTimeOfDayTransition, triggerTimeOfDayTransitionIfNeeded } from './triggers/dayPhaseTriggers.js';
-import { buildInstructions } from './helpers/promptBuilderHelper.js';
+import { buildInstructions } from './helpers/instructions/buildInstructions.js';
+import { buildDmInstructions } from './helpers/instructions/buildDmInstructions.js';
+import { dmResponseSchema } from './helpers/instructions/dmResponseSchema.js';
+import { orchestrateNpcTurn, recallDmMemories } from './helpers/instructions/npcOrchestrator.js';
+import { filterHistoryForNpc } from './helpers/instructions/historyFilter.js';
+import { rollEvent } from './helpers/eventRoller.js';
+
 
 import { EXPRESSIONS, LOCATIONS, NPCS, getNpcLocation, CONNECTIONS as STATIC_CONNECTIONS, getPathDistance } from '../src/data/world.js';
 
@@ -63,6 +69,46 @@ async function saveHistory(history) {
   try {
     await mkdir(path.dirname(historyFilePath), { recursive: true });
     await writeFile(historyFilePath, JSON.stringify(history || [], null, 2), 'utf8');
+
+    // Generate the last 5 turns debug log
+    try {
+      const last5TurnsLogPath = path.join(rootDir, 'server', 'data', 'last_5_turns.log');
+      const fullHistory = Array.isArray(history) ? history : [];
+      
+      let playerTurnsCount = 0;
+      let startIndex = 0;
+      for (let i = fullHistory.length - 1; i >= 0; i--) {
+        if (fullHistory[i].type === 'player') {
+          playerTurnsCount++;
+          if (playerTurnsCount === 5) {
+            startIndex = i;
+            break;
+          }
+        }
+      }
+      
+      const lastTurns = fullHistory.slice(startIndex);
+      let logContent = `=== DEBUG LOG: LAST 5 TURNS OF CONVERSATION ===\n`;
+      logContent += `Generated at: ${new Date().toISOString()}\n`;
+      logContent += `Total history length: ${fullHistory.length} entries\n\n`;
+      
+      let currentTurnNum = 5 - playerTurnsCount + 1;
+      lastTurns.forEach(entry => {
+        if (entry.type === 'player') {
+          logContent += `\n[Turn ${currentTurnNum++}] --------------------------------------------------\n`;
+          logContent += `VIAJERO: "${entry.line}" (Day ${entry.day}, Time ${entry.time}, Loc: ${entry.locationId})\n`;
+        } else if (entry.speakerId === 'narrator') {
+          logContent += `NARRADOR: ${entry.line}\n`;
+        } else {
+          logContent += `${String(entry.speaker || entry.speakerId).toUpperCase()}: "${entry.line}"\n`;
+        }
+      });
+      
+      await writeFile(last5TurnsLogPath, logContent, 'utf8');
+      console.log(`[DebugLog] Updated last_5_turns.log with the latest conversation turns.`);
+    } catch (logErr) {
+      console.error('[DebugLog] Failed to write last_5_turns.log:', logErr.message);
+    }
   } catch (error) {
     console.error('[Database] Failed to write history.json', error);
   }
@@ -249,8 +295,14 @@ async function saveLocations(locations) {
     for (const locationId of plan.addedLocationIds) {
       const location = locations.find((item) => item.id === locationId);
       if (!location) continue;
-      console.log(`[Assets] New location detected in data file, generating background asset: ${locationId}`);
-      await generateLocationBackground(location.id, location.prompt);
+      
+      const imgPath = path.join(rootDir, 'public', 'assets', 'locations', `${location.id}.png`);
+      try {
+        await access(imgPath);
+      } catch (err) {
+        console.log(`[Assets] New location detected in data file, generating background asset: ${locationId}`);
+        await generateLocationBackground(location.id, location.prompt);
+      }
     }
   } catch (error) {
     console.error('[Database] Failed to write locations.json', error);
@@ -913,48 +965,62 @@ async function triggerBackgroundEvents(state, events, currentLocations) {
   return { updated, notifications };
 }
 
+const activeGenerations = new Set();
+
 // Background Generator for locations
-async function generateLocationBackground(locationId, promptDescription) {
-  const publicDir = path.join(rootDir, 'public', 'assets', 'locations');
-  const distDir = path.join(rootDir, 'dist', 'assets', 'locations');
-
-  await mkdir(publicDir, { recursive: true });
-  await mkdir(distDir, { recursive: true });
-
-  if (useGemini && process.env.GEMINI_IMAGE_MODEL) {
-    try {
-      console.log(`[AI] Generating background for dynamic location: ${locationId}`);
-      const prompt = getLocationImagePrompt(promptDescription);
-      
-      const response = await client.models.generateContent({
-        model: process.env.GEMINI_IMAGE_MODEL,
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        config: locationImageConfig
-      });
-
-      let base64Image = null;
-      for (const part of response.candidates?.[0]?.content?.parts ?? []) {
-        if (part.inlineData) {
-          base64Image = part.inlineData.data;
-          break;
-        }
-      }
-
-      if (base64Image) {
-        const imageBuffer = Buffer.from(base64Image, 'base64');
-        const publicOutPath = path.join(publicDir, `${locationId}.png`);
-        const distOutPath = path.join(distDir, `${locationId}.png`);
-
-        await writeFile(publicOutPath, imageBuffer);
-        await sharp(publicOutPath).toFile(distOutPath);
-        console.log(`[AI] Successfully generated background for location: ${locationId}`);
-        return true;
-      }
-    } catch (err) {
-      console.error(`[AI] Location background generation failed for ${locationId}`, err);
-    }
+async function generateLocationBackground(locationId, promptDescription, existingImageBase64 = null, isEdit = false) {
+  if (activeGenerations.has(locationId)) {
+    console.log(`[Assets] Generation for location ${locationId} already in progress. Skipping concurrent call.`);
+    return false;
   }
-  return false;
+  activeGenerations.add(locationId);
+
+  try {
+    const publicDir = path.join(rootDir, 'public', 'assets', 'locations');
+    const distDir = path.join(rootDir, 'dist', 'assets', 'locations');
+
+    await mkdir(publicDir, { recursive: true });
+    await mkdir(distDir, { recursive: true });
+
+    if (useGemini && process.env.GEMINI_IMAGE_MODEL) {
+      try {
+        const prompt = getLocationImagePrompt(promptDescription, isEdit);
+        const contents = [{ role: 'user', parts: buildLocationImageContent(prompt, existingImageBase64) }];
+
+        console.log(`[AI] ${isEdit ? 'Editing' : 'Generating'} background for dynamic location: ${locationId}`);
+        
+        const response = await client.models.generateContent({
+          model: process.env.GEMINI_IMAGE_MODEL,
+          contents,
+          config: locationImageConfig
+        });
+
+        let base64Image = null;
+        for (const part of response.candidates?.[0]?.content?.parts ?? []) {
+          if (part.inlineData) {
+            base64Image = part.inlineData.data;
+            break;
+          }
+        }
+
+        if (base64Image) {
+          const imageBuffer = Buffer.from(base64Image, 'base64');
+          const publicOutPath = path.join(publicDir, `${locationId}.png`);
+          const distOutPath = path.join(distDir, `${locationId}.png`);
+
+          await writeFile(publicOutPath, imageBuffer);
+          await sharp(publicOutPath).toFile(distOutPath);
+          console.log(`[AI] Successfully generated background for location: ${locationId}`);
+          return true;
+        }
+      } catch (err) {
+        console.error(`[AI] Location background generation failed for ${locationId}`, err);
+      }
+    }
+    return false;
+  } finally {
+    activeGenerations.delete(locationId);
+  }
 }
 
 async function syncNpcToVectorDb(npc) {
@@ -1189,13 +1255,10 @@ app.get('/api/config', (_req, res) => {
 });
 
 app.post('/api/world/reset', async (_req, res) => {
-  console.log('[Server] POST /api/world/reset - Wiping all game databases, history, and vector index...');
+  console.log('[Server] POST /api/world/reset - Wiping history and vector index, restoring initial state (preserving NPCs, Locations, Events)...');
   try {
-    // 1. Delete database files
+    // 1. Delete only history and pending updates files
     const filesToDelete = [
-      npcsFilePath,
-      locationsFilePath,
-      eventsFilePath,
       pendingUpdatesFilePath,
       historyFilePath,
       vectorManager?.persistPath
@@ -1220,17 +1283,29 @@ app.post('/api/world/reset', async (_req, res) => {
       }
     }
 
-    // 3. Re-initialize databases from static templates
-    await loadNpcs();
-    await loadLocations();
-    await loadEvents();
+    // 3. Re-initialize vector manager
     if (vectorManager) {
       await vectorManager.init();
     }
 
-    res.json({ success: true, message: 'All database files, history, and vector indexes have been successfully reset.' });
+    // 4. Sync the EXISTING (preserved) NPCs and Locations back to the vector index
+    const currentNpcs = await loadNpcs();
+    const currentLocations = await loadLocations();
+    
+    console.log('[Reset] Re-indexing preserved NPCs and Locations to vector DB...');
+    for (const npc of currentNpcs) {
+      await syncNpcToVectorDb(npc);
+    }
+    for (const loc of currentLocations) {
+      await syncLocationToVectorDb(loc);
+    }
+
+    // 5. Bootstrap a clean history.json with empty array
+    await saveHistory([]);
+
+    res.json({ success: true, message: 'Game history and conversation memories have been reset to initial state. Existing NPCs, Locations, and Events have been preserved.' });
   } catch (err) {
-    console.error('[Reset] Failed to execute full database reset:', err.message);
+    console.error('[Reset] Failed to execute conversation history reset:', err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 });
@@ -1238,6 +1313,12 @@ app.post('/api/world/reset', async (_req, res) => {
 app.post('/api/conversation', async (req, res) => {
   const history = await loadHistory();
   let { locationId, participantIds, playerText, state = {}, provider } = req.body ?? {};
+  if (locationId) {
+    locationId = locationId.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+  if (state.locationId) {
+    state.locationId = state.locationId.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
   console.log(`\n[Server] POST /api/conversation - locationId: "${locationId}", participantIds: [${(participantIds || []).join(', ')}], playerText: "${playerText}", history length: ${history.length}, provider: "${provider}"`);
   
   const currentLocations = await loadLocations();
@@ -1629,20 +1710,36 @@ app.post('/api/conversation', async (req, res) => {
       const currentLocations = await loadLocations();
       const existingLoc = currentLocations.find((loc) => loc.id === locIdToUpdate);
       if (existingLoc && newPrompt) {
-        console.log(`[Server] Overwriting background image for location: ${locIdToUpdate} with prompt: "${newPrompt}"`);
+        console.log(`[LocationUpdate] Updating background for: ${locIdToUpdate}`);
         existingLoc.prompt = newPrompt;
         await saveLocations(currentLocations);
 
-        // Generate the new background image synchronously to overwrite the file
-        await generateLocationBackground(locIdToUpdate, newPrompt);
+        // Reuse the current image as input for a targeted edit
+        let existingImageBase64 = null;
+        const currentAssetPath = path.join(rootDir, 'public', 'assets', 'locations', `${locIdToUpdate}.png`);
+        try {
+          const currentImageBuffer = await readFile(currentAssetPath);
+          existingImageBase64 = currentImageBuffer.toString('base64');
+        } catch (error) {
+          // No existing image yet, fall back to a fresh generation
+        }
+
+        // Generate the new background image synchronously
+        const generated = await generateLocationBackground(locIdToUpdate, newPrompt, existingImageBase64, Boolean(existingImageBase64));
         
-        // Attach updated location info to the payload response so the client knows it changed
-        const ts = Date.now();
-        scene.locationUpdate = {
-          id: locIdToUpdate,
-          prompt: newPrompt,
-          assetUrl: `assets/locations/${locIdToUpdate}.png?t=${ts}`
-        };
+        if (generated) {
+          // Attach updated location info to the payload response so the client knows it changed
+          const ts = Date.now();
+          scene.locationUpdate = {
+            id: locIdToUpdate,
+            prompt: newPrompt,
+            assetUrl: `assets/locations/${locIdToUpdate}.png?t=${ts}`
+          };
+          console.log(`[LocationUpdate] ✓ Image generated and queued for client update.`);
+        } else {
+          console.log(`[LocationUpdate] ✗ Image generation failed. No client update will be sent.`);
+          scene.locationUpdate = null;
+        }
 
         // Re-sync to Vector DB
         await syncLocationToVectorDb(existingLoc);
@@ -1894,6 +1991,723 @@ app.post('/api/conversation', async (req, res) => {
   }
 });
 
+app.post('/api/conversation-stream', async (req, res) => {
+  // Set headers for SSE
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  const history = await loadHistory();
+  let { locationId, participantIds, playerText, state = {}, provider } = req.body ?? {};
+  if (locationId) {
+    locationId = locationId.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+  if (state.locationId) {
+    state.locationId = state.locationId.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+  
+  console.log(`\n[Server] POST /api/conversation-stream - locationId: "${locationId}", participantIds: [${(participantIds || []).join(', ')}], playerText: "${playerText}", history length: ${history.length}`);
+  
+  const currentLocations = await loadLocations();
+  const currentNpcs = await loadNpcs();
+  
+  const inputState = {
+    locationId: state.locationId || locationId,
+    relationships: state.relationships || {},
+    trust: state.trust || {},
+    day: typeof state.day === 'number' ? state.day : 1,
+    time: typeof state.time === 'string' ? state.time : '08:00',
+    flags: Array.isArray(state.flags) ? state.flags : [],
+    completedEvents: Array.isArray(state.completedEvents) ? state.completedEvents : [],
+    inventory: Array.isArray(state.inventory) ? state.inventory : [],
+    gold: typeof state.gold === 'number' ? state.gold : 0,
+    quests: Array.isArray(state.quests) ? state.quests : [],
+    npcActivityLog: Array.isArray(state.npcActivityLog) ? state.npcActivityLog : []
+  };
+
+  const hasTraveled = state.locationId && state.locationId !== locationId;
+
+  // Append player turn to server-side history (enriched with participantIds)
+  history.push({
+    speakerId: 'player',
+    speaker: 'Viajero',
+    line: playerText || '',
+    type: 'player',
+    locationId: inputState.locationId,
+    day: inputState.day,
+    time: inputState.time,
+    participantIds: participantIds || []
+  });
+
+  // Intercept if travelQueue is active
+  let travelQueue = Array.isArray(state.travelQueue) ? [...state.travelQueue] : [];
+  if (hasTraveled && travelQueue.length === 0) {
+    const path = findPath(state.locationId, locationId);
+    if (path && path.length > 2) {
+      travelQueue = path.slice(1);
+    }
+  }
+
+  let travelMinutes = 0;
+  if (hasTraveled) {
+    const conn = (CONNECTIONS[state.locationId] || []).find(c => c.to === locationId);
+    travelMinutes = conn ? conn.distance : 5;
+    const { day: d, time: t } = addMinutesToTime(inputState.day, inputState.time, travelMinutes);
+    inputState.day = d;
+    inputState.time = t;
+    inputState.timeOfDay = getTimeOfDay(t);
+  } else {
+    inputState.timeOfDay = getTimeOfDay(inputState.time);
+  }
+
+  inputState.travelQueue = travelQueue;
+
+  const location = currentLocations.find((item) => item.id === locationId);
+  if (!location || !String(playerText ?? '').trim()) {
+    res.write(`event: error\ndata: ${JSON.stringify({ error: 'Faltan datos de conversacion o ubicacion invalida.' })}\n\n`);
+    res.end();
+    return;
+  }
+
+  const events = await loadEvents();
+  const bgStartResult = await triggerBackgroundEvents(inputState, events, currentLocations);
+  const activeEvent = getEligibleEvent(locationId, inputState, events);
+  let finalParticipantIds = participantIds;
+  if (hasTraveled) {
+    finalParticipantIds = [];
+  }
+
+  if (activeEvent) {
+    if (activeEvent.setsFlags && activeEvent.setsFlags.length > 0) {
+      activeEvent.setsFlags.forEach(f => {
+        if (!inputState.flags.includes(f)) {
+          inputState.flags.push(f);
+        }
+      });
+    }
+    if (!activeEvent.repeatable) {
+      if (!inputState.completedEvents.includes(activeEvent.id)) {
+        inputState.completedEvents.push(activeEvent.id);
+      }
+    }
+    if (activeEvent.involvedNpcs && activeEvent.involvedNpcs.length > 0) {
+      finalParticipantIds = activeEvent.involvedNpcs;
+    }
+  }
+
+  let unexpectedEventNote = '';
+  let twistTriggered = false;
+
+  if (activeEvent) {
+    // Predefined story event takes absolute precedence
+    unexpectedEventNote = `\n\n=== EVENTO NARRATIVO PRINCIPAL ACTIVO ===\n` +
+      `Debes narrar e integrar este suceso especial en la escena:\n` +
+      `- Nombre: ${activeEvent.name}\n` +
+      `- Descripción: ${activeEvent.description}\n` +
+      `- Consecuencia: ${activeEvent.consequence}\n`;
+  } else {
+    // Run the probabilistic Event Roller
+    const rolled = await rollEvent();
+    if (rolled.category !== 'nada') {
+      twistTriggered = true;
+      unexpectedEventNote = `\n\n=== EVENTO INESPERADO (${rolled.title.toUpperCase()}) ===\n` +
+        `ATENCIÓN: Para este turno, debes forzar e integrar el siguiente suceso inesperado en la escena:\n` +
+        `"${rolled.description}"\n`;
+    } else {
+      unexpectedEventNote = `\n\n=== ESTADO DE LA ESCENA ===\n` +
+        `ATENCIÓN: Este turno NO ocurre ningún suceso inesperado ni cambio drástico en el entorno. Narra la cotidianidad tranquila de la ubicación, los quehaceres habituales, y deja que la conversación fluya con naturalidad sin interrupciones forzadas, accidentes de la nada o eventos inventados.\n`;
+    }
+  }
+
+  if ((activeEvent || twistTriggered) && travelQueue.length > 0) {
+    travelQueue = [];
+    inputState.travelQueue = [];
+  }
+
+  // Handle travel transitional stop (simple fast transition)
+  if (travelQueue.length > 0 && !activeEvent && !twistTriggered) {
+    const stopName = currentLocations.find(l => l.id === locationId)?.name || locationId;
+    const destName = currentLocations.find(l => l.id === travelQueue[travelQueue.length - 1])?.name || travelQueue[travelQueue.length - 1];
+
+    const transitionScene = {
+      locationId: locationId,
+      participantIds: [],
+      narration: `En viaje hacia ${destName}.`,
+      messages: [
+        {
+          speakerId: 'narrator',
+          line: `[Especial] Pasas por ${stopName} en dirección a tu destino final. Todo parece tranquilo aquí por el momento.`,
+          expression: 'neutral'
+        }
+      ],
+      relationshipDeltas: [],
+      trustDeltas: [],
+      newNpc: null,
+      newLocation: null,
+      minutesPassed: travelMinutes,
+      exitTheConversation: [],
+      enterTheConversation: [],
+      updateLocationImage: null,
+      inventoryDeltas: [],
+      goldDelta: 0,
+      questUpdates: [],
+      state: {
+        ...inputState,
+        travelQueue: travelQueue
+      }
+    };
+
+    // Day phase transition check
+    const oldTOD = state.timeOfDay || getTimeOfDay(state.time || '08:00');
+    const newTOD = inputState.timeOfDay;
+    const isNewDay = inputState.day > (state.day || 1);
+
+    if (isNewDay || oldTOD !== newTOD) {
+      const activeProvider = provider || state.provider || defaultProvider;
+      let currentClient = client;
+      let currentModel = modelName;
+      let currentIsGemini = useGemini;
+
+      if (activeProvider === 'gemini' && geminiClient) {
+        currentClient = geminiClient;
+        currentModel = geminiModel;
+        currentIsGemini = true;
+      } else if (activeProvider === 'openai' && openaiClient) {
+        currentClient = openaiClient;
+        currentModel = openaiModel;
+        currentIsGemini = false;
+      }
+
+      const activeConversationManager = new ConversationManager({
+        client: currentClient,
+        model: currentModel,
+        isGemini: currentIsGemini
+      });
+
+      if (isNewDay) {
+        runMorningWorldUpdate(activeConversationManager, inputState.day, history, inputState);
+      } else {
+        triggerTimeOfDayTransitionIfNeeded(oldTOD, newTOD, inputState, history, activeConversationManager, db);
+      }
+    }
+
+    if (transitionScene.narration) {
+      history.push({
+        speakerId: 'narrator',
+        speaker: 'Narrador',
+        line: transitionScene.narration,
+        type: 'npc',
+        locationId: inputState.locationId,
+        day: inputState.day,
+        time: inputState.time,
+        participantIds: []
+      });
+    }
+    if (Array.isArray(transitionScene.messages)) {
+      transitionScene.messages.forEach(m => {
+        history.push({
+          speakerId: m.speakerId,
+          speaker: m.speakerId === 'narrator' ? 'Narrador' : m.speakerId,
+          line: m.line,
+          type: 'npc',
+          locationId: inputState.locationId,
+          day: inputState.day,
+          time: inputState.time,
+          participantIds: []
+        });
+      });
+    }
+
+    await saveHistory(history);
+    transitionScene.history = history;
+
+    res.write(`event: dm_response\ndata: ${JSON.stringify(transitionScene)}\n\n`);
+    res.write(`event: turn_complete\ndata: ${JSON.stringify(transitionScene)}\n\n`);
+    res.end();
+    return;
+  }
+
+  const activeProvider = provider || state.provider || defaultProvider;
+  let currentClient = client;
+  let currentModel = modelName;
+  let currentIsGemini = useGemini;
+
+  if (activeProvider === 'gemini' && geminiClient) {
+    currentClient = geminiClient;
+    currentModel = geminiModel;
+    currentIsGemini = true;
+  } else if (activeProvider === 'openai' && openaiClient) {
+    currentClient = openaiClient;
+    currentModel = openaiModel;
+    currentIsGemini = false;
+  }
+
+  const activeConversationManager = new ConversationManager({
+    client: currentClient,
+    model: currentModel,
+    isGemini: currentIsGemini
+  });
+
+  const participants = activeConversationManager.resolveParticipants(
+    finalParticipantIds,
+    location,
+    currentNpcs,
+    inputState.timeOfDay
+  );
+
+  // Query RAG memories for DM context
+  const dmRagContext = await recallDmMemories({
+    location,
+    participants,
+    playerText,
+    client: currentClient,
+    isGemini: currentIsGemini,
+    vectorManager
+  });
+
+  // 1. Call DM to narrate/resolve scene
+  const dmSystemPrompt = buildDmInstructions({
+    location,
+    participants,
+    currentNpcs,
+    currentLocations,
+    activeEvent,
+    state: inputState,
+    travelMinutes,
+    unexpectedEventNote,
+    history,
+    ragContext: dmRagContext
+  });
+
+  let dmResponse = null;
+  try {
+    console.log(`[AI] Calling DM Model: "${currentModel}"`);
+    if (currentIsGemini) {
+      const dmContent = JSON.stringify({
+        task: 'dungeon_master_scene_setup',
+        location,
+        playerMessage: playerText
+      });
+      const response = await currentClient.models.generateContent({
+        model: currentModel,
+        contents: [{ role: 'user', parts: [{ text: dmContent }] }],
+        config: {
+          systemInstruction: dmSystemPrompt,
+          responseMimeType: 'application/json',
+          responseSchema: dmResponseSchema
+        }
+      });
+      console.log(`[AI] Raw DM Response:\n${response.text}`);
+      dmResponse = parseModelJson(response.text);
+    } else {
+      const response = await currentClient.chat.completions.create({
+        model: currentModel,
+        messages: [
+          { role: 'system', content: dmSystemPrompt },
+          { role: 'user', content: `El jugador dice: "${playerText}"` }
+        ],
+        response_format: {
+          type: 'json_schema',
+          json_schema: {
+            name: 'dm_response',
+            strict: true,
+            schema: dmResponseSchema
+          }
+        }
+      });
+      const content = response.choices[0].message.content;
+      console.log(`[AI] Raw DM Response:\n${content}`);
+      dmResponse = parseModelJson(content);
+    }
+  } catch (err) {
+    console.error('[AI Error] DM call failed:', err);
+    dmResponse = {
+      locationId: location.id,
+      participantIds: participants.map(p => p.id),
+      narration: `Llegas a ${location.name}.`,
+      sceneContext: "",
+      minutesPassed: 2,
+      newNpc: null,
+      newLocation: null,
+      exitTheConversation: [],
+      enterTheConversation: [],
+      updateLocationImage: null
+    };
+  }
+
+  dmResponse.participantIds = Array.isArray(dmResponse.participantIds) ? dmResponse.participantIds : [];
+  dmResponse.enterTheConversation = Array.isArray(dmResponse.enterTheConversation) ? dmResponse.enterTheConversation : [];
+  dmResponse.exitTheConversation = Array.isArray(dmResponse.exitTheConversation) ? dmResponse.exitTheConversation : [];
+  if (dmResponse.locationId) {
+    dmResponse.locationId = dmResponse.locationId.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
+  // Helper to resolve fuzzy NPC IDs from DM output
+  const resolveNpcId = (idOrName) => {
+    if (!idOrName) return null;
+    const clean = String(idOrName).toLowerCase().trim();
+    // 1. Direct match
+    let matched = currentNpcs.find(n => n.id.toLowerCase() === clean);
+    if (matched) return matched.id;
+    // 2. Name-derived match (e.g. "borin_martillopardo" -> "herrero")
+    matched = currentNpcs.find(n => {
+      const cleanName = n.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, '_');
+      const cleanInput = clean.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return cleanName === cleanInput || cleanInput.includes(cleanName) || cleanName.includes(cleanInput);
+    });
+    if (matched) return matched.id;
+    // 3. Fuzzy parts
+    matched = currentNpcs.find(n => {
+      const parts = n.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/\s+/);
+      const cleanInput = clean.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return parts.some(p => p.length > 3 && (cleanInput.includes(p) || p.includes(cleanInput)));
+    });
+    if (matched) return matched.id;
+    return idOrName; // Fallback
+  };
+
+  dmResponse.participantIds = dmResponse.participantIds.map(resolveNpcId).filter(Boolean);
+  dmResponse.enterTheConversation = dmResponse.enterTheConversation.map(resolveNpcId).filter(Boolean);
+  dmResponse.exitTheConversation = dmResponse.exitTheConversation.map(resolveNpcId).filter(Boolean);
+
+  // Apply exits and entrances narratively specified by DM to compute actual participantIds
+  let resolvedParticipantIds = [...dmResponse.participantIds];
+  if (dmResponse.exitTheConversation.length > 0) {
+    resolvedParticipantIds = resolvedParticipantIds.filter(id => !dmResponse.exitTheConversation.includes(id));
+  }
+  if (dmResponse.enterTheConversation.length > 0) {
+    dmResponse.enterTheConversation.forEach(id => {
+      if (!resolvedParticipantIds.includes(id) && currentNpcs.some(n => n.id === id)) {
+        resolvedParticipantIds.push(id);
+      }
+    });
+  }
+  dmResponse.participantIds = resolvedParticipantIds.slice(0, 4);
+
+  res.write(`event: dm_response\ndata: ${JSON.stringify(dmResponse)}\n\n`);
+
+  // Inject the DM's narration into history so the NPCs can see it in their context during this turn
+  if (dmResponse.narration) {
+    history.push({
+      speakerId: 'narrator',
+      speaker: 'Narrador',
+      line: dmResponse.narration,
+      type: 'npc',
+      locationId: dmResponse.locationId || locationId,
+      day: inputState.day,
+      time: inputState.time,
+      participantIds: dmResponse.participantIds
+    });
+  }
+
+  let runningParticipants = currentNpcs.filter(npc => dmResponse.participantIds.includes(npc.id));
+
+  // 2. Call sequential NPC orchestrator
+  let npcOrchestrationResults = {
+    relationshipDeltas: [],
+    trustDeltas: [],
+    inventoryDeltas: [],
+    goldDelta: 0,
+    questUpdates: [],
+    generateQuest: null,
+    wantsToLeaveIds: [],
+    npcMessages: []
+  };
+
+  const generator = orchestrateNpcTurn({
+    participants: runningParticipants,
+    location,
+    state: inputState,
+    playerText,
+    history,
+    currentNpcs,
+    client: currentClient,
+    isGemini: currentIsGemini,
+    mainModel: currentModel,
+    vectorManager,
+    sceneContext: dmResponse.sceneContext
+  });
+
+  let genResult = await generator.next();
+  while (!genResult.done) {
+    const npcEvt = genResult.value;
+    res.write(`event: npc_response\ndata: ${JSON.stringify(npcEvt)}\n\n`);
+    genResult = await generator.next();
+  }
+
+  npcOrchestrationResults = genResult.value || {
+    relationshipDeltas: [],
+    trustDeltas: [],
+    inventoryDeltas: [],
+    goldDelta: 0,
+    questUpdates: [],
+    generateQuest: null,
+    wantsToLeaveIds: [],
+    npcMessages: []
+  };
+
+  // 3. Consolidate scene output and perform post-processing
+  const consolidatedScene = {
+    locationId: dmResponse.locationId || locationId,
+    participantIds: dmResponse.participantIds,
+    narration: dmResponse.narration,
+    sceneContext: dmResponse.sceneContext || "",
+    messages: npcOrchestrationResults.npcMessages || [],
+    relationshipDeltas: {},
+    trustDeltas: {},
+    newNpc: dmResponse.newNpc && dmResponse.newNpc.id !== '' ? dmResponse.newNpc : null,
+    newLocation: dmResponse.newLocation && dmResponse.newLocation.id !== '' ? dmResponse.newLocation : null,
+    minutesPassed: dmResponse.minutesPassed || 2,
+    exitTheConversation: dmResponse.exitTheConversation,
+    enterTheConversation: dmResponse.enterTheConversation,
+    updateLocationImage: dmResponse.updateLocationImage && dmResponse.updateLocationImage.locationId !== '' ? dmResponse.updateLocationImage : null,
+    inventoryDeltas: npcOrchestrationResults.inventoryDeltas || [],
+    goldDelta: npcOrchestrationResults.goldDelta || 0,
+    questUpdates: npcOrchestrationResults.questUpdates || [],
+    generateQuest: npcOrchestrationResults.generateQuest
+  };
+
+  if (Array.isArray(npcOrchestrationResults.relationshipDeltas)) {
+    npcOrchestrationResults.relationshipDeltas.forEach(d => {
+      consolidatedScene.relationshipDeltas[d.npcId] = (consolidatedScene.relationshipDeltas[d.npcId] || 0) + d.delta;
+    });
+  }
+  if (Array.isArray(npcOrchestrationResults.trustDeltas)) {
+    npcOrchestrationResults.trustDeltas.forEach(d => {
+      consolidatedScene.trustDeltas[d.npcId] = (consolidatedScene.trustDeltas[d.npcId] || 0) + d.delta;
+    });
+  }
+
+  if (consolidatedScene.generateQuest && consolidatedScene.generateQuest.npcId && consolidatedScene.generateQuest.npcId !== '') {
+    console.log(`[QuestEngine] Requesting on-the-fly quest generation for NPC: "${consolidatedScene.generateQuest.npcId}"`);
+    const newQuest = await generateSingleQuestOnTheFly(
+      activeConversationManager,
+      consolidatedScene.generateQuest.npcId,
+      consolidatedScene.generateQuest.urgency || 'media',
+      consolidatedScene.generateQuest.theme || 'favor general',
+      inputState
+    );
+    inputState.quests.push(newQuest);
+  }
+
+  if (consolidatedScene.newNpc && consolidatedScene.newNpc.id) {
+    const cleanId = consolidatedScene.newNpc.id.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const matchedNpc = currentNpcs.find(npc => npc.id === cleanId || npc.name.toLowerCase().trim() === consolidatedScene.newNpc.name.toLowerCase().trim());
+    if (matchedNpc) {
+      consolidatedScene.participantIds = consolidatedScene.participantIds.map(id => id === consolidatedScene.newNpc.id ? matchedNpc.id : id);
+      consolidatedScene.messages = consolidatedScene.messages.map(m => m.speakerId === consolidatedScene.newNpc.id ? { ...m, speakerId: matchedNpc.id } : m);
+      consolidatedScene.newNpc = null;
+    } else {
+      const cleanNpc = {
+        id: cleanId,
+        name: consolidatedScene.newNpc.name,
+        role: consolidatedScene.newNpc.role,
+        locationId: consolidatedScene.newNpc.locationId || locationId,
+        personality: consolidatedScene.newNpc.personality,
+        secret: consolidatedScene.newNpc.secret,
+        hint: consolidatedScene.newNpc.hint,
+        color: consolidatedScene.newNpc.color || '#7c7c7c',
+        skin: consolidatedScene.newNpc.skin || '#dfab8f',
+        hair: consolidatedScene.newNpc.hair || '#2b1b17',
+        outfit: consolidatedScene.newNpc.outfit || 'civic',
+        suggestions: Array.isArray(consolidatedScene.newNpc.suggestions) ? consolidatedScene.newNpc.suggestions : ["Hablar", "Preguntar"]
+      };
+      const updatedNpcs = [...currentNpcs, cleanNpc];
+      await saveNpcs(updatedNpcs);
+      await generateNpcPortraits(cleanNpc.id, cleanNpc.color, cleanNpc);
+      await syncNpcToVectorDb(cleanNpc);
+    }
+  }
+
+  if (consolidatedScene.newLocation && consolidatedScene.newLocation.id) {
+    const cleanLocId = consolidatedScene.newLocation.id.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const exists = currentLocations.some(loc => loc.id === cleanLocId);
+    if (!exists) {
+      const parentLocId = String(consolidatedScene.newLocation.connectedTo || state.locationId).trim().toLowerCase();
+      const distance = Number(consolidatedScene.newLocation.distance || 5);
+      const cleanLocation = {
+        id: cleanLocId,
+        name: consolidatedScene.newLocation.name,
+        asset: `assets/locations/${cleanLocId}.png`,
+        prompt: consolidatedScene.newLocation.prompt,
+        ambient: consolidatedScene.newLocation.ambient || 'Silencio medieval.',
+        connections: [{ to: parentLocId, distance: distance }]
+      };
+      
+      const parentLoc = currentLocations.find(l => l.id === parentLocId);
+      if (parentLoc) {
+        if (!parentLoc.connections) parentLoc.connections = [];
+        if (!parentLoc.connections.some(c => c.to === cleanLocId)) {
+          parentLoc.connections.push({ to: cleanLocId, distance: distance });
+        }
+      }
+      const updatedLocations = [...currentLocations, cleanLocation];
+      await saveLocations(updatedLocations);
+      const generated = await generateLocationBackground(cleanLocation.id, cleanLocation.prompt);
+      const ts = Date.now();
+      consolidatedScene.newLocation.id = cleanLocId;
+      consolidatedScene.newLocation.assetUrl = generated ? `assets/locations/${cleanLocId}.png?t=${ts}` : null;
+      await syncLocationToVectorDb(cleanLocation);
+    }
+  }
+
+  if (consolidatedScene.updateLocationImage && consolidatedScene.updateLocationImage.locationId) {
+    const locIdToUpdate = String(consolidatedScene.updateLocationImage.locationId).trim().toLowerCase();
+    const newPrompt = String(consolidatedScene.updateLocationImage.prompt || '').trim();
+    const existingLoc = currentLocations.find((loc) => loc.id === locIdToUpdate);
+    if (existingLoc && newPrompt) {
+      existingLoc.prompt = newPrompt;
+      await saveLocations(currentLocations);
+      let existingImageBase64 = null;
+      const currentAssetPath = path.join(rootDir, 'public', 'assets', 'locations', `${locIdToUpdate}.png`);
+      try {
+        const currentImageBuffer = await readFile(currentAssetPath);
+        existingImageBase64 = currentImageBuffer.toString('base64');
+      } catch (e) {}
+      const generated = await generateLocationBackground(locIdToUpdate, newPrompt, existingImageBase64, Boolean(existingImageBase64));
+      if (generated) {
+        const ts = Date.now();
+        consolidatedScene.locationUpdate = {
+          id: locIdToUpdate,
+          prompt: newPrompt,
+          assetUrl: `assets/locations/${locIdToUpdate}.png?t=${ts}`
+        };
+      }
+      await syncLocationToVectorDb(existingLoc);
+    }
+  }
+
+  const postLocId = consolidatedScene.locationId || locationId;
+  let aiTravelMinutes = 0;
+  if (locationId !== postLocId) {
+    const path = findPath(locationId, postLocId);
+    if (path && path.length > 2) {
+      const nextStepLocId = path[1];
+      const remainingQueue = path.slice(2);
+      const conn = (CONNECTIONS[locationId] || []).find(c => c.to === nextStepLocId);
+      aiTravelMinutes = conn ? conn.distance : 5;
+      consolidatedScene.locationId = nextStepLocId;
+      inputState.travelQueue = remainingQueue;
+      const destName = currentLocations.find(l => l.id === postLocId)?.name || postLocId;
+      const nextStepName = currentLocations.find(l => l.id === nextStepLocId)?.name || nextStepLocId;
+      
+      consolidatedScene.messages = [{
+        speakerId: 'narrator',
+        line: `[Especial] Te trasladas hacia ${nextStepName} (parada intermedia en tu viaje hacia ${destName}).`,
+        expression: 'neutral'
+      }];
+      consolidatedScene.participantIds = [];
+      consolidatedScene.narration = `En viaje hacia ${destName}.`;
+    } else if (path && path.length === 2) {
+      aiTravelMinutes = getPathDistance(path);
+      const destName = currentLocations.find(l => l.id === postLocId)?.name || postLocId;
+      consolidatedScene.messages.push({
+        speakerId: 'narrator',
+        line: `[Especial] Te trasladas a ${destName} (${aiTravelMinutes} min de viaje).`,
+        expression: 'neutral'
+      });
+    }
+  }
+
+  const minutes = (consolidatedScene.minutesPassed || 2) + aiTravelMinutes;
+  const { day: nextDay, time: nextTime } = addMinutesToTime(inputState.day, inputState.time, minutes);
+  const oldTOD = state.timeOfDay || getTimeOfDay(state.time || '08:00');
+  const isNewDay = nextDay > (state.day || 1);
+
+  inputState.day = nextDay;
+  inputState.time = nextTime;
+  inputState.timeOfDay = getTimeOfDay(nextTime);
+  const newTOD = inputState.timeOfDay;
+
+  if (isNewDay) {
+    runMorningWorldUpdate(activeConversationManager, nextDay, history, inputState);
+  } else {
+    triggerTimeOfDayTransitionIfNeeded(oldTOD, newTOD, inputState, history, activeConversationManager, db);
+  }
+
+  const bgEndResult = await triggerBackgroundEvents(inputState, events, currentLocations);
+  const allBgNotifications = [...(bgStartResult?.notifications || []), ...(bgEndResult?.notifications || [])];
+  if (allBgNotifications.length > 0) {
+    consolidatedScene.messages.unshift(...allBgNotifications);
+  }
+
+  const updatedRelationships = { ...inputState.relationships };
+  Object.entries(consolidatedScene.relationshipDeltas).forEach(([npcId, delta]) => {
+    updatedRelationships[npcId] = (updatedRelationships[npcId] || 0) + delta;
+  });
+
+  const updatedTrust = { ...inputState.trust };
+  Object.entries(consolidatedScene.trustDeltas).forEach(([npcId, delta]) => {
+    updatedTrust[npcId] = (updatedTrust[npcId] || 0) + delta;
+  });
+
+  if (Array.isArray(consolidatedScene.inventoryDeltas)) {
+    consolidatedScene.inventoryDeltas.forEach(delta => {
+      if (delta.action === 'add') {
+        inputState.inventory.push({ id: delta.id, name: delta.name, description: delta.description || '' });
+      } else if (delta.action === 'remove') {
+        inputState.inventory = inputState.inventory.filter(item => item.id !== delta.id);
+      }
+    });
+  }
+
+  if (typeof consolidatedScene.goldDelta === 'number') {
+    inputState.gold = (inputState.gold || 0) + consolidatedScene.goldDelta;
+  }
+
+  const updatedQuests = inputState.quests.map(q => {
+    let triggerDirectMeet = q.triggerDirectMeet;
+    if (q.status === 'active' && q.urgency === 'alta' && q.triggerDirectMeet === true) {
+      triggerDirectMeet = false;
+    }
+    const update = Array.isArray(consolidatedScene.questUpdates) ? consolidatedScene.questUpdates.find(u => u.id === q.id) : null;
+    const status = update ? update.status : q.status;
+    return { ...q, status, triggerDirectMeet };
+  });
+
+  let finalParticipants = consolidatedScene.participantIds || [];
+  if (Array.isArray(npcOrchestrationResults.wantsToLeaveIds)) {
+    finalParticipants = finalParticipants.filter(id => !npcOrchestrationResults.wantsToLeaveIds.includes(id));
+  }
+
+  consolidatedScene.state = {
+    relationships: updatedRelationships,
+    trust: updatedTrust,
+    day: inputState.day,
+    time: inputState.time,
+    timeOfDay: inputState.timeOfDay,
+    flags: inputState.flags,
+    completedEvents: inputState.completedEvents,
+    travelQueue: inputState.travelQueue,
+    inventory: inputState.inventory,
+    gold: inputState.gold,
+    quests: updatedQuests,
+    npcActivityLog: inputState.npcActivityLog || []
+  };
+
+  if (Array.isArray(consolidatedScene.messages)) {
+    consolidatedScene.messages.forEach(m => {
+      history.push({
+        speakerId: m.speakerId,
+        speaker: currentNpcs.find(n => n.id === m.speakerId)?.name || m.speakerId,
+        line: m.line,
+        type: 'npc',
+        locationId: inputState.locationId,
+        day: inputState.day,
+        time: inputState.time,
+        participantIds: finalParticipants
+      });
+    });
+  }
+
+  await saveHistory(history);
+  consolidatedScene.history = history;
+
+  res.write(`event: turn_complete\ndata: ${JSON.stringify(consolidatedScene)}\n\n`);
+  res.end();
+});
+
+
 app.get('/api/world/pending-updates', async (_req, res) => {
   try {
     const pending = await loadPendingUpdates();
@@ -2119,6 +2933,9 @@ export class ConversationManager {
   }
 
   normalizeScene(scene, location, participants, activeEvent = null) {
+    if (scene && scene.locationId) {
+      scene.locationId = scene.locationId.toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
     // Prefer the participant list the AI decided on — it controls scene entries/exits.
     // An explicit [] from the AI means "no one present" and must be respected.
     // Only fall back to the server-resolved list when the AI omitted the field entirely.
@@ -2231,6 +3048,18 @@ export class ConversationManager {
     const newNpc = (scene.newNpc && scene.newNpc.id && scene.newNpc.id !== '') ? scene.newNpc : null;
     const newLocation = (scene.newLocation && scene.newLocation.id && scene.newLocation.id !== '') ? scene.newLocation : null;
     const generateQuest = (scene.generateQuest && scene.generateQuest.npcId && scene.generateQuest.npcId !== '') ? scene.generateQuest : null;
+    const updateLocationImage = (
+      scene.updateLocationImage
+      && scene.updateLocationImage.locationId
+      && scene.updateLocationImage.locationId.trim() !== ''
+      && scene.updateLocationImage.prompt
+      && scene.updateLocationImage.prompt.trim() !== ''
+    )
+      ? {
+          locationId: String(scene.updateLocationImage.locationId).trim().toLowerCase(),
+          prompt: String(scene.updateLocationImage.prompt).trim()
+        }
+      : null;
     
     // Clean suggestions array if empty
     if (newNpc && Array.isArray(newNpc.suggestions)) {
@@ -2246,6 +3075,7 @@ export class ConversationManager {
       trustDeltas: normalizeDeltaMap(trustDeltasMap, finalParticipantSet),
       newNpc,
       newLocation,
+      updateLocationImage,
       minutesPassed: typeof scene.minutesPassed === 'number' ? Math.max(1, scene.minutesPassed) : 2,
       inventoryDeltas,
       goldDelta,
@@ -2399,6 +3229,63 @@ if (vectorManager) {
 }
 
 const conversationManager = new ConversationManager({ client, model: modelName, isGemini: useGemini });
+
+await runInitialWorldBootstrap(conversationManager);
+
+async function runInitialWorldBootstrap(manager) {
+  try {
+    const npcsList = await loadNpcs();
+    const locationsList = await loadLocations();
+    const currentEvents = await loadEvents();
+
+    const pending = { quests: [], npcActions: [], npcUpdates: [] };
+    const db = {
+      loadNpcs,
+      saveNpcs,
+      loadLocations,
+      saveLocations,
+      loadEvents,
+      saveEvents,
+      savePendingUpdates
+    };
+
+    const defaultState = {
+      day: 1,
+      time: '08:00',
+      timeOfDay: 'mañana',
+      locationId: 'plaza',
+      relationships: {},
+      trust: {},
+      flags: [],
+      completedEvents: [],
+      inventory: [],
+      gold: 15,
+      quests: [],
+      npcActivityLog: [],
+      travelQueue: []
+    };
+
+    const context = {
+      manager,
+      day: 1,
+      history: [],
+      state: defaultState,
+      npcsList,
+      locationsList,
+      currentEvents,
+      db,
+      pending,
+      vectorManager
+    };
+
+    console.log('[WorldBootstrap] Running initial afterNight/beforeMorning NPC cycle...');
+    await runDayTransition(1, context);
+    await savePendingUpdates(pending);
+    console.log('[WorldBootstrap] Initial NPC bootstrap completed.');
+  } catch (err) {
+    console.error('[WorldBootstrap] Initial NPC bootstrap failed:', err.message);
+  }
+}
 
 async function syncAssetsForCurrentData() {
   const currentNpcs = await loadNpcs();
