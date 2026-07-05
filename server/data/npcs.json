@@ -33,7 +33,43 @@
     "longTermGoal": "Asegurar la autonomía a largo plazo de Robledal frente al señorío feudal sin recurrir al conflicto armado.",
     "shortTermGoalProgress": [],
     "longTermGoalProgress": [],
-    "goalProgress": "Al amanecer del Día 1, Elvira comienza a revisar de manera frenética el sótano del ayuntamiento, buscando entre los viejos archivadores antes de que llegue la comitiva del inspector."
+    "goalProgress": "Al amanecer del Día 1, Elvira comienza a revisar de manera frenética el sótano del ayuntamiento, buscando entre los viejos archivadores antes de que llegue la comitiva del inspector.",
+    "romance": {
+      "romanceable": true,
+      "difficulty": 5,
+      "difficultyLabel": "Muy difícil",
+      "unlockRequirement": "Haberla ayudado directamente con el problema del recaudador o el inspector real, ganándote un trato que ya no es puramente político",
+      "likes": [
+        "Discreción absoluta, sobre todo en público",
+        "Que le lleven información útil sin que ella tenga que pedirla",
+        "Ser tratada como persona y no solo como autoridad",
+        "Constancia silenciosa antes que gestos grandes y visibles"
+      ],
+      "dislikes": [
+        "Que cuestionen sus decisiones delante del consejo",
+        "Cualquier indiscreción que ponga en riesgo la aldea",
+        "Presión para que hable de su difunto esposo"
+      ],
+      "approach": "No responde a la seducción directa, sino a la demostración sostenida de que se puede confiar en vos con cosas que le importan. El avance es lento y político al principio, y solo se vuelve personal cuando siente que la crisis del recaudador y el inspector deja de amenazarla.",
+      "milestones": [
+        {
+          "stage": "Conocida",
+          "scene": "Empieza a consultarte antes de tomar decisiones menores, en vez de solo informarte después."
+        },
+        {
+          "stage": "Amistad",
+          "scene": "Te recibe en su despacho fuera del horario oficial, sin agenda política de por medio."
+        },
+        {
+          "stage": "Cariño",
+          "scene": "Abre la caja de caoba bajo su despacho y te muestra el anillo de bodas que nunca dejó de guardar."
+        },
+        {
+          "stage": "Amor",
+          "scene": "Por primera vez en doce años, deja que alguien la vea perder la compostura sin intentar disimularlo."
+        }
+      ]
+    }
   },
   {
     "id": "herrero",
@@ -105,7 +141,43 @@
     "longTermGoal": "Transmitir de forma segura todo su conocimiento ancestral a Aurelia para preservar el legado de sanación.",
     "shortTermGoalProgress": [],
     "longTermGoalProgress": [],
-    "goalProgress": "Termina de mezclar el ungüento curativo en el amanecer del Día 1 y se prepara para adentrarse en la arboleda con Aurelia para aplicárselo a la criatura."
+    "goalProgress": "Termina de mezclar el ungüento curativo en el amanecer del Día 1 y se prepara para adentrarse en la arboleda con Aurelia para aplicárselo a la criatura.",
+    "romance": {
+      "romanceable": true,
+      "difficulty": 4,
+      "difficultyLabel": "Difícil",
+      "unlockRequirement": "Haber demostrado que sabes guardar un secreto delicado, idealmente relacionado con la criatura que trata en el bosque",
+      "likes": [
+        "Curiosidad genuina por su conocimiento, no solo por remedios rápidos",
+        "Paciencia con sus silencios y su forma indirecta de hablar",
+        "Acompañarla en tareas del bosque sin pedir nada a cambio",
+        "Que guarden sus secretos sin necesidad de jurarlo"
+      ],
+      "dislikes": [
+        "Preguntas directas que exigen respuesta inmediata",
+        "Curiosidad morbosa sobre la criatura que cuida",
+        "Que alguien trate su conocimiento como brujería peligrosa"
+      ],
+      "approach": "Hay que ganarse su confianza con hechos pequeños y sostenidos en el tiempo; las prisas la cierran por completo. Es más receptiva de noche, cuando el bosque está tranquilo y no tiene que sostener el papel de curandera del pueblo.",
+      "milestones": [
+        {
+          "stage": "Conocida",
+          "scene": "Empieza a pedirte ayuda con tareas concretas del bosque en vez de solo despacharte remedios."
+        },
+        {
+          "stage": "Amistad",
+          "scene": "Te deja acercarte lo suficiente como para intuir que esconde algo en las ruinas cubiertas de musgo."
+        },
+        {
+          "stage": "Cariño",
+          "scene": "Te confía la existencia de la criatura herida y te permite ayudarla a cuidarla."
+        },
+        {
+          "stage": "Amor",
+          "scene": "Rompe una de sus pausas larguísimas para decirte, sin metáforas por una vez, lo que siente."
+        }
+      ]
+    }
   },
   {
     "id": "posadera",
@@ -141,7 +213,43 @@
     "longTermGoal": "Garantizar la estabilidad financiera de la taberna para que sus dos hijos puedan estudiar con el clérigo.",
     "shortTermGoalProgress": [],
     "longTermGoalProgress": [],
-    "goalProgress": "Comienza el día encendiendo los fogones de la taberna para preparar el guiso especial, esperando atraer a la guardia y a los viajeros matutinos."
+    "goalProgress": "Comienza el día encendiendo los fogones de la taberna para preparar el guiso especial, esperando atraer a la guardia y a los viajeros matutinos.",
+    "romance": {
+      "romanceable": true,
+      "difficulty": 3,
+      "difficultyLabel": "Moderada",
+      "unlockRequirement": "Ninguno especial, aunque avanza más rápido si le mencionás algo sobre el mensajero desaparecido",
+      "likes": [
+        "Humor rápido y capacidad de seguirle el ritmo mordaz",
+        "Ser útil en la posada sin que se lo pidan",
+        "Que noten cuándo baja la guardia detrás de la barra",
+        "Constancia: aparecer seguido, no solo cuando necesitás algo"
+      ],
+      "dislikes": [
+        "Que la traten como una fuente de chismes y nada más",
+        "Insistir en las cartas del mensajero antes de tiempo",
+        "Compromisos vacíos o promesas que no se sostienen"
+      ],
+      "approach": "Se defiende con sarcasmo, así que hay que ganarse el derecho a verla en serio devolviéndole el ingenio sin ofenderse. Una vez que confía, es la más directa de todas para mostrar interés, aunque disfraza de broma sus primeros acercamientos reales.",
+      "milestones": [
+        {
+          "stage": "Conocida",
+          "scene": "Empieza a guardarte la mejor mesa de la taberna sin que lo pidas."
+        },
+        {
+          "stage": "Amistad",
+          "scene": "Te cuenta un chisme real, no uno de boca en boca, como señal de confianza."
+        },
+        {
+          "stage": "Cariño",
+          "scene": "Te deja entrar a la trastienda donde guarda las cartas del mensajero que nunca llegó."
+        },
+        {
+          "stage": "Amor",
+          "scene": "Te confiesa que una de esas cartas, la que nunca envió, estaba pensada para vos."
+        }
+      ]
+    }
   },
   {
     "id": "clerigo",
@@ -501,7 +609,43 @@
     "longTermGoal": "Desentrañar el misterio del noble que fingió su muerte y componer una obra maestra épica antes de cruzar la frontera.",
     "shortTermGoalProgress": [],
     "longTermGoalProgress": [],
-    "goalProgress": "Se encuentra en la cocina de la posada ayudando de buena gana a Inés con las tareas matutinas, esperando el momento propicio para sacar el tema del mensajero."
+    "goalProgress": "Se encuentra en la cocina de la posada ayudando de buena gana a Inés con las tareas matutinas, esperando el momento propicio para sacar el tema del mensajero.",
+    "romance": {
+      "romanceable": true,
+      "difficulty": 3,
+      "difficultyLabel": "Moderada-Difícil",
+      "unlockRequirement": "Haber intercambiado con ella al menos una historia o secreto real, demostrando que el trato es mutuo y no solo curiosidad tuya",
+      "likes": [
+        "Intercambios justos de información, dar tanto como se recibe",
+        "Que valoren sus canciones como algo más que entretenimiento",
+        "Espontaneidad y disposición a vivir una buena historia",
+        "Que no intenten atarla ni pedirle que se quede sin más"
+      ],
+      "dislikes": [
+        "Que traten sus canciones como simples chismes sin valor",
+        "Preguntas insistentes sobre su pasado o el matrimonio del que escapó",
+        "Promesas de estabilidad que suenan a jaula"
+      ],
+      "approach": "Coquetea con facilidad como parte de su oficio, así que la dificultad real está en que note la diferencia entre un juego de taberna y algo genuino. Responde bien a quien le da información o historias a cambio, tratándola como igual en el intercambio.",
+      "milestones": [
+        {
+          "stage": "Conocida",
+          "scene": "Empieza a improvisar versos sobre vos que no son solo parte del show."
+        },
+        {
+          "stage": "Amistad",
+          "scene": "Te deja leer una página de su cuaderno de fragmentos ajenos, algo que no le muestra a nadie."
+        },
+        {
+          "stage": "Cariño",
+          "scene": "Te cuenta la verdad sobre el matrimonio arreglado del que escapó de adolescente."
+        },
+        {
+          "stage": "Amor",
+          "scene": "Compone, por primera vez, una canción que no piensa vender ni cantar para nadie más que para vos."
+        }
+      ]
+    }
   },
   {
     "id": "carpintero",
@@ -573,7 +717,43 @@
     "longTermGoal": "Utilizar la información sobre el bordado de la capa del mensajero como un seguro para garantizar su estabilidad si el pueblo entra en crisis.",
     "shortTermGoalProgress": [],
     "longTermGoalProgress": [],
-    "goalProgress": "Prepara sus hilos y ordena el taller matutino a la espera de que Leonor de Ferraval acuda a probarse su vestido para sonsacarle rumores de la corte."
+    "goalProgress": "Prepara sus hilos y ordena el taller matutino a la espera de que Leonor de Ferraval acuda a probarse su vestido para sonsacarle rumores de la corte.",
+    "romance": {
+      "romanceable": true,
+      "difficulty": 2,
+      "difficultyLabel": "Sencilla-Moderada",
+      "unlockRequirement": "Ninguno especial, disponible desde el principio si visitás su taller con regularidad",
+      "likes": [
+        "Visitas frecuentes al taller, aunque sea sin motivo aparente",
+        "Escuchar sus chismes sin repetirlos a nadie más",
+        "Pequeños detalles de atención constante",
+        "Que la traten con calidez, no solo como proveedora de ropa"
+      ],
+      "dislikes": [
+        "Que compartan sus chismes con otros a sus espaldas",
+        "Preguntas bruscas sobre el mensajero desaparecido antes de tiempo",
+        "Ser subestimada por su oficio"
+      ],
+      "approach": "Es de las más fáciles de acercarse porque disfruta la compañía y la conversación por sí mismas. La clave es la regularidad: aparecer seguido por su taller y dejar que la confianza crezca mientras cose, más que buscar un momento grande y único.",
+      "milestones": [
+        {
+          "stage": "Conocida",
+          "scene": "Empieza a guardarte los mejores retazos de tela sin que se los pidas."
+        },
+        {
+          "stage": "Amistad",
+          "scene": "Te cuenta un chisme que no le contaría a cualquier cliente del pueblo."
+        },
+        {
+          "stage": "Cariño",
+          "scene": "Te confía lo que reconoció en el bordado de la capa del mensajero desaparecido."
+        },
+        {
+          "stage": "Amor",
+          "scene": "Te confiesa que, por una vez, quiere que un secreto suyo le sirva a ella misma: quedarse con vos."
+        }
+      ]
+    }
   },
   {
     "id": "cazador",
@@ -1365,27 +1545,5 @@
     "shortTermGoalProgress": [],
     "longTermGoalProgress": [],
     "goalProgress": "Consigue convencer a Galindo de que necesita intimidad para una prueba de costura, y se encamina sola y aliviada hacia el taller de Beatriz."
-  },
-  {
-    "id": "testdummyidnotused",
-    "name": "",
-    "role": "",
-    "locationId": "casaflorista",
-    "personality": "",
-    "secret": "",
-    "hint": "",
-    "color": "#7c7c7c",
-    "skin": "#dfab8f",
-    "hair": "#2b1b17",
-    "outfit": "civic",
-    "suggestions": [],
-    "routine": {
-      "mañana": "plaza",
-      "tarde": "mercado",
-      "noche": "taberna"
-    },
-    "shortTermGoal": "Establecer contacto",
-    "longTermGoal": "Cumplir sus deberes",
-    "goalProgress": "Aún no iniciado"
   }
 ]

@@ -524,7 +524,6 @@ export default function App() {
     });
   };
 
-  // Sends the API request and processes the visual novel response
   // Sends the API request and processes the visual novel response via SSE streaming
   const fetchConversation = async ({
     locationId,
@@ -545,7 +544,7 @@ export default function App() {
     streamActiveRef.current = true;
 
     try {
-      const response = await fetch('/api/conversation-stream', {
+      const response = await fetch('/api/conversation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

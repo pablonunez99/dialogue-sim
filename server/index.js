@@ -8,7 +8,7 @@ import { syncAllToVectorDb, syncAssetsForCurrentData } from './vectorSync.js';
 import { registerTurnHandlers } from './triggers/turnTriggers.js';
 import { registerDayPhaseHandlers } from './triggers/dayPhaseTriggers.js';
 import { registerWorldRoutes } from './routes/worldRoutes.js';
-import { registerConversationRoutes } from './routes/conversationRoutes.js';
+import { registerConversationRoutes } from './routes/conversation/conversationRoutes.js';
 
 const app = express();
 const port = Number(process.env.PORT || 5174);

@@ -83,9 +83,6 @@ app.post('/api/world/reset', async (_req, res) => {
   try {
     // 1. Delete database files
     const filesToDelete = [
-      npcsFilePath,
-      locationsFilePath,
-      eventsFilePath,
       pendingUpdatesFilePath,
       historyFilePath,
       vectorManager?.persistPath

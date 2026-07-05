@@ -11,13 +11,15 @@ const schema = {
           npcId: { type: 'string' },
           routine: {
             type: 'object',
-            properties: {
-              mañana: { type: 'string' },
-              tarde: { type: 'string' },
-              noche: { type: 'string' }
-            },
-            required: ['mañana', 'tarde', 'noche'],
-            additionalProperties: false
+            additionalProperties: {
+              type: 'object',
+              properties: {
+                locationId: { type: 'string' },
+                action: { type: 'string' }
+              },
+              required: ['locationId', 'action'],
+              additionalProperties: false
+            }
           }
         },
         required: ['npcId', 'routine'],
@@ -34,7 +36,7 @@ export async function assignNpcRoutinesForDay(context) {
   if (!manager?.client) return;
 
   const prompt = `Eres el Agente de Simulación del Mundo de la aldea medieval de Robledal.
-Hoy comienza el Amanecer del Día ${day}. Tu tarea es asignar una rutina diaria coherente (mañana, tarde y noche) para CADA NPC de la aldea basándote en sus metas actuales y en las ubicaciones disponibles del mapa.
+Hoy comienza el Amanecer del Día ${day}. Tu tarea es asignar una rutina diaria estructurada por hora (claves correspondientes a horas en formato string, de 0 a 23, ej: "7", "8", "9", "14", "20", "22") para CADA NPC de la aldea basándose en sus metas actuales y en las ubicaciones disponibles del mapa.
 
 === UBICACIONES DE LA ALDEA ===
 ${locationsList.map(l => `${l.name} (id: ${l.id})`).join(', ')}
@@ -44,10 +46,18 @@ ${npcsList.map(n => `- ID: ${n.id} | Nombre: ${n.name}
   * Objetivo a Corto Plazo: "${n.shortTermGoal || 'Establecer contacto'}"
   * Objetivo a Largo Plazo: "${n.longTermGoal || 'Cumplir sus deberes'}"`).join('\n')}
 
-TAREA: Determina la rutina de CADA NPC para el Día ${day} ("routine" con mañana, tarde y noche).
-Reglas:
-- La rutina DEBE ser coherente con sus objetivos activos (ej: si busca suministros irá al "mercado", si busca descansar irá a la "taberna" o su "casa", etc.).
-- SOLO usa IDs de ubicación válidos de la lista de ubicaciones.
+TAREA: Determina la rutina de CADA NPC para el Día ${day} mediante un mapa de horas a objetos { locationId, action }.
+Reglas de la rutina horaria:
+- Las claves del objeto "routine" deben ser strings de horas (números enteros de 0 a 23, ej: "7", "8", "14", "20"). Debes definir al menos 4 entradas por NPC (ej: despertar a las 7/8, actividades de mañana a las 8/9, actividades de tarde a las 14/15 y descanso/cena a las 20/22).
+- Para cada hora, debes especificar la ubicación física ("locationId") y la acción en lenguaje natural ("action").
+- La acción y ubicación DEBEN ser coherentes con sus objetivos activos (ej: si busca suministros irá a "mercado", si trabaja de día irá a su lugar de oficio, etc.).
+- Ejemplo de entradas en la rutina:
+  "7": { "locationId": "casa", "action": "despertar y vestirse" }
+  "8": { "locationId": "mercado", "action": "ir al mercado a comprar pan y provisiones" }
+  "9": { "locationId": "taberna", "action": "abrir la taberna y atender a los clientes" }
+  "20": { "locationId": "bodega", "action": "organizar barricas en la bodega" }
+  "22": { "locationId": "casa", "action": "ir a dormir" }
+- SOLO usa IDs de ubicación válidos de la lista de ubicaciones en "locationId".
 Devuelve el JSON con la propiedad "npcRoutines".`;
 
   console.log(`[assignRoutines] Querying AI to update NPC routines for Day ${day}...`);

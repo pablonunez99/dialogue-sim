@@ -14,10 +14,10 @@ export function registerDayPhaseHandlers() {
   on('afterNight', extractNpcActionsFromYesterday);
   on('afterNight', deprecateInvalidatedEvents);
   on('afterNight', pruneOrphanMemories);
+  on('afterNight', evaluateNpcGoalProgress);
 
   // beforeMorning triggers: run at start of day, preparing the new state, schedules, and goals
   on('beforeMorning', scheduleFollowupEvents);
-  on('beforeMorning', evaluateNpcGoalProgress);
   on('beforeMorning', assignNpcRoutinesForDay);
   on('beforeMorning', validateFlagConsistency);
   on('beforeMorning', generateDailyQuestsForActiveNpcs);
@@ -29,10 +29,6 @@ export function registerDayPhaseHandlers() {
 
 export async function runDayTransition(day, context) {
   console.log(`[DayTransition] Triggering transition for Day ${day}...`);
-  
-  // 1. Run afterNight logic (processing yesterday's day = day - 1)
-  await fire('afterNight', { ...context, day: day - 1 });
-  
   // 2. Run beforeMorning logic (planning today's schedule, goals, and quests)
   await fire('beforeMorning', { ...context, day });
   

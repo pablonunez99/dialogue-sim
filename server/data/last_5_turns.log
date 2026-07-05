@@ -1,32 +1,13 @@
 === DEBUG LOG: LAST 5 TURNS OF CONVERSATION ===
-Generated at: 2026-07-02T09:48:46.200Z
-Total history length: 31 entries
+Generated at: 2026-07-05T01:59:18.325Z
+Total history length: 7 entries
 
-
-[Turn 1] --------------------------------------------------
-VIAJERO: "No pasa nada. Recien llego a la aldea. Busco un lugar donde quedarme un tiempito" (Day 1, Time 08:12, Loc: casaflorista)
-NARRADOR: Rosalía se limpia suavemente las manos en su delantal, mirándote con timidez y curiosidad. El sol de la mañana entra por la ventana, iluminando los manojos de flores silvestres que decoran la estancia.
-ROSALÍA CAMPOFLOR: "¡Bienvenido a Robledal, Pablo! Pocos buscan posada aquí, pero quizás la taberna tenga algo disponible para ti."
-
-[Turn 2] --------------------------------------------------
-VIAJERO: "Ah , aja, si... el tema es que... mi aldea natal fue incendiada. Pude escapar solo con lo que llevo puesto." (Day 1, Time 08:12, Loc: casaflorista)
-NARRADOR: Rosalía se queda helada al escuchar tu relato, y su expresión de timidez se transforma de inmediato en una mueca de profunda compasión. Sus dedos se aprietan con fuerza contra el delantal de lino mientras da un paso instintivo hacia ti, conmovida por tu desgracia.
-ROSALÍA CAMPOFLOR: "¡Qué tragedia, pobre alma! Por favor, toma esto, quizás te traiga un poco de paz en este momento tan difícil."
-
-[Turn 3] --------------------------------------------------
-VIAJERO: "Que flor es esta? es hermosa" (Day 1, Time 08:13, Loc: casaflorista)
-NARRADOR: Un violento grito desgarrador resuena a lo lejos, rompiendo súbitamente la calma matutina de la aldea. Rosalía se estremece al instante, apartando los ojos de la flor y mirando alarmada hacia la ventana abierta.
-ROSALÍA CAMPOFLOR: "Es un nomeolvides, ¡para que no olvides que aquí hay gente dispuesta a ayudarte! Pero... ¿oíste eso? Ese grito ha sonado muy cerca."
-
-[Turn 4] --------------------------------------------------
-VIAJERO: "Habra que ir a ver" (Day 1, Time 08:14, Loc: casaflorista)
-NARRADOR: Salís de la cabaña a toda prisa hacia la Plaza del Pozo, donde el eco del grito aún resuena. Allí, bajo el sol matutino, una pequeña multitud rodea el pozo con rostros llenos de pavor.
-ROSALÍA CAMPOFLOR: "¡Cierto, no podemos quedarnos parados! Vamos, pero ten cuidado, no me gusta nada ese alboroto."
-ELVIRA DE ROBLEDAL: "Mantengamos el orden. Iré tras ella, no perdamos de vista lo que ocurre en nuestra plaza."
-NARRADOR: [Especial] Te trasladas a Plaza del Pozo (5 min de viaje).
 
 [Turn 5] --------------------------------------------------
-VIAJERO: "que ha ocurrido?" (Day 1, Time 08:24, Loc: plaza)
-NARRADOR: Al llegar a la plaza, un grupo de aldeanos rodea el pozo señalando su interior con rostros desencajados. Un fino hilo de sangre fresca se desliza por el borde de piedra, perdiéndose en la oscuridad del fondo. La alcaldesa Elvira intenta mantener el control mientras Rosalía contiene el aliento a tu lado.
-ROSALÍA CAMPOFLOR: "¡No lo sé, Pablo! Es horrible... sangre en el pozo, Dios nos asista."
-ELVIRA DE ROBLEDAL: "Aún no conocemos la causa, pero esto presenta complicaciones graves para nuestra paz. Retírense todos del brocal inmediatamente mientras organizo una inspección."
+VIAJERO: "hola" (Day 1, Time 08:00, Loc: plaza)
+NARRADOR: El sol matutino ilumina las manchas oscuras sobre el brocal del pozo mientras la tensión se palpa entre los reunidos. Mara Lunaverde se aproxima apresuradamente al grupo con semblante grave y paso firme.
+NARRADOR: [Sucesos de la Aldea] Mientras tanto, en Camino al Castillo: Un jinete de porte rígido cruza el camino hacia Robledal, con un sello real cosido en la solapa. Cesáreo de Montalva ha llegado antes de lo que nadie esperaba. La noticia corre por la plaza en minutos. (Consecuencia: A partir de este evento, la alcaldesa se muestra más tensa en sus diálogos y el granjero evita hablar de los registros del consejo.)
+MARA LUNAVERDE: "No es momento de saludos, viajero. Necesito pétalos azules de la linde del bosque, tres de ellos, y hazlo con total discreción."
+INÉS JARRABLANCA: "Deja las cortesías para otro día, forastero. Hay sangre fresca en el pozo y el ambiente está bastante cargado para perder el tiempo en cháchara."
+BORIN MARTILLOPARDO: "Deja las palabras vacías, eso tiene mal filo. Mira la sangre del pozo y mejor mantente apartado, que el día se ha puesto oscuro muy pronto."
+ELVIRA DE ROBLEDAL: "Como ve, viajero, la cosecha de este año está siendo empañada por asuntos muy desagradables; eso presenta ciertas complicaciones para todos."

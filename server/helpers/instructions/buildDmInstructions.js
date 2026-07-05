@@ -93,12 +93,7 @@ export function buildDmInstructions({
   // Build detailed npc personalities block for present NPCs
   const npcPersonalitiesContext = participants.length > 0
     ? `\n=== PERSONALIDADES DE PERSONAJES PRESENTES EN ESCENA ===\n` + participants.map(npc => {
-        return `- ${npc.name} (ID: ${npc.id}):\n` +
-               `  * Rol: ${npc.role}\n` +
-               `  * Personalidad: ${npc.personality}\n` +
-               `  * Estilo de habla: ${npc.speech_style || 'Estándar'}\n` +
-               `  * Secreto: ${npc.secret || 'Sin secreto'}\n` +
-               `  * Meta a corto plazo: ${npc.shortTermGoal || 'Ninguna'}`;
+        return npc
       }).join('\n')
     : '';
 
