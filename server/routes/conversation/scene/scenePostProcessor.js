@@ -157,6 +157,7 @@ export async function process(context, activeConversationManager, oldTOD) {
         line: scene.narration,
         type: 'npc',
         locationId: inputState.locationId,
+        participantIds: scene.participantIds,
         day: inputState.day,
         time: inputState.time
       });
@@ -169,6 +170,7 @@ export async function process(context, activeConversationManager, oldTOD) {
           line: m.line,
           type: 'npc',
           locationId: inputState.locationId,
+          participantIds: scene.participantIds,
           day: inputState.day,
           time: inputState.time
         });
@@ -195,6 +197,7 @@ export async function processTransition(context) {
         line: scene.narration,
         type: 'npc',
         locationId: inputState.locationId,
+        participantIds: scene.participantIds,
         day: inputState.day,
         time: inputState.time
       });
@@ -207,6 +210,7 @@ export async function processTransition(context) {
           line: m.line,
           type: 'npc',
           locationId: inputState.locationId,
+          participantIds: scene.participantIds,
           day: inputState.day,
           time: inputState.time
         });

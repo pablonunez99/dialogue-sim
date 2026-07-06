@@ -22,9 +22,11 @@ export function filterHistoryForNpc(history, npcId, maxTurns = 15) {
     // NPC was present when someone else spoke
     if (entry.participantIds && entry.participantIds.includes(npcId)) return true;
     
-    // Fallback/Legacy items that don't have participantIds: include them so context is not completely lost
-    if (!entry.participantIds) return true;
-    
+    // Fallback/Legacy items without participantIds: keep only player and narrator turns, or the NPC's own lines
+    if (!entry.participantIds) {
+      return entry.type === 'player' || entry.type === 'narrator' || entry.speakerId === npcId;
+    }
+
     return false;
   });
 

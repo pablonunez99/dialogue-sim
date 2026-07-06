@@ -95,7 +95,7 @@ export function buildNpcInstructions({
     ? dialoguesSoFarInTurn.map(d => `${d.npcName} (${d.npcId}) acaba de decir/hacer:\nDiálogo: "${d.dialogue}"\nAcción: ${d.actions}`).join('\n\n')
     : '(Ningún otro personaje ha hablado aún en este turno)';
 
-  return [
+   return [
     NPC_RULES,
     '\n=== ESQUEMA DE RESPUESTA JSON REQUERIDO ===',
     JSON.stringify(npcResponseSchema, null, 2),

@@ -3,7 +3,7 @@
     "id": "plaza",
     "name": "Plaza del Pozo",
     "asset": "assets/locations/plaza.png",
-    "prompt": "A medieval village square in the morning, tense crowd of peasants gathered around a stone well, whispers of horror, dark blood stains on the well stone, cinematic lighting.",
+    "prompt": "A medieval village square in the morning, a crowd of peasants gathered around a stone well, cinematic lighting.",
     "ambient": "Campanas lejanas, pregones de mercado y ruedas de carro sobre barro seco.",
     "connections": [
       {

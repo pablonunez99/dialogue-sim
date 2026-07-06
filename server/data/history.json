@@ -1,0 +1,2282 @@
+[
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Hola!",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:00"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sol de la mañana ilumina la plaza mientras el murmullo de la multitud congregada alrededor del viejo pozo se apaga de golpe. Los tres aldeanos interrumpen su tensa conversación y giran la cabeza lentamente para observarte con recelo.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:01"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "Buenos días. No reconozco su rostro en Robledal; ¿qué trae a un forastero a nuestra aldea en este momento de la temporada?",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:01"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Lo mismo digo, 'Caminante'. Aquí las caras nuevas suelen significar problemas o sed, y a juzgar por tu aspecto, espero que sea lo segundo.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:01"
+  },
+  {
+    "speakerId": "herrero",
+    "speaker": "Borin Martillopardo",
+    "line": "Si buscas trabajo, mi forja está al límite. Si solo pasas, no te detengas demasiado tiempo en las sombras del molino.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:01"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Busco trabajo, mi nombre es Pablo Rodenblat. Era el panadero de mi pueblo.",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:01"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La luz dorada de la mañana baña el empedrado de la plaza mientras el agua del pozo brilla bajo el sol. Las tres figuras detienen su charla y se giran con parsimonia hacia ti, evaluando tu presencia con miradas templadas.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:03"
+  },
+  {
+    "speakerId": "herrero",
+    "speaker": "Borin Martillopardo",
+    "line": "Un panadero no sirve para martillear acero, Pablo. La forja es pesada y quema, y aquí no hay harina que amasar.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:03"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "Un panadero, dice. Nuestra panadería tiene dueña desde hace mucho, y el pueblo no necesita más manos de las que ya tiene, Pablo.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:03"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Un panadero sin pan y sin pueblo, Pablo. Si te sirve de algo, mi cocina está siempre necesitada de alguien que sepa limpiar el hollín, pero no pago por caridad.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:03"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Tomaré lo que sea. Ines, con gusto trabajare para ti",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:03"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Mientras le hablas a Inés, un destello brillante entre las piedras del pozo llama tu atención. Al agacharte discretamente, tus dedos encuentran una reluciente moneda de oro que un comerciante descuidado debió perder esta mañana.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:05"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "La humildad es una virtud necesaria en tiempos de escasez, pero asegúrese de que sus manos sean tan rápidas como su palabra.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:05"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Bien, Panadero. Preséntate en La Jarra Blanca al mediodía; si el suelo de la cocina no brilla tras tu jornada, no esperes ni una moneda.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:05"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Voy a la taberna",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:05"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Cruzas el umbral de la taberna dejando atrás el bullicio de la plaza. El olor a madera vieja y guiso caliente inunda el aire matutino. Justo al entrar, tu bota tropieza con una reluciente moneda de oro encajada en una grieta del suelo, la cual recoges discretamente del gastado piso de madera.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:09"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se une a la conversación.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:09"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Elvira de Robledal se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:09"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Borin Martillopardo se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:09"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Llegas pronto, Panadero. La cocina está al fondo, el trapo y el cubo están tras la puerta.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:09"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Te trasladas a Taberna del Ciervo Partido (2 min de viaje).",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "08:09"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Seguro. Comienzo a trabajar",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "08:09"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Tomas el trapo áspero y comienzas a restregar la grasa acumulada en las mesas de madera. Inés se apoya en el mostrador, siguiendo en silencio la firmeza de cada una de tus pasadas.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "08:24"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Menos palabras y más acción, Panadero. El hollín no se quitará solo y los fogones esperan.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "08:24"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Sigo limpiando el hollin",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "08:24"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El hollín oscuro se adhiere fuertemente a tu piel mientras limpias el fondo de la gran chimenea. Inés te observa en silencio desde la barra, evaluando la seriedad de tu esfuerzo físico.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "08:44"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "No te detengas ahora, Panadero. El esfuerzo se nota en el brillo, sigue así.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "08:44"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Continuo toda la mañana limpiando y obedeciendo las ordenes de ines",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "08:44"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Mientras frotas con fuerza la madera de las mesas bajo la atenta mirada de Inés, un crujido seco resuena en la pared trasera. El estante superior de las jarras cede de repente, haciendo que docenas de recipientes de barro caigan al suelo recién barrido con un estrépito ensordecedor y salpiquen cerveza rancia por toda la sala.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:44"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Nada mal, Panadero. Parece que sabes seguir instrucciones mejor que otros que han pasado por aquí.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:44"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Uf... nada como el esfuerzo. Dime Ines, como estas? Quisiera saber algo sobre mi nueva jefa",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:44"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sudor se mezcla con el hollín en tus manos mientras dejas el trapo húmedo sobre la mesa de madera áspera. Inés detiene el paño con el que limpia la barra, fijando sus ojos oscuros en ti bajo la cálida luz matutina que se cuela por el ventanal.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:49"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Preocúpate de esos cristales rotos, Panadero. Aquí no se viene a charlar, se viene a trabajar; de mi vida ya me encargo yo.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:49"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Comienzo inmediatamente a limpiar lo roto. Intento que ella no se esfuerce demasiado",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:49"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Te arrodillas rápidamente en el suelo húmedo, recogiendo los afilados trozos de barro y secando los charcos de cerveza con un trapo grueso antes de que ella pueda agacharse. El fuerte aroma a alcohol fermentado y arcilla mojada se eleva en el aire templado de la mañana.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:54"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Ahorra energías, Panadero; ya he cargado con pesos peores que un par de jarras rotas.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:54"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "no te preocupes Ines, yo me encargo, seguro tendras otras tareas mas importantes",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:54"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sol de la mañana entra inclinado por el ventanal, iluminando las motas de polvo suspendidas. Inés detiene el paño con el que frotaba la madera y te observa fijamente, midiendo con la mirada tu disposición al trabajo.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:59"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Tareas no faltan, Panadero. Si de verdad quieres ayudar, limpia bien esos restos y pasa a revisar la despensa; el inventario está hecho un desastre.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:59"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Claro. Hago lo que dice, incluso comienzo proactivamente a buscarme tareas",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "10:59"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El trapo húmedo se desliza con firmeza sobre la madera gastada del mostrador, removiendo el olor a cerveza vieja y grasa acumulada. El sol de la mañana entra en diagonal por los ventanales de la taberna, iluminando el polvo en suspensión mientras ordenas los pesados taburetes de pino.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:14"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "No te pases de listo, Panadero. Solo necesito que la despensa sea legible; nada de ordenar por colores.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:14"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "La belleza esta en lo simple no? tienes razon.",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:14"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El trapo áspero saca a relucir el brillo natural de la madera oscura de la mesa. Inés observa con atención la firmeza de tu movimiento, evaluando tu disposición y el ritmo constante de tu trabajo.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:16"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "La simplicidad paga las cuentas, Panadero. Sigue con la despensa antes de que cambie de opinión sobre tu utilidad.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:16"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Voy a ordenar la despensa.",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:16"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Cruzas el umbral hacia la despensa trasera, donde el aire es considerablemente más frío. Las estanterías de pino crujen levemente bajo el peso de las tinajas mientras estiras el brazo para ordenar el primer nivel.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:21"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Muy bien, no te distraigas con lo que veas en los estantes. Si algo falta, apúntalo en la tablilla.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:21"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Continuo mis tareas. Mientras le pregunto a ines como es trabajar aqui",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:21"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El trapo húmedo se desliza sobre la madera desgastada de la barra, levantando una fina capa de polvo dorado bajo el sol que entra por el ventanal. Limpias con esmero una esquina especialmente grasienta, esperando su respuesta mientras ella detiene su tarea por un momento.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:26"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Es como intentar achicar el mar con un cubo pinchado. Si te gusta el ruido, el olor a cerveza rancia y que nadie te agradezca nada, te sentirás en casa.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:26"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Debe ser dificil gestionar esto sola no?",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:26"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sol de la mañana resalta las marcas de desgaste diario en la barra de madera. Inés detiene por un instante el trapo húmedo con el que limpia el mostrador, mirándote de frente tras escuchar tu pregunta.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:28"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "La lástima no paga las facturas, Panadero. Sigue moviendo esas cajas o pronto serás tú quien busque otro lugar donde dormir.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:28"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Sigo trabajando mientras conversamos. No te preocupas mas dulce dama. Hoy no estas sola. Aqui estaré para escuchar las no gratitudes",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:28"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El trapo húmedo se desliza con suavidad sobre la veta de la mesa, retirando el polvo acumulado. Inés detiene sus movimientos mecánicos tras la barra, clavando la mirada en tus manos trabajadoras mientras el sol matutino calienta el ambiente.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:33"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Ahorra el halago, Panadero. Aquí solo valen los resultados, no las palabras bonitas.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:33"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Termino de limpiar la despensa, giro y le digo: Puedo hacer ambas cosas corazon",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:33"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Sales de la fresca penumbra de la despensa sacudiéndote el polvo de las manos. Te detienes frente a la barra, donde Inés limpia un vaso de peltre mientras te observa fijamente con una ceja alzada.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:38"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Ahorra el azúcar, Panadero. Si la despensa está impecable, que es lo que me importa, ya veremos si te ganas el derecho a bromear.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:38"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "He terminado, le digo orgulloso, mientras me ofrezco a realizar otra tarea",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:38"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El frotado concienzudo deja la mesa de madera reluciente bajo el sol de la mañana. Al retirar el último rastro de grasa, una brillante moneda de plata perdida entre las tablas del suelo queda al descubierto. Inés observa el hallazgo con una leve sonrisa de aprobación por el trabajo bien hecho.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:48"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Nada mal, Panadero. Ya que tienes manos rápidas, ve a la bodega y trae un barril de la cosecha de otoño; ten cuidado, que la escalera está algo floja.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:48"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "voy a la bodega a buscar el barril y se lo entrego",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "11:48"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Dejas atrás el bullicio de la plaza y entras en la fresca penumbra de la taberna. Inés te recibe tras el mostrador y, con un leve gesto de la cabeza, señala la trampilla de madera que da acceso al sótano.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "11:52"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Elvira de Robledal se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "11:52"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Borin Martillopardo se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "11:52"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Bien hecho, Panadero. Te has ahorrado una caída tonta en esas escaleras; tómate un respiro, te has ganado un trago.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "11:52"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Te trasladas a Taberna del Ciervo Partido (2 min de viaje).",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "11:52"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Gracias Ines... Asique tenias una hermosa sonrisa escondida por ahi.... Dime, a que hora suelen llegar los clientes?",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:52"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La luz del mediodía entra de lleno por las ventanas de la taberna, cortando la penumbra del interior. El aroma de la comida que empieza a prepararse en la cocina trasera inunda el ambiente. El constante frotar del paño sobre la madera de la barra se detiene por un breve segundo.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:54"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Deja las lisonjas para los trovadores, Panadero. Los parroquianos habituales empiezan a aparecer cuando el sol cae, justo después de la hora de la cena.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:54"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Ah, tenemos tiempo entonces...",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:54"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sol del mediodía se filtra con fuerza por las ventanas de madera, iluminando las motas de polvo que flotan sobre la barra. Inés detiene un instante su trapo sobre la superficie gastada, sosteniendo tu mirada con firmeza en el silencio de la taberna vacía.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:56"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Tiempo para trabajar, no para holgazanear. Si no hay clientes, siempre hay estantes que limpiar o suelos que fregar.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:56"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "No diga mas. Paso toda la tarde limpiando hasta el ultimo rincon",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "11:56"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sudor empapa tu camisa durante horas de frotar vigas, suelos y rincones oscuros bajo la luz menguante de la tarde. El aire de la taberna ahora huele a madera limpia y cera de abeja, libre de la grasa acumulada.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "15:56"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "A ver si es verdad. La parte trasera de la chimenea lleva meses pidiendo a gritos un buen fregado.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "15:56"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Mira llegaron clientes! Los atiendo?",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "15:56"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El chirrido de la puerta de madera anuncia la entrada de dos labradores que se sientan al fondo. Inés levanta la mirada del mostrador, sosteniendo un paño limpio entre las manos.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:01"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "No te precipites, deja que se acomoden primero. Atiende sus pedidos con rapidez y no te quedes escuchando sus conversaciones.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:01"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Esta bien, espero a que se sienten y voy a tomarles el pedido",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:01"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Sostienes el paño húmedo mientras observas a los recién llegados acomodarse en la mesa del rincón. Inés te vigila de reojo desde la barra mientras seca una jarra de peltre.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:06"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Bien hecho. Mantén la cabeza baja y no te enredes en sus charlas.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:06"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Veo que llego Selene, le hablare",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:06"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El rasgueo suave de un laúd destaca sobre el murmullo general de la taberna. Selene se acomoda en un taburete de la esquina, ajustando las clavijas de su instrumento mientras la luz de la tarde resalta el polvo en suspensión.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:08"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Selene Cantoclaro se une a la conversación.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:08"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Cuidado con esa, Panadero. Selene tiene lengua de serpiente y oídos de murciélago; no le sueltes nada que no quieras que sepa todo Robledal mañana.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:08"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Vaya, un rostro nuevo que parece cargar más secretos que harinas, ¿acaso buscas una canción o solo te gusta mirar?",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:08"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Mirarte no esta nada mal",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:08"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sol de la tarde entra inclinado por los ventanales, iluminando las motas de polvo suspendidas en el aire. El trapo húmedo se detiene un instante sobre la barra de madera pulida, interrumpiendo la constante tarea de limpieza.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:09"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Deja de intentar camelar a todo el que entra, Panadero. Tenemos clientes esperando y tu lengua no llena las jarras.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:09"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Un halago al aire suena bien, pero cuidado, que a veces el destino te tiene algo en el rehén. ¿Buscas solo flores, o escondes algún dolor entre tus labores?",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:09"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Hola selene",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:09"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La brisa cálida de la tarde sopla sobre la plaza mientras saludas a Selene. De repente, un estrépito de metal cayendo y un grito alarmado resuenan desde el mercado cercano. El eco del disturbio interrumpe el murmullo de la plaza.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:10"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Hola de nuevo, alma errante. ¿Qué vientos te traen a este rincón, donde la música y el secreto se confunden en la canción?",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:10"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Menos música y más trabajar, que las jarras no se llenan solas con rimas. ¡Panadero, deja de distraerte!",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:10"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Le susurro a selene que me siga a la bodega",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:10"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Le susurras tu propuesta al oído a Selene. Ella te dedica una mirada de reojo cargada de curiosidad, asiente en silencio y te acompaña de vuelta hacia la taberna, dejando atrás el bullicio de la plaza.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:14"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:14"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "La bodega es un lugar frío para una melodía, ¿no crees? Pero si el secreto es jugoso, quizás valga la pena el viaje.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:14"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Te trasladas a Taberna del Ciervo Partido (2 min de viaje).",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "16:14"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Ven a la bodega",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:14"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Bajas por la estrecha escalera de madera hacia la penumbra de la bodega, sintiendo cómo el aire se vuelve de golpe frío y húmedo. Selene te sigue de cerca, con pasos ligeros que apenas hacen ruido sobre los viejos peldaños.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:20"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "La oscuridad aquí guarda bien lo que se dice, lejos de ojos curiosos. ¿Qué historia escondes que requiere tanta sombra?",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:20"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Te trasladas a Bodega de la Taberna (5 min de viaje).",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:20"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Vi como me mirabas. Y tus ojos, me hipnotizaron. Tu lengua me intriga. Tus curvas me emborrachan",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:20"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La penumbra de la bodega envuelve la distancia entre ambos, cortada únicamente por el débil haz de luz que desciende de la entrada. El aroma a mosto y a madera húmeda impregna el aire denso mientras el silencio del sótano amortigua el bullicio de la taberna de arriba.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:21"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Vaya, qué versos más cargados, aunque de poco sirven si los cimientos son sagrados. ¿Viniste a halagar mi figura, o a soltar la verdad que bajo tu piel perdura?",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:21"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Mi verdad es que me enamore desde el primer instante por el que te vi entrar a la taberna.",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:21"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El frío de la bodega contrasta con la cercanía de vuestros cuerpos entre las sombras. Un goteo lejano resuena en el silencio mientras la escasa luz del tragaluz ilumina el perfil de la bardo, quien ladea levemente la cabeza para mirarte a los ojos.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:23"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Esas palabras suenan dulces, como miel en la garganta, pero el amor suele ser una trampa que al bardo encanta. Dime, ¿tu corazón busca mi compañía, o solo distrae tu mente de alguna lejanía?",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:23"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "De donde vengo lo unico que vale es la honestidad. Y todo mi cuerpo grita por tu compañia. aqui y ahora.",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:23"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La cercanía física en el reducido espacio de la bodega se vuelve palpable. El frío del sótano contrasta fuertemente con la proximidad de los cuerpos en la penumbra.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:25"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "La honestidad es un arma de doble filo, forastero; aunque tu ardor me seduce, prefiero mantener mi laúd afinado antes que enredarme en un compromiso apresurado.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:25"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Aunque mi llama es enorme, no hay lluvia que la apague. Te esperaré lo que haga falta (me acerco a ella, a una distancia que podria cerrar con solo estirar los labios). Aunque, estas segura de que no quieres probar algo?",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:25"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El aire frío de la bodega se entibia al acortar la distancia entre ambos, donde la débil luz del tragaluz recorta vuestras siluetas. Un silencio espeso desciende entre los barriles de roble, dejando únicamente el rumor de una respiración cercana.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:27"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Tu insistencia es un verso que se repite sin gracia, forastero; prefiero una canción que no termine en una farsa. No busques probar mi suerte, pues mi laúd solo canta lo que el viento me advierte.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:27"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Dime, que debo hacer para convercerte de que voy en serio? No quiero algo fugaz contigo. No soy esa clase de persona.",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:27"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La penumbra de la bodega suaviza la escasa distancia física que os separa, dejando que el sonido de vuestras respiraciones llene el espacio húmedo. El lejano murmullo de los clientes de la taberna apenas logra romper el silencio entre ambos.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:29"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Para convencerme, Panadero, demuestra que tu lealtad no es solo un capricho pasajero. Un noble que fingió su muerte y escapó al destino, ¿no es una historia que merece un buen sentido?",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:29"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Como te lo demuestro?",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:29"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La penumbra de la bodega envuelve el espacio entre los dos, roto únicamente por el débil haz de luz del techo. Selene retrocede un paso apoyándose contra un gran barril de roble, observando cada uno de tus movimientos en silencio.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:31"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Muéstrame que tus manos no solo sirven para limpiar, sino para proteger lo que debe ser hallado. Averigua quién porta un sello de nobleza en una carta que no debería existir en esta aldea, y quizás te crea.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:31"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Te ayudaré a encontrar a este hombre si eso quieres. Pero no lo haré gratis. Como se que no estas utilizandome solo con promesas bonitas?",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:31"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El polvo flota perezosamente en el estrecho haz de luz que se filtra desde las rendijas del techo. En la intimidad de la bodega, rodeados de viejos barriles de madera, la atmósfera se vuelve densa y cargada de expectativas.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:33"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "La confianza no se compra con oro, panadero, sino con riesgos compartidos. Si hallas esa carta con el sello, mi lealtad será la melodía que guíe tu camino, y mi bolsa, si fuera necesario, tu auxilio.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:33"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Dame un beso... y seré quien te lleve a lo mas alto.",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:33"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La penumbra de la bodega se estrecha entre el crujido de la madera y vuestro aliento compartido. Selene sostiene su laúd contra el pecho, pero no da un paso atrás en la oscuridad del sótano.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:34"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Un beso no es moneda de cambio en mi canción, panadero. Primero tráeme el sello, y luego veremos si el ritmo merece el empeño.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:34"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Esta bien... y que tal una cancion?",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:34"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El tenue haz de luz del tragaluz ilumina el polvo que flota entre los pesados barriles de vino. Selene acomoda su laúd entre sus brazos, frotando suavemente las cuerdas de madera con las yemas de sus dedos en un silencio expectante. El olor a humedad y mosto fermentado impregna el gélido ambiente de la bodega.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:36"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Una canción para endulzar la espera, mientras el sello busca quien lo revela. Escucha bien, panadero, que en mis versos el noble muerto es el primero.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:36"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "escucho la cancion",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:36"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El murmullo de la taberna de arriba apenas traspasa el grueso suelo de madera de la bodega. Selene acomoda su laúd entre los brazos mientras la tenue luz del tragaluz resalta el polvo suspendido en el aire.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:39"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "El noble cayó en la estepa, su sangre tiñó el frío metal, pero su sello escapó de la cepa, oculto en un sobre de sal. Busca la marca del cuervo grabado, la carta que espera en rincón olvidado.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:39"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Gran cancion, se nota que no es solo entretenimiento. Y tu voz, es miel.",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:39"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Un haz de luz dorada filtra el polvo en suspensión que os rodea. Selene acaricia con suavidad el mástil de su laúd, esbozando una sutil sonrisa de soslayo. El gélido aire de la bodega amortigua vuestras respiraciones cercanas.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:41"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Halagos de miel que endulzan el oído, pero la realidad del sello es el verdadero destino. Guarda tus versos para el camino, y tráeme pronto el rastro del asesino.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:41"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "(Le tomo la mano y se la beso). Lo haré bella.",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:41"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El calor de tu mano se une al frío tacto de sus dedos en la penumbra de la bodega. Selene mantiene la mirada fija en ti mientras retiras tus labios de su piel, permaneciendo inmóvil entre las sombras de los viejos barriles.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:43"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Tus gestos son tan atrevidos como tus promesas, panadero. Asegúrate de que tus actos tengan el mismo peso, pues no perdono a quien juega con fuego y se quema.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:43"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Regreso a la taberna.",
+    "type": "player",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:43"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Subes los gastados peldaños de madera de vuelta al salón principal de la taberna, seguido de cerca por la bardo. El contraste del aire gélido de la bodega con el calor del hogar de la chimenea es inmediato al cruzar la puerta de madera.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:49"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se une a la conversación.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:49"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "No te demores demasiado con las jarras, forastero. Recuerda que el cuervo busca siempre al descuidado.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:49"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Veo que finalmente has decidido salir de ese agujero frío. Menos charla con los bardos y más arrimar el hombro, que el suelo de la entrada está lleno de barro.",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:49"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Te trasladas a Taberna del Ciervo Partido (5 min de viaje).",
+    "type": "npc",
+    "locationId": "bodega",
+    "day": 1,
+    "time": "16:49"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Voy a limpiar el suelo. Luego, le pregunto a Ines, si no ha recibido una carta para mi, con un sello.",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:49"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Tomas la escoba y comienzas a limpiar los restos del suelo de madera, levantando una fina capa de polvo dorado bajo el sol de la tarde. Tras dejar el cepillo a un lado, te aproximas a la barra donde Inés organiza los tarros de barro junto a Selene.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:59"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "¿Una carta para ti? No sé quién te crees que soy, ¿mensajera real o posadera? Aquí solo llegan recibos, forastero.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:59"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Parece que la fortuna es esquiva con tu correo, panadero; los sellos nobles rara vez llegan a manos de quien los busca con tanto esmero.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:59"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Paso toda la tarde limpiando y atendiendo a los clientes",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "16:59"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El esfuerzo físico se siente en tus hombros tras fregar las últimas mesas y ordenar los taburetes de madera. El aroma a cera limpia y cerveza templada flota en el aire de la taberna mientras las ventanas comienzan a teñirse con el tono anaranjado del atardecer.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "18:59"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Al César lo que es del César, panadero; tu esfuerzo brilla más que el suelo bajo el lucero. Pero dime, tras tanta labor, ¿alguna sombra viste en este rincón con algún sello de valor?",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "18:59"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Deja ya de mirar esquinas, que ni hay cartas ni hay sellos de nobleza aquí. Concéntrate en la clientela, 'cazador de sombras', que la taberna sigue llena.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "18:59"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Eso hago! continuo trabajando",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "18:59"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sudor se mezcla con el hollín negro en tus brazos mientras restriegas las últimas manchas difíciles de la chimenea. Inés observa con atención la firmeza de tus movimientos, mientras Selene, sentada a unos pasos, acaricia suavemente las cuerdas de su laúd.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:14"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Así se habla, Panadero. Sigue dándole fuerte a esa madera, que los clientes no perdonan una mesa pegajosa.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:14"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Trabaja con ritmo, que el sol se agota, mientras la historia tras las puertas flota.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:14"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Atiendo a las mujeres que acaban de llegar",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:14"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Te acercas a la mesa donde se encuentran las mujeres, con el paño de servicio al hombro. El aroma a guiso caliente y cerveza impregna el aire templado mientras te dispones a tomar su orden.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:16"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Atiende con gracia, que la cortesía es el mejor velo para cualquier sospecha. No olvides tus oídos bien abiertos, pues a veces las mujeres dicen más de lo que parece en su juego de senderos.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:16"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Deja la charla de la bardo para otro momento y céntrate en servir. Si se quejan de la temperatura del vino, les das un poco de agua caliente y asunto arreglado.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:16"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Miro aun quien falta por atender.",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:16"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Al revisar las banquetas y el suelo de las mesas vacías en el rincón oscuro, tus dedos tropiezan con una reluciente moneda de oro que se había colado en una grieta de la madera. Al levantar la vista, constatas que el resto de los clientes ya han sido provistos de jarras llenas.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:18"
+  },
+  {
+    "speakerId": "bardo",
+    "speaker": "Selene Cantoclaro",
+    "line": "Aquel viejo de la esquina parece tener la sed de una semana; no lo hagas esperar, pues la impaciencia es mala compañera.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:18"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Hazle caso a la bardo, Panadero, ese viejo es el mejor cliente de la casa y odia la espera.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:18"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "voy a hablar con el viejo",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:18"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Sales de la ruidosa calidez de la taberna buscando el aire fresco de la tarde. En la Plaza del Pozo, el viejo Tobías descansa inmóvil sobre un banco de piedra áspera, observando fijamente el reflejo del agua bajo el cielo crepuscular.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:22"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Tobías Cienlunas se une a la conversación.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:22"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Selene Cantoclaro se retira de la escena.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:22"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se retira de la escena.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:22"
+  },
+  {
+    "speakerId": "anciano",
+    "speaker": "Tobías Cienlunas",
+    "line": "Ah, un rostro nuevo que se acerca a mis huesos cansados. ¿Buscas historia o solo vienes a ver cómo el tiempo gotea en este pozo?",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:22"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Te trasladas a Plaza del Pozo (2 min de viaje).",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:22"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Sabes algo de un noble que ha fingido su muerte?",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:22"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El sol de la tarde baña la plaza de tonos dorados mientras el viento acaricia las copas de los robles cercanos. El anciano Tobías, sentado junto al pozo, detiene su mirada en ti con ojos astutos, acariciando lentamente su barba de plata. Un par de palomas revolotean cerca del agua y levantan el vuelo.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:24"
+  },
+  {
+    "speakerId": "anciano",
+    "speaker": "Tobías Cienlunas",
+    "line": "Los muertos suelen quedarse quietos, joven; si un noble busca el olvido, más le vale aprender a no dejar rastros bajo la luna. ¿Acaso crees que los cuentos de cuna se inventan para dormir, o para ocultar lo que nadie quiere recordar?",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:24"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Nada. Vuelvo a la taberna",
+    "type": "player",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:24"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Dejas atrás el bullicio de la plaza y empujas la pesada puerta de madera de la taberna. El agradable olor a guiso matutino y el frescor del interior te envuelven de inmediato al entrar.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:28"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se une a la conversación.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:28"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Tobías Cienlunas se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:28"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Menos mal que regresas; el viejo Tobías solo sabe dar vueltas a la cabeza, no a los barriles. Aquí hay trabajo pendiente, así que deja las adivinanzas de lado.",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:28"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Te trasladas a Taberna del Ciervo Partido (2 min de viaje).",
+    "type": "npc",
+    "locationId": "plaza",
+    "day": 1,
+    "time": "19:28"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Observo la taberna, quienes estan aqui?",
+    "type": "player",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:28"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El cálido resplandor de la chimenea baña las gastadas mesas de madera de la taberna. Al barrer la vista por el rincón más oscuro, un destello metálico entre las ranuras del suelo revela una reluciente moneda de oro que alguien debió perder.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:30"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Aparte de un par de mercaderes locales y un borracho que apenas sostiene la jarra, la taberna está vacía hoy. Deja de fisgonear y ayúdame con las jarras, que la clientela no se sirve sola.",
+    "type": "npc",
+    "locationId": "taberna",
+    "day": 1,
+    "time": "19:30"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Como estas?",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:30"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Las sombras del atardecer se alargan sobre el pozo de piedra mientras los tres aldeanos detienen su murmullo. Intercambian una mirada rápida antes de fijar sus ojos en ti, evaluando tu inesperada presencia en la plaza.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:31"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "¿Cómo estoy? Cansada, 'Panadero'. Pero el trabajo no se hace solo, así que menos cháchara y a limpiar esos vasos.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:31"
+  },
+  {
+    "speakerId": "herrero",
+    "speaker": "Borin Martillopardo",
+    "line": "Con las manos sucias de hollín y el yunque esperando, no me quejo. ¿Tienes algún hierro que reparar o solo buscas perder el tiempo?",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:31"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "La cosecha se acerca y los preparativos exigen toda mi atención; es una estación de mucho movimiento, como bien puedes ver.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:31"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Emm... disculpen pero no tengo donde dormir.",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:31"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El crepúsculo comienza a teñir de sombras el empedrado de la plaza mientras el viento nocturno agita levemente las copas de los árboles. Los tres aldeanos detienen su charla junto al viejo brocal del pozo y fijan sus miradas sobre ti tras escuchar tu dilema.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:33"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "Eso presenta ciertas complicaciones, pues nuestras estancias están dispuestas para quienes contribuyen al ciclo de la aldea. Podrías consultar con la posadera, pero la hospitalidad sin sustento suele ser una semilla que no germina.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:33"
+  },
+  {
+    "speakerId": "herrero",
+    "speaker": "Borin Martillopardo",
+    "line": "La forja no es una posada, forastero. Si no tienes con qué pagar una cama, eso tiene mal filo para ti.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:33"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "La Jarra Blanca no es un refugio para caridad, Panadero. Si tienes esas quince monedas de oro que asoman por tu bolsa, tendrás un jergón esta noche; si no, el banco del pozo está muy despejado.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:33"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "No ire a donde no soy bienvenido. Me quedare a dormir en el pozo",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "herrero",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:33"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El frío de la noche empieza a calar en las piedras del pozo mientras la luz del crepúsculo se desvanece por completo. Los tres aldeanos se miran entre sí, sorprendidos por la brusca determinación del forastero de pasar la noche a la intemperie.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:35"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "La intemperie es un refugio cruel en esta estación; no seas imprudente, las noches de Robledal no son clementes con los caminantes.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:35"
+  },
+  {
+    "speakerId": "herrero",
+    "speaker": "Borin Martillopardo",
+    "line": "Haz lo que quieras, es tu pellejo. Pero luego no te quejes si el frío te cala hasta los huesos.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:35"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Deja el orgullo para alguien que tenga una manta, Panadero. El jergón sigue ahí por quince monedas si cambias de parecer antes de que la escarcha te deje tieso.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:35"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Borin Martillopardo se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:35"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:35"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Voy acomodandome para dormir.",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:35"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Te acomodas sobre el duro borde de piedra del pozo buscando una postura tolerable para pasar la noche. De pronto, un violento estruendo de madera rota y un grito colérico resuenan con fuerza desde la dirección de la taberna.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "19:40"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "La imprudencia es una mala compañera, pero no seré yo quien fuerce una voluntad ajena. Que descanses, si el sereno te lo permite.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "19:40"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Elvira de Robledal se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "19:40"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Miro en direccion de la taberna",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "19:40"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "El viento cálido de la noche mece los faroles colgados cerca del pozo. Al mirar hacia la taberna, la luz dorada que escapa de sus ventanas promete refugio frente a la oscuridad del camino.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:41"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se une a la conversación.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:41"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Elvira de Robledal se une a la conversación.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:41"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Deja de mirar la entrada con cara de pena, que el jergón no va a caminar hacia ti solo. Tú decides si prefieres una cama o el frío de la piedra.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:41"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Si lo unico que te interesa es el dinero, no, no ire. estas 15 monedas son todo lo que tengo.",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:41"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La penumbra del atardecer tiñe las piedras del viejo pozo con un tono violáceo bajo la brisa templada. Las sombras de los edificios colindantes comienzan a alargarse sobre el suelo empedrado, marcando el fin de la jornada.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:43"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "El dinero es simplemente una medida de esfuerzo, no el fin mismo. Si prefieres la piedra al refugio, es una elección que solo a ti te pertenece.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:43"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Es tu elección, Panadero. Mis hijos no comen de buenas intenciones ni de orgullo, y esa taberna cuesta sudor mantenerla en pie.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:43"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Pues trabaje todo el dia para ti. Ni siquiera me merezco un techo donde descansar?",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa",
+      "posadera"
+    ],
+    "day": 1,
+    "time": "19:43"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "La luz anaranjada del farol del pozo parpadea sobre las piedras desgastadas del suelo. Inés se cruza de brazos bajo la brisa templada de la noche, entornando los ojos ante el reclamo, mientras la alcaldesa observa la escena con atención silenciosa.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:45"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "El trabajo ya se pagó con las sobras de comida que te di al mediodía, Panadero. Mis hijos no llenan sus estómagos con tus quejas.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:45"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "La gratitud suele ser una cosecha escasa cuando el hambre aprieta. Si has trabajado tanto, sabrás que el esfuerzo sin acuerdo previo rara vez se traduce en moneda o techo.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:45"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Deja de dramatizar. Si quieres una cama, paga; si quieres caridad, te has equivocado de aldea.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:45"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:45"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Me siento a la orilla del pozo. intento dormir",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [
+      "alcaldesa"
+    ],
+    "day": 1,
+    "time": "19:45"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Te sientas sobre el borde de piedra fría del pozo, apoyando la espalda e intentando conciliar el sueño. El viento templado de la noche agita suavemente tu ropa mientras los párpados te empiezan a pesar.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:00"
+  },
+  {
+    "speakerId": "alcaldesa",
+    "speaker": "Elvira de Robledal",
+    "line": "La noche es larga y el frío de la piedra no perdona. Si decides persistir en tu empeño, que el sereno sea compasivo contigo.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:00"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Elvira de Robledal se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:00"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Intento dormir",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:00"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Te recuestas sobre el frío y duro banco de piedra junto al pozo, buscando una posición cómoda en la oscuridad. El frío de la noche empieza a calar en tus huesos justo cuando el sonido de unos pasos firmes rompe el silencio de la plaza.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:15"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se une a la conversación.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:15"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Allá tú, Panadero. La piedra está fría y no perdona a nadie que se quede dormido sobre ella.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:15"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:15"
+  },
+  {
+    "speakerId": "player",
+    "speaker": "Viajero",
+    "line": "Intento domrir",
+    "type": "player",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:15"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "Narrador",
+    "line": "Te acomodas sobre el duro banco de piedra junto al pozo, intentando cerrar los ojos bajo la brisa templada de la noche. El crujido de unos pasos sobre el empedrado te sobresalta, revelando la silueta de Inés iluminada por un farol de mano.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:20"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se une a la conversación.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:20"
+  },
+  {
+    "speakerId": "posadera",
+    "speaker": "Inés Jarrablanca",
+    "line": "Allá tú, Panadero. La piedra está fría y no perdona a nadie que se quede dormido sobre ella.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:20"
+  },
+  {
+    "speakerId": "narrator",
+    "speaker": "narrator",
+    "line": "[Especial] Inés Jarrablanca se retira de la escena.",
+    "type": "npc",
+    "locationId": "plaza",
+    "participantIds": [],
+    "day": 1,
+    "time": "20:20"
+  }
+]

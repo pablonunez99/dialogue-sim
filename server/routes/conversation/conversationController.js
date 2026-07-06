@@ -28,6 +28,7 @@ export async function handleConversation(req, res) {
       line: context.playerText || '',
       type: 'player',
       locationId: context.state.locationId,
+      participantIds: context.participantIds,
       day: context.state.day,
       time: context.state.time
     });
@@ -49,12 +50,9 @@ export async function handleConversation(req, res) {
       context.state.travelQueue = [];
     }
 
-    // 4. Generate scene (handles transitions, AI generation, fallbacks, and post-processing)
+    // 4. Generate scene (handles transitions, AI generation, fallbacks, post-processing, and streaming in real-time)
     const activeConversationManager = createConversationManager(context);
-    await sceneGenerator.generate(context, activeConversationManager, oldTOD);
-
-    // 5. Stream the response in SSE format using the sceneStreamer service
-    sceneStreamer.stream(res, context.scene);
+    await sceneGenerator.generate(context, activeConversationManager, oldTOD, res);
   } catch (error) {
     console.error('[Server] Fatal route controller error:', error);
     return res.status(500).json({ error: 'Error interno del servidor.' });

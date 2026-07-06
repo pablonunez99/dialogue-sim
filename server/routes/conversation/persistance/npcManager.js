@@ -3,6 +3,7 @@ import { generateNpcPortraits } from "../../../images/portraitGenerator.js";
 import { syncNpcToVectorDb } from "../../../vectorSync.js";
 import { orchestrateNpcTurn } from "../../../helpers/instructions/npcOrchestrator.js";
 import { vectorManager } from "../../../config/aiProviders.js";
+import * as sceneStreamer from "../scene/sceneStreamer.js";
 
 export async function resolve(scene, locationId) {
     if (scene.newNpc && scene.newNpc.id) {
@@ -52,7 +53,7 @@ export async function resolve(scene, locationId) {
     }
 }
 
-export async function orchestrate(context, activeConversationManager) {
+export async function orchestrate(context, activeConversationManager, res) {
     const participants = context.scene.participantIds
         .map(id => context.npcs.find(npc => npc.id === id))
         .filter(Boolean);
@@ -75,6 +76,15 @@ export async function orchestrate(context, activeConversationManager) {
 
         let result = await iterator.next();
         while (!result.done) {
+            const chunk = result.value;
+            if (res) {
+                sceneStreamer.sendNpcResponse(res, {
+                    speakerId: chunk.npcId,
+                    line: chunk.dialogue,
+                    expression: chunk.expression,
+                    actions: chunk.actions
+                });
+            }
             result = await iterator.next();
         }
         const aggregated = result.value;

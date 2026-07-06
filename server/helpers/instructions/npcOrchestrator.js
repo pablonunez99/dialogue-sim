@@ -326,6 +326,7 @@ export async function* orchestrateNpcTurn({
       playerText,
       sceneContext
     });
+    console.log('[Orchestrator] NPC prompt:',systemInstruction)
 
     try {
       const parsed = await callLlm(systemInstruction, npc.id);

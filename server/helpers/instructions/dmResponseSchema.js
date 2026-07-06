@@ -56,11 +56,6 @@ export const dmResponseSchema = {
     'narration',
     'sceneContext',
     'minutesPassed',
-    'newNpc',
-    'newLocation',
-    'exitTheConversation',
-    'enterTheConversation',
-    'updateLocationImage'
   ],
   additionalProperties: false
 };

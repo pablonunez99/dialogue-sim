@@ -9,6 +9,7 @@ import { buildMessageArray } from './messageBuilder.js';
 import { normalizeScene } from '../scene/sceneNormalizer.js';
 import { makeFallbackScene } from '../scene/fallbackGenerator.js';
 import { buildDmInstructions } from '../../../helpers/instructions/buildDmInstructions.js';
+import { getTimeOfDay } from '../../../world/time.js';
 
 export class ConversationManager {
   constructor({ client, model: modelName, isGemini }) {
@@ -21,7 +22,12 @@ export class ConversationManager {
     const location = getLocation(locationId);
     const currentNpcs = await loadNpcs();
     const currentLocations = await loadLocations();
-    const timeOfDay = state?.timeOfDay || 'mañana';
+    const normalizedState = {
+      ...state,
+      time: state?.time || '08:00',
+      timeOfDay: state?.timeOfDay || getTimeOfDay(state?.time || '08:00')
+    };
+    const timeOfDay = normalizedState.timeOfDay || 'mañana';
     const participants = resolveParticipants(participantIds, location, currentNpcs, timeOfDay);
 
     if (!this.client) {
@@ -39,7 +45,7 @@ export class ConversationManager {
       npcsList: currentNpcs,
       locationsList: currentLocations,
       locationId: location.id,
-      state,
+      state: normalizedState,
       ragContext: '' // will be populated by beforeTurn trigger
     };
 
@@ -74,7 +80,7 @@ export class ConversationManager {
       currentNpcs,
       currentLocations,
       activeEvent,
-      state,
+      state: normalizedState,
       travelMinutes,
       unexpectedEventNote,
       recentHistory,

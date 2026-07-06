@@ -69,6 +69,7 @@ Reglas:
 - RUMORES Y COTILLEOS: Los NPCs chismorrean sobre el Viajero. Si el jugador flirtea, se pelea, o realiza una acción notable en presencia de otros NPCs, añade una bandera de rumor en los flags con el prefijo 'rumor_'. Si un flag con 'rumor_' está activo o si ves relaciones notables en el bloque de rumores, los personajes presentes reaccionarán de forma coherente (celos, despecho, advertencias, curiosidad, burla).
 - Cada mensaje en 'messages' debe tener como 'speakerId' exactamente uno de los IDs autorizados de NPCs presentes en escena o 'narrator'. NUNCA uses nombres propios ni descripciones en 'speakerId'. Usa SOLO los IDs de la lista de NPCs conocidos.
 - CONTROL DE ESCENA: El campo 'participantIds' de tu respuesta define quién está presente en pantalla. Puedes y debes modificarlo libremente. Solo pueden hablar los NPCs que estén en 'participantIds'.
+- AWARENESS DE NPCs EN LA UBICACIÓN: Debes ser consciente de los NPCs que están físicamente en la ubicación aunque no formen parte activa de la conversación. Pueden estar presentes como fondo, observar o reaccionar, y si la escena lo merece puedes incorporarlos a la interacción añadiéndolos a 'participantIds' o usando 'enterTheConversation'.
 - CAMBIO DE UBICACIÓN NARRATIVO: SOLO puedes establecer 'locationId' a una ubicación DIRECTAMENTE CONECTADA (adyacente) a la actual en el mapa. Está TERMINANTEMENTE PROHIBIDO saltar a ubicaciones no adyacentes. Si deseas ir a un destino lejano, cambia al primer nodo adyacente este turno y deja que el viaje continúe en los siguientes turnos. Además, 'participantIds' DEBE reflejar ÚNICAMENTE los NPCs que físicamente viajaron a la nueva ubicación.
 - Mantén la narración y los diálogos realistas, directos e inmersivos. Escribe entre 3 y 6 mensajes en total.
 - PRIVACIDAD DE SECRETOS (CRÍTICO): Está estrictamente prohibido que un NPC mencione o actúe basándose en el secreto de otro NPC, a menos que el historial muestre que dicho secreto ya fue revelado. Mantén estricta separación de conocimientos entre personajes (Teoría de la Mente).
@@ -117,6 +118,10 @@ export function buildPrompt({
   const participantList  = participants.map(npc => npc.id).join(', ') || '(ninguno - exploración solitaria)';
   const npcList          = currentNpcs.map(npc => `${npc.name} (${npc.id})`).join(', ');
   const locationList     = currentLocations.map(loc => `${loc.name} (${loc.id})`).join(', ');
+  const locationNpcList  = currentNpcs
+    .filter((npc) => getNpcLocation(npc.id, timeContext?.includes('noche') ? 'noche' : 'mañana', npc.locationId, npc) === location.id)
+    .map((npc) => `${npc.name} (${npc.id})`)
+    .join(', ') || '(ninguno)';
 
   return [
     'Eres el Dungeon Master de una novela visual de intriga medieval en la aldea de Robledal.',
@@ -127,6 +132,7 @@ export function buildPrompt({
     FORMAT_RULES,
     NARRATIVE_RULES,
     `- NPCs actualmente presentes en escena: ${participantList}.`,
+    `- NPCs físicamente presentes en esta ubicación: ${locationNpcList}.`,
     `- Lista completa de NPCs conocidos del mundo: ${npcList}.`,
     `- Lista completa de ubicaciones conocidas de la aldea: ${locationList}.`,
     `- Ubicación actual: ${location.name}. Ambiente: ${location.prompt}.`,

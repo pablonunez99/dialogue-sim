@@ -3,12 +3,14 @@
  * Esto permite al cliente de visual novel recibir la configuración de escena,
  * las líneas individuales de diálogos y finalizar con la confirmación de fin de turno.
  */
-export function stream(res, scene) {
+
+export function startStream(res) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
+}
 
-  // 1. Enviar configuración inicial de la escena (dm_response)
+export function sendDmResponse(res, scene) {
   const dmResponse = {
     locationId: scene.locationId,
     participantIds: scene.participantIds,
@@ -18,21 +20,30 @@ export function stream(res, scene) {
     locationUpdate: scene.locationUpdate
   };
   res.write(`event: dm_response\ndata: ${JSON.stringify(dmResponse)}\n\n`);
+}
 
-  // 2. Transmitir diálogos individuales paso a paso (npc_response)
-  if (Array.isArray(scene.messages)) {
-    scene.messages.forEach((m) => {
-      const npcEvt = {
-        npcId: m.speakerId,
-        dialogue: m.line,
-        expression: m.expression,
-        actions: m.actions
-      };
-      res.write(`event: npc_response\ndata: ${JSON.stringify(npcEvt)}\n\n`);
-    });
-  }
+export function sendNpcResponse(res, m) {
+  const npcEvt = {
+    npcId: m.speakerId || m.npcId,
+    dialogue: m.line || m.dialogue,
+    expression: m.expression,
+    actions: m.actions
+  };
+  res.write(`event: npc_response\ndata: ${JSON.stringify(npcEvt)}\n\n`);
+}
 
-  // 3. Enviar confirmación de fin de turno para quitar el loader y aplicar estado (turn_complete)
+export function completeStream(res, scene) {
   res.write(`event: turn_complete\ndata: ${JSON.stringify(scene)}\n\n`);
   res.end();
+}
+
+export function stream(res, scene) {
+  startStream(res);
+  sendDmResponse(res, scene);
+  if (Array.isArray(scene.messages)) {
+    scene.messages.forEach((m) => {
+      sendNpcResponse(res, m);
+    });
+  }
+  completeStream(res, scene);
 }
